@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function ClassHeader() {
     return (
-        <div class="border-black rounded-lg border bg-gradient-to-r from-green-800 to-secondary overflow-hidden">
+        <div class="border-black border bg-gradient-to-r from-green-800 to-secondary overflow-hidden">
             <div class="group h-40 sm:h-60 overflow-hidden relative border-b border-black"> </div>
 
             <div class="flex flex-col sm:lsdfdfsdafd items-center sm:gap-4 mb-2">

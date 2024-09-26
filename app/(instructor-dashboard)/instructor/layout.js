@@ -70,7 +70,7 @@ export default function RootLayout({ children }) {
                                         <span class="flex-grow"><i class="bi bi-collection-fill mr-2"></i> Classes</span>
                                     </Link>
                                 </li>
-                                <li>
+                                <li> 
                                     <Link href={'/instructor/schedules'}>
                                         <span class="flex-grow"><i class="bi bi-calendar-event-fill mr-2"></i> Schedules</span>
                                     </Link>
@@ -83,6 +83,11 @@ export default function RootLayout({ children }) {
                                 <li>
                                     <Link href={'/'}>
                                         <span class="flex-grow"><i class="bi bi-camera-video-fill mr-2"></i> Live Class</span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href={'/'}>
+                                        <span class="flex-grow"><i class="bi bi-clipboard-fill mr-2"></i> Whiteboard</span>
                                     </Link>
                                 </li>
                                 <li>

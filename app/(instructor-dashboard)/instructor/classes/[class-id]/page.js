@@ -12,11 +12,11 @@ export default function Class() {
                     <div className='xl:col-span-3'>
                         <ClassHeader />
                     </div>
-                    <div className='xl:col-span-2'>
+                    <div className='xl:col-span-2 relative'>
                         <ClassFeed />
                     </div>
                     <div className='xl:col-span-1 flex flex-col gap-6'>
-                        <div className='border-black rounded-lg border p-6 text-base bg-white'>
+                        <div className='hover-shadow border-black border p-6 text-base bg-white'>
                             <div className='text-lg font-semibold mb-4'>
                                 Filter
                             </div>
