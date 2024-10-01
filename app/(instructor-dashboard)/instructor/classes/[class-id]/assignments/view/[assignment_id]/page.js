@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import React from 'react'
 
-export default function CreateAssignmentPage() {
+export default function ViewAssignmentPage() {
     return (
         <div className='container-fluid'>
             <div className='flex justify-between items-center mb-5'>
                 <div>
-                    <h2 className='text-2xl font-bold'>Create Assignment</h2>
+                    <h2 className='text-2xl font-bold'>Assignment</h2>
                     <nav class="breadcrumb" aria-label="Breadcrumb">
                         <ol class="list-none text-sm p-0 inline-flex">
                             <li class="flex pdskdmsdnjw">
@@ -18,7 +18,7 @@ export default function CreateAssignmentPage() {
                             </li>
                             <li class="flex pdskdmsdnjw">
                                 <span class="mx-2">›</span>
-                                <a href="#" class="font-bold">Create Assignment</a>
+                                <a href="#" class="font-bold">View Assignment</a>
                             </li>
                         </ol>
                     </nav>
@@ -30,11 +30,40 @@ export default function CreateAssignmentPage() {
                     <div className='border border-black py-2 px-3 mb-5'>
                         <div className='form-group'>
                             <label className='mb-2 block'>Title</label>
-                            <input className='form-control' />
+                            <input className='form-control' value={'Test'} />
                         </div>
                         <div className='form-group'>
                             <label className='mb-2 block'>Instructions (optional)</label>
-                            <textarea className='form-control' rows={10} cols={10} style={{ height: '200px' }}></textarea>
+                            <textarea className='form-control' rows={10} cols={10} style={{ height: '200px' }}>{"Test Description"}</textarea>
+                        </div>
+                        <div className='my-3'>
+                            <h2 className='mb-3 text-xl font-bold'>School Work Attachments</h2>
+                            <div className='flex flex-col gap-3'>
+                                {/* File Attachment */}
+                                <div className='border border-black hover-shadow p-3 cursor-pointer'>
+                                    <div className='flex justify-between items-start gap-3'>
+                                        <div className='w-[15%] h-[80px] bg-secondary border border-black flex justify-center items-center p-2'>
+                                            <i class="bi bi-files-alt text-3xl"></i>
+                                        </div>
+                                        <div className='w-[85%]'>
+                                            <h3 className='text-xl'>assignment-1-schoolattachment.pdf</h3>
+                                            <h6 className='text-muted text-sm'>File</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* Link Attachment */}
+                                <div className='border border-black hover-shadow p-3 cursor-pointer'>
+                                    <div className='flex justify-between items-start gap-3'>
+                                        <div className='w-[15%] h-[80px] bg-secondary border border-black flex justify-center items-center p-2'>
+                                            <i class="bi bi-link-45deg text-4xl"></i>
+                                        </div>
+                                        <div className='w-[85%]'>
+                                            <h3 className='text-xl'>https://pnm.edu.ph</h3>
+                                            <h6 className='text-muted text-sm'>Link</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className='border border-black py-2 px-3'>

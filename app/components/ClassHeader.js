@@ -28,9 +28,17 @@ export default function ClassHeader() {
                         <i className="bi bi-calendar-fill max-md:text-2xl"></i>
                         <span className="hidden md:block">Calendar</span>
                     </Link>
-                    <Link href={'/instructor/classes/1'} className="flex items-center py-2 px-3 gap-1.5 font-medium hover:text-secondary text-white">
-                        <i class="bi bi-1-circle-fill max-md:text-2xl"></i>
-                        <span className="hidden md:block">Student Grades</span>
+                    <Link href={'/instructor/classes/1/attendances'} className="flex items-center py-2 px-3 gap-1.5 font-medium hover:text-secondary text-white">
+                        <i className="bi bi-person-arms-up max-md:text-2xl"></i>
+                        <span className="hidden md:block">Attendance</span>
+                    </Link>
+                    <Link href={'/instructor/classes/1/grades'} className="flex items-center py-2 px-3 gap-1.5 font-medium hover:text-secondary text-white">
+                        <i className="bi bi-1-square-fill max-md:text-2xl"></i>
+                        <span className="hidden md:block">Grades</span>
+                    </Link>
+                    <Link href={'/instructor/classes/1/analytics-report'} className="flex items-center py-2 px-3 gap-1.5 font-medium hover:text-secondary text-white">
+                        <i class="bi bi-bar-chart-fill max-md:text-2xl"></i>
+                        <span className="hidden md:block">Analytics Report</span>
                     </Link>
                 </div>
             </div>

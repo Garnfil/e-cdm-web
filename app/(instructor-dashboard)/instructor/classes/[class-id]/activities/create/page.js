@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import React from 'react'
 
-export default function CreateAssignmentPage() {
+export default function CreateActivityPage() {
     return (
         <div className='container-fluid'>
             <div className='flex justify-between items-center mb-5'>
                 <div>
-                    <h2 className='text-2xl font-bold'>Create Assignment</h2>
+                    <h2 className='text-2xl font-bold'>Create Activity</h2>
                     <nav class="breadcrumb" aria-label="Breadcrumb">
                         <ol class="list-none text-sm p-0 inline-flex">
                             <li class="flex pdskdmsdnjw">
@@ -18,7 +18,7 @@ export default function CreateAssignmentPage() {
                             </li>
                             <li class="flex pdskdmsdnjw">
                                 <span class="mx-2">›</span>
-                                <a href="#" class="font-bold">Create Assignment</a>
+                                <a href="#" class="font-bold">Create Activity</a>
                             </li>
                         </ol>
                     </nav>

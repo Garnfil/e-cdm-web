@@ -3,6 +3,9 @@
 import axios from 'axios';
 import Link from 'next/link'
 import React from 'react'
+import yellowIllustration from '../../../public/yellow-illustration.png';
+import greenIllustration from '../../../public/green-illustration.png';
+import Image from 'next/image';
 
 export default function LoginPage() {
 
@@ -51,8 +54,9 @@ export default function LoginPage() {
                                 </div>
                             </form>
                         </div>
-                        <div className='w-[65%] bg-primary h-full rounded-lg'>
-
+                        <div className='w-[65%] bg-primary h-full rounded-lg relative'>
+                            <Image src={greenIllustration} className='absolute right-0' />
+                            <Image src={yellowIllustration} className='absolute bottom-0' />
                         </div>
                     </div>
                 </div>

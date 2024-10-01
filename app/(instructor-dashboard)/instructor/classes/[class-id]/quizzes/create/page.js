@@ -1,4 +1,13 @@
 import React from 'react'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import Link from 'next/link'
 
 export default function CreateQuizPage() {
     return (
@@ -22,7 +31,7 @@ export default function CreateQuizPage() {
                         </ol>
                     </nav>
                 </div>
-                <a href='' className='btn btn-primary hover-shadow'><i class="bi bi-arrow-left mr-1"></i> Back to Class</a>
+                <Link href={'/instructor/classes/1'} className='btn btn-primary hover-shadow'><i class="bi bi-arrow-left mr-1"></i> Back to Class</Link>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6'>
                 <div className='xl:col-span-2'>

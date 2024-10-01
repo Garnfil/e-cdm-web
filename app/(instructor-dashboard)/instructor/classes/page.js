@@ -21,7 +21,7 @@ export default function ClassesPage() {
                         </ol>
                     </nav>
                 </div>
-                <button className='btn btn-primary hover-shadow'><i class="bi bi-plus-lg"></i> Add New Class</button>
+                <Link href={'/instructor/create-class'} className='btn btn-primary hover-shadow'><i class="bi bi-plus-lg"></i> Add New Class</Link>
             </div>
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
                 <Link href={"/instructor/classes/1"} class="p-6 bg-white hover-shadow border-black rounded border cursor-pointer">
