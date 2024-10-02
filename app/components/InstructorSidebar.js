@@ -28,11 +28,11 @@ export default function InstructorSidebar() {
                             <span class="flex-grow"><i class="bi bi-calendar-event-fill mr-2"></i> Schedules</span>
                         </Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link href={'#'}>
                             <span class="flex-grow"><i class="bi bi-1-square-fill mr-2"></i> Grade Rubrics</span>
                         </Link>
-                    </li>
+                    </li> */}
                     <li>
                         <Link href={'/instructor/live-conference-classes'}>
                             <span class="flex-grow"><i class="bi bi-camera-video-fill mr-2"></i> Live Class</span>

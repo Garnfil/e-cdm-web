@@ -8,25 +8,25 @@ const Whiteboard = (props) => {
     const isThrottled = useRef(false); // Ref to manage throttling state
     const [isDrawing, setIsDrawing] = useState(false);
     const [color, setColor] = useState("#000000");
-    const [count, setCount] = useState(0);
 
     useEffect(() => {
         const canvas = canvasRef.current;
         const context = canvas.getContext("2d");
         context.lineCap = "round";  // Smooth lines
         context.lineWidth = 5;      // Line thickness
-    }, [session_id]);
 
-    const pusher = new Pusher('dcb5e22ff8f02d72a547', {
-        cluster: 'ap1',
-    });
+        const pusher = new Pusher('dcb5e22ff8f02d72a547', {
+            cluster: 'ap1',
+        });
 
-    const channel = pusher.subscribe(`whiteboard.${session_id}`); // Use sessionId in the public channel name
+        const channel = pusher.subscribe(`whiteboard.${session_id}`); // Use sessionId in the public channel name
 
-    channel.bind('my-event', (data) => {
-        console.log(data);
-        drawFromServer(data);
-    });
+        channel.bind('whiteboard-updated', (data) => {
+            console.log(data);
+            drawFromServer(data);
+        });
+
+    }, []);
 
     const startDrawing = (e) => {
         const canvas = canvasRef.current;
@@ -38,6 +38,8 @@ const Whiteboard = (props) => {
         setIsDrawing(true);
     };
 
+    const root = this;
+
     const draw = (e) => {
         if (!isDrawing) return;
 
@@ -46,25 +48,17 @@ const Whiteboard = (props) => {
         context.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
         context.stroke();
 
-        console.log(count);
+        // Throttle the whiteboard updates
+        if (root.timeout != undefined) clearTimeout(root.timeout);
+        root.timeout = setTimeout(() => {
+            var base64ImageData = canvas.toDataUrl("image/png");
+            sendWhiteboardUpdate(base64ImageData);
+        }, 1000);
     };
 
 
     const stopDrawing = (e) => {
         setIsDrawing(false);
-        // Throttle the whiteboard updates
-        if (!isThrottled.current) {
-            setCount(() => count + 1);
-            isThrottled.current = true;
-            setTimeout(() => {
-                sendWhiteboardUpdate({
-                    x: e.nativeEvent.offsetX,
-                    y: e.nativeEvent.offsetY,
-                    color,
-                });
-                isThrottled.current = false;
-            }, 2000); // Throttling time in milliseconds
-        }
     };
 
     const clearCanvas = () => {
@@ -78,17 +72,21 @@ const Whiteboard = (props) => {
             method: 'POST',
             body: JSON.stringify({ data }),
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
         });
     };
 
     const drawFromServer = (data) => {
+        console.log(data);
+        const image = new Image();
         const canvas = canvasRef.current;
         const context = canvas.getContext("2d");
-        context.strokeStyle = data.color;
-        context.lineTo(data.x, data.y);
-        context.stroke();
+        image.onload = function () {
+            context.drawImage(image, 0, 0);
+        }
+        image.src = data;
     };
 
     return (

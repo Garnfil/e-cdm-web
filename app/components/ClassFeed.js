@@ -24,6 +24,11 @@ export default function ClassFeed() {
                             <DropdownMenuLabel>School Works</DropdownMenuLabel>
                             <DropdownMenuSeparator className="bg-white" />
                             <DropdownMenuItem>
+                                <Link href={'/instructor/classes/1/modules/create'}>
+                                    Modules
+                                </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
                                 <Link href={'/instructor/classes/1/assignments/create'}>
                                     Assignment
                                 </Link>
