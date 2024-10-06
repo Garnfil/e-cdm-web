@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -9,9 +9,60 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Link from 'next/link';
+import axios from 'axios';
+import jsCookie from 'js-cookie';
 
-export default function ClassFeed() {
-    const [isShowDropdown, setIsShowDropdown] = useState(false);
+export default function ClassFeed(props) {
+    const { classId } = props;
+    const [schoolWorks, setSchoolWorks] = useState([]);
+
+    useEffect(() => {
+        let session = JSON.parse(jsCookie.get("session"));
+
+        const fetchClassSchoolWorks = async () => {
+            const response = await axios.get(`http://127.0.0.1:8000/api/classes/${classId}/school-works`, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${session.token}`
+                }
+            });
+
+            let schoolWorksList = response.data.school_works.map(school_work => {
+                let url = "#";
+                switch (school_work.type) {
+                    case "assignment":
+                        url = `/instructor/classes/${classId}/assignments/${school_work.id}/view`;
+                        break;
+
+                    case "activity":
+                        url = `/instructor/classes/${classId}/activities/${school_work.id}/view`;
+                        break;
+
+                    case "quiz":
+                        url = `/instructor/classes/${classId}/quizzes/${school_work.id}/view`;
+                        break;
+
+                    case "exam":
+                        url = `/instructor/classes/${classId}/exams/${school_work.id}/view`;
+                        break;
+
+                    default:
+                        url = `#`;
+                        break;
+                }
+                return {
+                    school_work,
+                    url: url
+                };
+            })
+
+            console.log(schoolWorksList);
+
+            setSchoolWorks(schoolWorksList);
+        }
+
+        fetchClassSchoolWorks();
+    }, [])
 
     return (
         <div className=' text-base max-h-[70vh] overflow-auto class-stream-container'>
@@ -50,48 +101,31 @@ export default function ClassFeed() {
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    {/* <button className='btn btn-primary hover-shadow'>Create <i class="bi bi-plus-lg"></i></button> */}
+                    {/* <button className='btn btn-primary hover-shadow'>Create <i className="bi bi-plus-lg"></i></button> */}
                 </div>
             </div>
             <div className='relative w-full mt-4 overflow-y-auto flex flex-col gap-3'>
-                <Link href={'/instructor/classes/1/assignments/view/1'}>
-                    <div className='bg-white border border-black hover-shadow'>
-                        <div className='py-3 px-4 border-b border-black flex justify-between items-center'>
-                            <h3 className='text-lg font-semibold mb-2'>Assignment #1</h3>
-                            <div className='py-1 px-2 text-xs font-bold bg-secondary flex items-center'>
-                                Assignment
-                            </div>
-                        </div>
-                        <div className='py-3 px-4'>
-                            <p className='text-sm'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis velit consectetur, iaculis magna ac, tristique sem.
-                                Donec congue justo sed enim suscipit, ac aliquet tellus rhoncus. Duis erat sapien, semper a libero nec, convallis malesuada purus.</p>
-                        </div>
-                    </div>
-                </Link>
-                <div className='bg-white border border-black hover-shadow'>
-                    <div className='py-3 px-4 border-b border-black flex justify-between items-center'>
-                        <h3 className='text-lg font-semibold mb-2'>Quiz #1</h3>
-                        <div className='py-1 px-2 text-xs font-bold bg-secondary flex items-center'>
-                            Quiz
-                        </div>
-                    </div>
-                    <div className='py-3 px-4'>
-                        <p className='text-sm'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis velit consectetur, iaculis magna ac, tristique sem.
-                            Donec congue justo sed enim suscipit, ac aliquet tellus rhoncus. Duis erat sapien, semper a libero nec, convallis malesuada purus.</p>
-                    </div>
-                </div>
-                <div className='bg-white border border-black hover-shadow'>
-                    <div className='py-3 px-4 border-b border-black flex justify-between items-center'>
-                        <h3 className='text-lg font-semibold mb-2'>Exam #1</h3>
-                        <div className='py-1 px-2 text-xs font-bold bg-secondary flex items-center'>
-                            Exam
-                        </div>
-                    </div>
-                    <div className='py-3 px-4'>
-                        <p className='text-sm'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis velit consectetur, iaculis magna ac, tristique sem.
-                            Donec congue justo sed enim suscipit, ac aliquet tellus rhoncus. Duis erat sapien, semper a libero nec, convallis malesuada purus.</p>
-                    </div>
-                </div>
+                {
+                    schoolWorks.length > 0 ? (
+                        schoolWorks.map(schoolWorkData => (
+                            <Link href={`${schoolWorkData.url}`}>
+                                <div className='bg-white border border-black hover-shadow'>
+                                    <div className='py-3 px-4 border-b border-black flex justify-between items-center'>
+                                        <h3 className='text-lg font-semibold mb-2'>{schoolWorkData.school_work.title}</h3>
+                                        <div className='py-1 px-2 text-xs font-bold bg-secondary flex items-center rounded'>
+                                            {schoolWorkData.school_work.type}
+                                        </div>
+                                    </div>
+                                    <div className='py-3 px-4'>
+                                        <p className='text-sm'>{schoolWorkData.school_work.description}</p>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))
+                    ) : (
+                        <div></div>
+                    )
+                }
             </div>
         </div >
     )

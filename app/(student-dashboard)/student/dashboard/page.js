@@ -64,7 +64,7 @@ export default function StudentDashboardPage() {
                                     <td className='border border-black py-3 px-2'>BSIT - 3H</td>
                                     <td className='border border-black py-3 px-2'>Assignment</td>
                                     <td className='border border-black py-3 px-2 text-center'>
-                                        <button className='btn btn-primary px-2 py-1'><i class="bi bi-eye"></i></button>
+                                        <button className='btn btn-primary px-2 py-1'><i className="bi bi-eye"></i></button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -73,7 +73,7 @@ export default function StudentDashboardPage() {
                                     <td className='border border-black py-3 px-2'>BSIT - 3H</td>
                                     <td className='border border-black py-3 px-2'>Assignment</td>
                                     <td className='border border-black py-3 px-2 text-center'>
-                                        <button className='btn btn-primary px-2 py-1'><i class="bi bi-eye"></i></button>
+                                        <button className='btn btn-primary px-2 py-1'><i className="bi bi-eye"></i></button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -82,7 +82,7 @@ export default function StudentDashboardPage() {
                                     <td className='border border-black py-3 px-2'>BSIT - 3H</td>
                                     <td className='border border-black py-3 px-2'>Assignment</td>
                                     <td className='border border-black py-3 px-2 text-center'>
-                                        <button className='btn btn-primary px-2 py-1'><i class="bi bi-eye"></i></button>
+                                        <button className='btn btn-primary px-2 py-1'><i className="bi bi-eye"></i></button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -91,7 +91,7 @@ export default function StudentDashboardPage() {
                                     <td className='border border-black py-3 px-2'>BSIT - 3H</td>
                                     <td className='border border-black py-3 px-2'>Assignment</td>
                                     <td className='border border-black py-3 px-2 text-center'>
-                                        <button className='btn btn-primary px-2 py-1'><i class="bi bi-eye"></i></button>
+                                        <button className='btn btn-primary px-2 py-1'><i className="bi bi-eye"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -133,17 +133,17 @@ export default function StudentDashboardPage() {
                             <div className='border border-b-black p-3'>
                                 <div className='flex justify-start items-start gap-3'>
                                     <div className='bg-secondary w-[50px] h-[50px] flex justify-center items-center border border-black'>
-                                        <i class="bi bi-calendar-event text-xl"></i>
+                                        <i className="bi bi-calendar-event text-xl"></i>
                                     </div>
                                     <div className='flex flex-col gap-1 w-full'>
                                         <h3 className='font-semibold text-md'>Event One Institute</h3>
                                         <div className='text-xs flex justify-between items-start w-full'>
                                             <div className='time'>
-                                                <span className='pr-2'><i class="bi bi-clock"></i></span>
+                                                <span className='pr-2'><i className="bi bi-clock"></i></span>
                                                 <span>4:00 P.M</span> - <span>5:00 P.M</span>
                                             </div>
                                             <div className='time'>
-                                                <span className='pr-2'><i class="bi bi-calendar"></i></span>
+                                                <span className='pr-2'><i className="bi bi-calendar"></i></span>
                                                 <span>Aug. 20, 2024</span>
                                             </div>
                                         </div>
@@ -154,17 +154,17 @@ export default function StudentDashboardPage() {
                             <div className='border border-b-black p-3'>
                                 <div className='flex justify-start items-start gap-3'>
                                     <div className='bg-secondary w-[50px] h-[50px] flex justify-center items-center border border-black'>
-                                        <i class="bi bi-calendar-event text-xl"></i>
+                                        <i className="bi bi-calendar-event text-xl"></i>
                                     </div>
                                     <div className='flex flex-col gap-1 w-full'>
                                         <h3 className='font-semibold text-md'>Event Two Institute</h3>
                                         <div className='text-xs flex justify-between items-start w-full'>
                                             <div className='time'>
-                                                <span className='pr-2'><i class="bi bi-clock"></i></span>
+                                                <span className='pr-2'><i className="bi bi-clock"></i></span>
                                                 <span>8:00 A.M</span> - <span>11:00 A.M</span>
                                             </div>
                                             <div className='time'>
-                                                <span className='pr-2'><i class="bi bi-calendar"></i></span>
+                                                <span className='pr-2'><i className="bi bi-calendar"></i></span>
                                                 <span>Aug. 22, 2024</span>
                                             </div>
                                         </div>

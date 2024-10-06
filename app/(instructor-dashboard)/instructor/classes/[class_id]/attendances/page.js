@@ -15,24 +15,24 @@ export default function ClassAttendancePage() {
             <div className='flex justify-between items-center mb-5'>
                 <div>
                     <h2 className='text-2xl font-bold'>Class Attendance</h2>
-                    <nav class="breadcrumb" aria-label="Breadcrumb">
-                        <ol class="list-none text-sm p-0 inline-flex">
-                            <li class="flex pdskdmsdnjw">
-                                <a href="#" class="hover:underline">Dashboard</a>
+                    <nav className="breadcrumb" aria-label="Breadcrumb">
+                        <ol className="list-none text-sm p-0 inline-flex">
+                            <li className="flex pdskdmsdnjw">
+                                <a href="#" className="hover:underline">Dashboard</a>
                             </li>
-                            <li class="flex pdskdmsdnjw">
-                                <span class="mx-2">›</span>
-                                <a href="#" class="hover:underline">Class</a>
+                            <li className="flex pdskdmsdnjw">
+                                <span className="mx-2">›</span>
+                                <a href="#" className="hover:underline">Class</a>
                             </li>
-                            <li class="flex pdskdmsdnjw">
-                                <span class="mx-2">›</span>
-                                <a href="#" class="font-bold">Class Attendance</a>
+                            <li className="flex pdskdmsdnjw">
+                                <span className="mx-2">›</span>
+                                <a href="#" className="font-bold">Class Attendance</a>
                             </li>
                         </ol>
                     </nav>
                 </div>
                 <div className='flex gap-2'>
-                    <Link href={'/instructor/classes/1'} className='btn hover-shadow'><i class="bi bi-arrow-left mr-1"></i> Back to Class</Link>
+                    <Link href={'/instructor/classes/1'} className='btn hover-shadow'><i className="bi bi-arrow-left mr-1"></i> Back to Class</Link>
                     <Dialog>
                         <DialogTrigger className='btn btn-primary hover-shadow'>
                             Add New Attendance
@@ -85,8 +85,8 @@ export default function ClassAttendancePage() {
                             <td className='p-4 whitespace-nowrap'>fsdfeab-9234232</td>
                             <td className='p-4 whitespace-nowrap'>20</td>
                             <td className='p-4 whitespace-nowrap'>
-                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i class="bi bi-eye"></i></button>
-                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i class="bi bi-trash"></i></button>
+                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
+                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
                             </td>
                         </tr>
                         <tr className="cursor-pointer">
@@ -94,8 +94,8 @@ export default function ClassAttendancePage() {
                             <td className='p-4 whitespace-nowrap'>fsdfeab-9234231</td>
                             <td className='p-4 whitespace-nowrap'>20</td>
                             <td className='p-4 whitespace-nowrap'>
-                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i class="bi bi-eye"></i></button>
-                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i class="bi bi-trash"></i></button>
+                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
+                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
                             </td>
                         </tr>
                         <tr className="cursor-pointer">
@@ -103,8 +103,8 @@ export default function ClassAttendancePage() {
                             <td className='p-4 whitespace-nowrap'>bskdfgr-3423453</td>
                             <td className='p-4 whitespace-nowrap'>20</td>
                             <td className='p-4 whitespace-nowrap'>
-                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i class="bi bi-eye"></i></button>
-                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i class="bi bi-trash"></i></button>
+                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
+                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
                             </td>
                         </tr>
                         <tr className="cursor-pointer">
@@ -112,8 +112,8 @@ export default function ClassAttendancePage() {
                             <td className='p-4 whitespace-nowrap'>kuzdfw-32432441</td>
                             <td className='p-4 whitespace-nowrap'>30</td>
                             <td className='p-4 whitespace-nowrap'>
-                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i class="bi bi-eye"></i></button>
-                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i class="bi bi-trash"></i></button>
+                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
+                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
                             </td>
                         </tr>
                     </tbody>

@@ -7,19 +7,19 @@ export default function LiveSessionsPage() {
             <div className='flex justify-between items-center mb-5'>
                 <div>
                     <h2 className='text-2xl font-semibold'>Live Sessions</h2>
-                    <nav class="breadcrumb" aria-label="Breadcrumb">
-                        <ol class="list-none text-sm p-0 inline-flex">
-                            <li class="flex pdskdmsdnjw">
-                                <a href="#" class="hover:underline">Dashboard</a>
+                    <nav className="breadcrumb" aria-label="Breadcrumb">
+                        <ol className="list-none text-sm p-0 inline-flex">
+                            <li className="flex pdskdmsdnjw">
+                                <a href="#" className="hover:underline">Dashboard</a>
                             </li>
-                            <li class="flex pdskdmsdnjw">
-                                <span class="mx-2">›</span>
-                                <a href="#" class="hover:underline font-bold">Live Sessions</a>
+                            <li className="flex pdskdmsdnjw">
+                                <span className="mx-2">›</span>
+                                <a href="#" className="hover:underline font-bold">Live Sessions</a>
                             </li>
                         </ol>
                     </nav>
                 </div>
-                <Link href={'/instructor/classes'} className='btn btn-primary hover-shadow'><i class="bi bi-plus-lg"></i> Join Session</Link>
+                <Link href={'/instructor/classes'} className='btn btn-primary hover-shadow'><i className="bi bi-plus-lg"></i> Join Session</Link>
             </div>
             <div className='my-2'>
                 <table className='border border-black w-full'>

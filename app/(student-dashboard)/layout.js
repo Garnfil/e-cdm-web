@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <head>
                 <link rel="preconnect" href="https://fonts.googleapis.com"></link>
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin></link>
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true"></link>
                 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet"></link>
 
             </head>
@@ -22,29 +22,29 @@ export default function RootLayout({ children }) {
                 <div className='bg-neutral-100'>
                     <header className='fixed z-10 top-0 inset-x-0 lg:ms-64 py-3 px-4 lg:px-6 bg-neutral-100 flex justify-between items-center border-b border-black'>
                         <div className='flex items-center gap-3'>
-                            <div class="flex flex-wrap items-stretch w-full relative">
-                                <input type="text" class="flex-shrink flex-grow max-w-full leading-5 relative text-sm py-3 px-6 border border-black rounded focus:outline-none hover-shadow bg-white/60  focus:ring-0" placeholder="Search…" aria-label="Search" />
-                                <div class="raiytahskcn top-1 end-0 -me-px">
-                                    <button class="flex items-center py-2 px-4 -ms-1 rtl:-me-1 rounded-r rtl:rounded-l leading-5 hover:ring-0 focus:outline-none focus:ring-0" type="button">
-                                        <i class="bi bi-search"></i>
+                            <div className="flex flex-wrap items-stretch w-full relative">
+                                <input type="text" className="flex-shrink flex-grow max-w-full leading-5 relative text-sm py-3 px-6 border border-black rounded focus:outline-none hover-shadow bg-white/60  focus:ring-0" placeholder="Search…" aria-label="Search" />
+                                <div className="raiytahskcn top-1 end-0 -me-px">
+                                    <button className="flex items-center py-2 px-4 -ms-1 rtl:-me-1 rounded-r rtl:rounded-l leading-5 hover:ring-0 focus:outline-none focus:ring-0" type="button">
+                                        <i className="bi bi-search"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div className='flex items-center gap-3'>
                             <div className='relative'>
-                                <button class="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-white border border-black hover-shadow">
-                                    <i class="bi bi-gear-fill"></i>
+                                <button className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-white border border-black hover-shadow">
+                                    <i className="bi bi-gear-fill"></i>
                                 </button>
                             </div>
                             <div className='relative'>
-                                <button class="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-white border border-black hover-shadow">
-                                    <i class="bi bi-bell-fill"></i>
+                                <button className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-white border border-black hover-shadow">
+                                    <i className="bi bi-bell-fill"></i>
                                 </button>
                             </div>
                             <div className='relative'>
-                                <button class="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-white border border-black hover-shadow">
-                                    <Image src={cdmLogo} class="w-10 h-10 flex-none rounded-full bg-white pointer-events-none" />
+                                <button className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-white border border-black hover-shadow">
+                                    <Image src={cdmLogo} className="w-10 h-10 flex-none rounded-full bg-white pointer-events-none" />
                                 </button>
                             </div>
                         </div>

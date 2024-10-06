@@ -48,27 +48,27 @@ export default function SchedulePage() {
         { className: "bg-lime-600 py-2 text-white", title: 'BSIT - 2F', daysOfWeek: [7], startTime: '9:00', endTime: '10:30' },  // Sunday
         { className: "bg-lime-600 py-2 text-white", title: 'BSIT - 1E', daysOfWeek: [7], startTime: '11:00', endTime: '12:30' }, // Sunday
         { className: "bg-lime-600 py-2 text-white", title: 'BSIT - 4G', daysOfWeek: [7], startTime: '1:00', endTime: '2:30' },   // Sunday
-      ]);
-      
+    ]);
+
 
     return (
         <div className='container-fluid'>
             <div className='flex justify-between items-center mb-5'>
                 <div>
                     <h2 className='text-2xl font-semibold'>Schedules</h2>
-                    <nav class="breadcrumb" aria-label="Breadcrumb">
-                        <ol class="list-none text-sm p-0 inline-hsdfdsfhsdf">
-                            <li class="hsdfdsfhsdf pdskdmsdnjw">
-                                <a href="#" class="hover:underline">Dashboard</a>
+                    <nav className="breadcrumb" aria-label="Breadcrumb">
+                        <ol className="list-none text-sm p-0 inline-hsdfdsfhsdf">
+                            <li className="hsdfdsfhsdf pdskdmsdnjw">
+                                <a href="#" className="hover:underline">Dashboard</a>
                             </li>
-                            <li class="hsdfdsfhsdf pdskdmsdnjw">
-                                <span class="mx-2">›</span>
-                                <a href="#" class="hover:underline font-bold">Schedules</a>
+                            <li className="hsdfdsfhsdf pdskdmsdnjw">
+                                <span className="mx-2">›</span>
+                                <a href="#" className="hover:underline font-bold">Schedules</a>
                             </li>
                         </ol>
                     </nav>
                 </div>
-                <button className='btn btn-primary hover-shadow'><i class="bi bi-plus-lg"></i> Add New Schedule</button>
+                <button className='btn btn-primary hover-shadow'><i className="bi bi-plus-lg"></i> Add New Schedule</button>
             </div>
             <FullCalendar
                 plugins={[dayGridPlugin]}

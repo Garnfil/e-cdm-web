@@ -6,8 +6,11 @@ import React from 'react'
 import yellowIllustration from '../../../public/yellow-illustration.png';
 import greenIllustration from '../../../public/green-illustration.png';
 import Image from 'next/image';
+import { useRouter } from "next/navigation";
+import jsCookie from 'js-cookie';
 
 export default function LoginPage() {
+    const router = useRouter();
 
     const handleSubmitLogin = async (e) => {
         e.preventDefault();
@@ -17,11 +20,15 @@ export default function LoginPage() {
             // Send POST request using Axios
             const response = await axios.post('http://127.0.0.1:8000/api/instructor/login', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data', // Set appropriate content type
+                    // 'Content-Type': 'multipart/form-data', // Set appropriate content type
+                    'Content-Type': 'application/json',
                 },
             });
 
-            console.log(response);
+            if (response.status == 200) {
+                jsCookie.set("session", JSON.stringify(response.data));
+                router.push('/instructor/dashboard');
+            }
 
         } catch (error) {
             // Handle errors

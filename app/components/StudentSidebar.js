@@ -15,32 +15,32 @@ export default function StudentSidebar() {
                 <ul className='flex flex-col gap-2 w-full px-4 instructor-sidebar-list'>
                     <li>
                         <Link href={'/student/dashboard'}>
-                            <span class="flex-grow"><i class="bi bi-house-door-fill mr-2"></i> Dashboard</span>
+                            <span className="flex-grow"><i className="bi bi-house-door-fill mr-2"></i> Dashboard</span>
                         </Link>
                     </li>
                     <li>
                         <Link href={'/student/live-sessions'}>
-                            <span class="flex-grow"><i class="bi bi-camera-video-fill mr-2"></i> Live Sessions</span>
+                            <span className="flex-grow"><i className="bi bi-camera-video-fill mr-2"></i> Live Sessions</span>
                         </Link>
                     </li>
                     <li>
                         <Link href={'/student/schedules'}>
-                            <span class="flex-grow"><i class="bi bi-calendar-event-fill mr-2"></i> Schedules</span>
+                            <span className="flex-grow"><i className="bi bi-calendar-event-fill mr-2"></i> Schedules</span>
                         </Link>
                     </li>
                     <li>
                         <Link href={'#'}>
-                            <span class="flex-grow"><i class="bi bi-1-square-fill mr-2"></i> Grades</span>
+                            <span className="flex-grow"><i className="bi bi-1-square-fill mr-2"></i> Grades</span>
                         </Link>
                     </li>
                     <li>
                         <Link href={'/'}>
-                            <span class="flex-grow"><i class="bi bi-clipboard-fill mr-2"></i> Whiteboard</span>
+                            <span className="flex-grow"><i className="bi bi-clipboard-fill mr-2"></i> Whiteboard</span>
                         </Link>
                     </li>
                     <li>
                         <Link href={'/discussion-forum'}>
-                            <span class="flex-grow"><i class="bi bi-people-fill mr-2"></i> Discussion Forum</span>
+                            <span className="flex-grow"><i className="bi bi-people-fill mr-2"></i> Discussion Forum</span>
                         </Link>
                     </li>
                 </ul>

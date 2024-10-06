@@ -6,23 +6,23 @@ export default function LiveConferenceClassesPage() {
             <div className='flex justify-between items-center mb-5'>
                 <div>
                     <h2 className='text-2xl font-semibold'>Live Conference Classes</h2>
-                    <nav class="breadcrumb" aria-label="Breadcrumb">
-                        <ol class="list-none text-sm p-0 inline-flex">
-                            <li class="flex pdskdmsdnjw">
-                                <a href="#" class="hover:underline">Dashboard</a>
+                    <nav className="breadcrumb" aria-label="Breadcrumb">
+                        <ol className="list-none text-sm p-0 inline-flex">
+                            <li className="flex pdskdmsdnjw">
+                                <a href="#" className="hover:underline">Dashboard</a>
                             </li>
-                            <li class="flex pdskdmsdnjw">
-                                <span class="mx-2">›</span>
-                                <a href="#" class="hover:underline">Class</a>
+                            <li className="flex pdskdmsdnjw">
+                                <span className="mx-2">›</span>
+                                <a href="#" className="hover:underline">Class</a>
                             </li>
-                            <li class="flex pdskdmsdnjw">
-                                <span class="mx-2">›</span>
-                                <a href="#" class="hover:underline font-bold">Live Conference Classes</a>
+                            <li className="flex pdskdmsdnjw">
+                                <span className="mx-2">›</span>
+                                <a href="#" className="hover:underline font-bold">Live Conference Classes</a>
                             </li>
                         </ol>
                     </nav>
                 </div>
-                <button className='btn btn-primary hover-shadow'><i class="bi bi-arrow-left"></i> Back to List</button>
+                <button className='btn btn-primary hover-shadow'><i className="bi bi-arrow-left"></i> Back to List</button>
             </div>
 
             <div className='flex justify-between items-start gap-3'>
@@ -46,52 +46,52 @@ export default function LiveConferenceClassesPage() {
 
                     </div>
                     <div className='flex flex-col gap-3 my-3 p-3'>
-                        <div class="today relative flex flex-start gap-3">
+                        <div className="today relative flex flex-start gap-3">
                             <div>
-                                <div class="py-2 w-12 bg-secondary border border-black text-black rounded flex flex-col items-center gap-0.5 text-today">
-                                    <span class="text-sm">May</span>
-                                    <span class="text-xl font-bold leading-none">15</span>
+                                <div className="py-2 w-12 bg-secondary border border-black text-black rounded flex flex-col items-center gap-0.5 text-today">
+                                    <span className="text-sm">May</span>
+                                    <span className="text-xl font-bold leading-none">15</span>
                                 </div>
                             </div>
-                            <div class="flex flex-col gap-1.5">
-                                <h4 class="text-sm font-semibold">Class in BSIT-4D</h4>
-                                <div class="text-xs"><i class="bi bi-clock me-1"></i>14:30 PM - 15:00 PM</div>
+                            <div className="flex flex-col gap-1.5">
+                                <h4 className="text-sm font-semibold">Class in BSIT-4D</h4>
+                                <div className="text-xs"><i className="bi bi-clock me-1"></i>14:30 PM - 15:00 PM</div>
                             </div>
                         </div>
-                        <div class="today relative flex flex-start gap-3">
+                        <div className="today relative flex flex-start gap-3">
                             <div>
-                                <div class="py-2 w-12 bg-secondary border border-black text-black rounded flex flex-col items-center gap-0.5 text-today">
-                                    <span class="text-sm">May</span>
-                                    <span class="text-xl font-bold leading-none">11</span>
+                                <div className="py-2 w-12 bg-secondary border border-black text-black rounded flex flex-col items-center gap-0.5 text-today">
+                                    <span className="text-sm">May</span>
+                                    <span className="text-xl font-bold leading-none">11</span>
                                 </div>
                             </div>
-                            <div class="flex flex-col gap-1.5">
-                                <h4 class="text-sm font-semibold">Class in BSIT-2E</h4>
-                                <div class="text-xs"><i class="bi bi-clock me-1"></i>14:30 PM - 15:00 PM</div>
+                            <div className="flex flex-col gap-1.5">
+                                <h4 className="text-sm font-semibold">Class in BSIT-2E</h4>
+                                <div className="text-xs"><i className="bi bi-clock me-1"></i>14:30 PM - 15:00 PM</div>
                             </div>
                         </div>
-                        <div class="today relative flex flex-start gap-3">
+                        <div className="today relative flex flex-start gap-3">
                             <div>
-                                <div class="py-2 w-12 bg-secondary border border-black text-black rounded flex flex-col items-center gap-0.5 text-today">
-                                    <span class="text-sm">May</span>
-                                    <span class="text-xl font-bold leading-none">11</span>
+                                <div className="py-2 w-12 bg-secondary border border-black text-black rounded flex flex-col items-center gap-0.5 text-today">
+                                    <span className="text-sm">May</span>
+                                    <span className="text-xl font-bold leading-none">11</span>
                                 </div>
                             </div>
-                            <div class="flex flex-col gap-1.5">
-                                <h4 class="text-sm font-semibold">Class in BSIT-2A</h4>
-                                <div class="text-xs"><i class="bi bi-clock me-1"></i>10:30 AM - 11:00 AM</div>
+                            <div className="flex flex-col gap-1.5">
+                                <h4 className="text-sm font-semibold">Class in BSIT-2A</h4>
+                                <div className="text-xs"><i className="bi bi-clock me-1"></i>10:30 AM - 11:00 AM</div>
                             </div>
                         </div>
-                        <div class="today relative flex flex-start gap-3">
+                        <div className="today relative flex flex-start gap-3">
                             <div>
-                                <div class="py-2 w-12 bg-secondary border border-black text-black rounded flex flex-col items-center gap-0.5 text-today">
-                                    <span class="text-sm">May</span>
-                                    <span class="text-xl font-bold leading-none">11</span>
+                                <div className="py-2 w-12 bg-secondary border border-black text-black rounded flex flex-col items-center gap-0.5 text-today">
+                                    <span className="text-sm">May</span>
+                                    <span className="text-xl font-bold leading-none">11</span>
                                 </div>
                             </div>
-                            <div class="flex flex-col gap-1.5">
-                                <h4 class="text-sm font-semibold">Class in BSIT-2C</h4>
-                                <div class="text-xs"><i class="bi bi-clock me-1"></i>8:30 AM - 9:30 AM</div>
+                            <div className="flex flex-col gap-1.5">
+                                <h4 className="text-sm font-semibold">Class in BSIT-2C</h4>
+                                <div className="text-xs"><i className="bi bi-clock me-1"></i>8:30 AM - 9:30 AM</div>
                             </div>
                         </div>
                     </div>

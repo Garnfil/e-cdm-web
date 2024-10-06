@@ -17,21 +17,21 @@ export default function InstructorWhiteBoardPage() {
             <div className='flex justify-between items-center mb-5'>
                 <div>
                     <h2 className='text-2xl font-bold'>Whiteboard</h2>
-                    <nav class="breadcrumb" aria-label="Breadcrumb">
-                        <ol class="list-none text-sm p-0 inline-flex">
-                            <li class="flex pdskdmsdnjw">
-                                <a href="#" class="hover:underline">Dashboard</a>
+                    <nav className="breadcrumb" aria-label="Breadcrumb">
+                        <ol className="list-none text-sm p-0 inline-flex">
+                            <li className="flex pdskdmsdnjw">
+                                <a href="#" className="hover:underline">Dashboard</a>
                             </li>
-                            <li class="flex pdskdmsdnjw">
-                                <span class="mx-2">›</span>
-                                <a href="#" class="font-bold">Whiteboard</a>
+                            <li className="flex pdskdmsdnjw">
+                                <span className="mx-2">›</span>
+                                <a href="#" className="font-bold">Whiteboard</a>
                             </li>
                         </ol>
                     </nav>
                 </div>
                 <Dialog>
                     <DialogTrigger className='btn btn-primary hover-shadow'>
-                        <i class="bi bi-plus-lg mr-1"></i> Create New Whiteboard
+                        <i className="bi bi-plus-lg mr-1"></i> Create New Whiteboard
                     </DialogTrigger>
                     <DialogContent className="bg-white">
                         <DialogHeader>

@@ -39,8 +39,8 @@ export default function ClassStudentsPage() {
                                             <td className='p-4 whitespace-nowrap'>16</td>
                                             <td className='p-4 whitespace-nowrap'>3-H</td>
                                             <td className='p-4 whitespace-nowrap'>
-                                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i class="bi bi-eye"></i></button>
-                                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i class="bi bi-trash"></i></button>
+                                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
+                                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
                                             </td>
                                         </tr>
                                         <tr className="cursor-pointer">
@@ -48,8 +48,8 @@ export default function ClassStudentsPage() {
                                             <td className='p-4 whitespace-nowrap'>17</td>
                                             <td className='p-4 whitespace-nowrap'>3-H</td>
                                             <td className='p-4 whitespace-nowrap'>
-                                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i class="bi bi-eye"></i></button>
-                                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i class="bi bi-trash"></i></button>
+                                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
+                                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
                                             </td>
                                         </tr>
                                         <tr className="cursor-pointer">
@@ -57,8 +57,8 @@ export default function ClassStudentsPage() {
                                             <td className='p-4 whitespace-nowrap'>16</td>
                                             <td className='p-4 whitespace-nowrap'>3-H</td>
                                             <td className='p-4 whitespace-nowrap'>
-                                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i class="bi bi-eye"></i></button>
-                                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i class="bi bi-trash"></i></button>
+                                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
+                                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
                                             </td>
                                         </tr>
                                         <tr className="cursor-pointer">
@@ -66,8 +66,8 @@ export default function ClassStudentsPage() {
                                             <td className='p-4 whitespace-nowrap'>15</td>
                                             <td className='p-4 whitespace-nowrap'>3-H</td>
                                             <td className='p-4 whitespace-nowrap'>
-                                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i class="bi bi-eye"></i></button>
-                                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i class="bi bi-trash"></i></button>
+                                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
+                                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
                                             </td>
                                         </tr>
                                     </tbody>

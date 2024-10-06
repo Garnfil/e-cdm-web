@@ -16,15 +16,15 @@ export default function LoginPage() {
                             <form className='my-8'>
                                 <div className='form-group'>
                                     <label className='mb-2 block'>Student ID</label>
-                                    <input id="input-id" type="text" name="" placeholder="Your Student ID" class="form-control" />
+                                    <input id="input-id" type="text" name="" placeholder="Your Student ID" className="form-control" />
                                 </div>
                                 <div className='form-group'>
                                     <label className='mb-2 block'>Email</label>
-                                    <input id="input-id" type="text" name="" placeholder="Your name" class="form-control" />
+                                    <input id="input-id" type="text" name="" placeholder="Your name" className="form-control" />
                                 </div>
                                 <div className='form-group'>
                                     <label className='mb-2 block'>Password</label>
-                                    <input id="input-id" type="password" name="" placeholder="Your password" class="form-control" />
+                                    <input id="input-id" type="password" name="" placeholder="Your password" className="form-control" />
                                 </div>
                                 <button className='btn btn-primary w-full'>
                                     Sign In

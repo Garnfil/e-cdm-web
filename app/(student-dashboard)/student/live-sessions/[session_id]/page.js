@@ -7,23 +7,23 @@ export default function page() {
             <div className='flex justify-between items-center mb-5'>
                 <div>
                     <h2 className='text-2xl font-semibold'>Session</h2>
-                    <nav class="breadcrumb" aria-label="Breadcrumb">
-                        <ol class="list-none text-sm p-0 inline-flex">
-                            <li class="flex pdskdmsdnjw">
-                                <a href="#" class="hover:underline">Dashboard</a>
+                    <nav className="breadcrumb" aria-label="Breadcrumb">
+                        <ol className="list-none text-sm p-0 inline-flex">
+                            <li className="flex pdskdmsdnjw">
+                                <a href="#" className="hover:underline">Dashboard</a>
                             </li>
-                            <li class="flex pdskdmsdnjw">
-                                <span class="mx-2">›</span>
-                                <a href="#" class="hover:underline">Live Sessions</a>
+                            <li className="flex pdskdmsdnjw">
+                                <span className="mx-2">›</span>
+                                <a href="#" className="hover:underline">Live Sessions</a>
                             </li>
-                            <li class="flex pdskdmsdnjw">
-                                <span class="mx-2">›</span>
-                                <a href="#" class="hover:underline font-bold">Session</a>
+                            <li className="flex pdskdmsdnjw">
+                                <span className="mx-2">›</span>
+                                <a href="#" className="hover:underline font-bold">Session</a>
                             </li>
                         </ol>
                     </nav>
                 </div>
-                <Link href={'/student/live-sessions'} className='btn btn-primary hover-shadow'><i class="bi bi-arrow-left"></i> Back to List</Link>
+                <Link href={'/student/live-sessions'} className='btn btn-primary hover-shadow'><i className="bi bi-arrow-left"></i> Back to List</Link>
             </div>
 
             <div className='my-3'>
@@ -31,7 +31,7 @@ export default function page() {
                     <div className='col-span-1'>
                         <div className='w-full bg-white border border-black rounded hover-shadow'>
                             <div className='px-4 py-3 border border-b-black bg-green-100'>
-                                <h2 className='text-xl font-bold text-primary'><i class="bi bi-camera-video-fill mr-2"></i> Session Details</h2>
+                                <h2 className='text-xl font-bold text-primary'><i className="bi bi-camera-video-fill mr-2"></i> Session Details</h2>
                             </div>
                             <div className='p-4'>
                                 <h2 className='text-lg font-bold'>Meet with BSIT 3H - IT ELECT</h2>
@@ -68,7 +68,7 @@ export default function page() {
                         <div className='my-3'>
                             <div className='w-full border border-black bg-white hover-shadow'>
                                 <div className='px-4 py-3 border border-b-black bg-green-100'>
-                                    <h2 className='text-xl font-bold text-primary'><i class="bi bi-card-text mr-2"></i> Notes</h2>
+                                    <h2 className='text-xl font-bold text-primary'><i className="bi bi-card-text mr-2"></i> Notes</h2>
                                 </div>
                                 <div className='notes-list p-4 max-h-[300px] h-[300px] overflow-auto'>
                                     {/* Note One */}

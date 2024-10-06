@@ -15,17 +15,17 @@ export default function StudentSidebar() {
                 <ul className='flex flex-col gap-2 w-full px-4 instructor-sidebar-list'>
                     <li>
                         <Link href={'/parent/dashboard'}>
-                            <span class="flex-grow"><i class="bi bi-house-door-fill mr-2"></i> Dashboard</span>
+                            <span className="flex-grow"><i className="bi bi-house-door-fill mr-2"></i> Dashboard</span>
                         </Link>
                     </li>
                     <li>
                         <Link href={'/parent/announcements'}>
-                            <span class="flex-grow"><i class="bi bi-camera-video-fill mr-2"></i> Announcements</span>
+                            <span className="flex-grow"><i className="bi bi-camera-video-fill mr-2"></i> Announcements</span>
                         </Link>
                     </li>
                     <li>
                         <Link href={'/parent/children'}>
-                            <span class="flex-grow"><i class="bi bi-calendar-event-fill mr-2"></i> Children</span>
+                            <span className="flex-grow"><i className="bi bi-calendar-event-fill mr-2"></i> Children</span>
                         </Link>
                     </li>
                 </ul>

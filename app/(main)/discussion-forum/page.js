@@ -17,9 +17,9 @@ export default function page() {
             <div className='flex justify-between items-center my-3'>
                 <h2 className='text-2xl font-bold'>Discussions</h2>
                 <div className='flex gap-3'>
-                    <button className='btn btn-secondary hover-shadow'><i class="bi bi-filter"></i> Filter</button>
+                    <button className='btn btn-secondary hover-shadow'><i className="bi bi-filter"></i> Filter</button>
                     <Dialog>
-                        <DialogTrigger className='btn btn-primary hover-shadow'><i class="bi bi-plus-lg"></i> Add New Discussion</DialogTrigger>
+                        <DialogTrigger className='btn btn-primary hover-shadow'><i className="bi bi-plus-lg"></i> Add New Discussion</DialogTrigger>
                         <DialogContent className="bg-white">
                             <DialogHeader>
                                 <DialogTitle className="mb-5">New Discussion</DialogTitle>
@@ -48,7 +48,7 @@ export default function page() {
                 <div className='border border-black p-4 hover-shadow cursor-pointer'>
                     <div className='flex items-start justify-between'>
                         <div className='w-auto'>
-                            <Image class="rounded-full shadow object-cover w-10 h-10 bg-white border border-black" src={student} alt="Image Description"></Image>
+                            <Image className="rounded-full shadow object-cover w-10 h-10 bg-white border border-black" src={student} alt="Image Description"></Image>
                         </div>
                         <div className='px-3 flex-1'>
                             <div className='forum-content'>
@@ -63,8 +63,8 @@ export default function page() {
                                 </p>
                             </div>
                             <div className='flex gap-3 items-start mt-5'>
-                                <span><i class="bi bi-chat-fill"></i> 21</span>
-                                <span><i class="bi bi-hand-thumbs-up"></i> 150</span>
+                                <span><i className="bi bi-chat-fill"></i> 21</span>
+                                <span><i className="bi bi-hand-thumbs-up"></i> 150</span>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@ export default function page() {
                 <div className='border border-black p-4 hover-shadow cursor-pointer'>
                     <div className='flex items-start justify-between'>
                         <div className='w-auto'>
-                            <Image class="rounded-full shadow object-cover w-10 h-10 bg-white border border-black" src={student} alt="Image Description"></Image>
+                            <Image className="rounded-full shadow object-cover w-10 h-10 bg-white border border-black" src={student} alt="Image Description"></Image>
                         </div>
                         <div className='px-3 flex-1'>
                             <div className='forum-content'>
@@ -92,8 +92,8 @@ export default function page() {
                                 </div>
                             </div>
                             <div className='flex gap-3 items-start mt-5'>
-                                <span><i class="bi bi-chat-fill"></i> 21</span>
-                                <span><i class="bi bi-hand-thumbs-up"></i> 150</span>
+                                <span><i className="bi bi-chat-fill"></i> 21</span>
+                                <span><i className="bi bi-hand-thumbs-up"></i> 150</span>
                             </div>
                         </div>
                     </div>
