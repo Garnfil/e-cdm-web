@@ -10,14 +10,62 @@ export default function CreateQuizPage() {
     const params = useParams();
     const router = useRouter();
 
-    const { class_id } = params;
+    const { quiz_id, class_id } = params;
     const [instructorId, setInstructorId] = useState(0);
     const [authSession, setAuthSession] = useState({});
+    const [quizDetails, setQuizDetails] = useState({
+        class_id: "",
+        instructor_id: "",
+        title: "",
+        description: "",
+        type: "quiz",
+        status: "posted",
+        quiz_id: "",
+        points: "",
+        assessment_type: "",
+        notes: "",
+        quiz_type: "",
+        due_datetime: "",
+        has_quiz_form: false,
+        attachments: [],
+    });
 
     useEffect(() => {
         const session = JSON.parse(jsCookie.get('session'));
         setAuthSession(session);
         setInstructorId(session.user.id);
+
+        const fetchQuizDetails = async () => {
+            const response = await axios.get(`http://127.0.0.1:8000/api/school-works/${quiz_id}`, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${session.token}`
+                }
+            });
+
+            setQuizDetails({
+                school_work_id: response.data.school_work.id,
+                class_id: response.data.school_work.class_id,
+                instructor_id: response.data.school_work.instructor_id,
+                title: response.data.school_work.title,
+                description: response.data.school_work.description,
+                type: response.data.school_work.type,
+                status: response.data.school_work.status,
+                quiz_id: response.data.school_work.quiz.id,
+                points: response.data.school_work.quiz.points,
+                assessment_type: response.data.school_work.quiz.assessment_type,
+                notes: response.data.school_work.quiz.notes,
+                quiz_type: response.data.school_work.quiz.quiz_type,
+                due_datetime: response.data.school_work.due_datetime,
+                has_quiz_form: response.data.school_work.quiz.has_quiz_form,
+                attachments: response.data.school_work.attachments,
+            });
+
+            // fetchSubmittedAssignments(session, response.data.school_work.assignment.id);
+        }
+
+        fetchQuizDetails();
+
     }, [])
 
     const handleSubmit = async (e) => {
@@ -31,18 +79,25 @@ export default function CreateQuizPage() {
             }
         })
 
-        console.log(response);
-
-        if (response.status == 200) {
-            router.push(`/instructor/classes/${class_id}/quizzes/${response.data.quiz.school_work_id}/view`);
-        }
+        // if (response.status == 200) {
+        //     router.push(`/instructor/classes/${class_id}/quizzes/${response.data.quiz.school_work_id}/view`);
+        // }
     }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        // Dynamically update the state property using the name of the input
+        setAssignmentDetails(prevDetails => ({
+            ...prevDetails,
+            [name]: value
+        }));
+    };
 
     return (
         <div className='container-fluid'>
             <div className='flex justify-between items-center mb-5'>
                 <div>
-                    <h2 className='text-2xl font-semibold'>Create Quiz</h2>
+                    <h2 className='text-2xl font-semibold'>Quiz</h2>
                     <nav className="breadcrumb" aria-label="Breadcrumb">
                         <ol className="list-none text-sm p-0 inline-flex">
                             <li className="flex pdskdmsdnjw">
@@ -54,7 +109,7 @@ export default function CreateQuizPage() {
                             </li>
                             <li className="flex pdskdmsdnjw">
                                 <span className="mx-2">›</span>
-                                <a href="#" className="font-bold">Create Quiz</a>
+                                <a href="#" className="font-bold">View Quiz</a>
                             </li>
                         </ol>
                     </nav>
@@ -69,41 +124,47 @@ export default function CreateQuizPage() {
                         <div className='border border-black py-2 px-3 mb-5'>
                             <div className='form-group'>
                                 <label className='mb-2 block font-bold'>Title</label>
-                                <input className='form-control' name='title' />
+                                <input className='form-control' name='title' value={quizDetails.title} onChange={handleChange} />
                             </div>
                             <div className='form-group'>
                                 <label className='mb-2 block font-bold'>Instructions (optional)</label>
-                                <textarea className='form-control' rows={10} cols={10} style={{ height: '200px' }} name='description'></textarea>
+                                <textarea className='form-control'
+                                    rows={10}
+                                    cols={10}
+                                    style={{ height: '200px' }}
+                                    name='description'
+                                    value={quizDetails.description}
+                                    onChange={handleChange}></textarea>
                             </div>
                         </div>
-                        {/* <div className='border border-black py-2 px-3'>
-                        <h3 className='font-bold'>Attach</h3>
-                        <div className='flex justify-center items-center gap-5'>
-                            <div className='flex flex-col justify-center items-center gap-1'>
-                                <button className="hidden sm:flex items-center justify-center w-14 h-14 rounded-full bg-white border border-black hover-shadow">
-                                    <i className="bi bi-file-earmark-arrow-up-fill text-2xl"></i>
-                                </button>
-                                <h6>Upload</h6>
-                            </div>
-                            <div className='flex flex-col justify-center items-center gap-1'>
-                                <button className="hidden sm:flex items-center justify-center w-14 h-14 rounded-full bg-white border border-black hover-shadow">
-                                    <i className="bi bi-link text-2xl"></i>
-                                </button>
-                                <h6>Link</h6>
+                        <div className='border border-black py-2 px-3'>
+                            <h3 className='font-bold'>Attach</h3>
+                            <div className='flex justify-center items-center gap-5'>
+                                <div className='flex flex-col justify-center items-center gap-1'>
+                                    <button className="hidden sm:flex items-center justify-center w-14 h-14 rounded-full bg-white border border-black hover-shadow">
+                                        <i className="bi bi-file-earmark-arrow-up-fill text-2xl"></i>
+                                    </button>
+                                    <h6>Upload</h6>
+                                </div>
+                                <div className='flex flex-col justify-center items-center gap-1'>
+                                    <button className="hidden sm:flex items-center justify-center w-14 h-14 rounded-full bg-white border border-black hover-shadow">
+                                        <i className="bi bi-link text-2xl"></i>
+                                    </button>
+                                    <h6>Link</h6>
+                                </div>
                             </div>
                         </div>
-                    </div> */}
                     </div>
                     <div className='xl:col-span-1'>
                         <div className='border border-black py-2 px-3'>
                             <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
                                 <div className='form-group col-span-2'>
                                     <label className='mb-2 block font-bold'>Points</label>
-                                    <input className='form-control' name='points' />
+                                    <input className='form-control' name='points' onChange={handleChange} value={quizDetails.points} />
                                 </div>
                                 <div className='form-group col-span-2'>
                                     <label className='mb-2 block font-bold'>Assessment Type</label>
-                                    <select className="form-control" name="assessment_type">
+                                    <select className="form-control" name="assessment_type" onChange={handleChange} value={quizDetails.assessment_type}>
                                         <option value="">-- SELECT ASSESSMENT TYPE --</option>
                                         <option value="prelim">Prelim</option>
                                         <option value="midterm">Midterm</option>
@@ -112,7 +173,7 @@ export default function CreateQuizPage() {
                                 </div>
                                 <div className='form-group col-span-2'>
                                     <label className='mb-2 block'>Quiz Type</label>
-                                    <select className="form-control" name="quiz_type">
+                                    <select className="form-control" name="quiz_type" onChange={handleChange} value={quizDetails.quiz_type}>
                                         <option value="">-- SELECT QUIZ TYPE --</option>
                                         <option value="long">Long</option>
                                         <option value="short">Short</option>
@@ -120,10 +181,10 @@ export default function CreateQuizPage() {
                                 </div>
                                 <div className='form-group col-span-2'>
                                     <label className='mb-2 block font-bold'>Due</label>
-                                    <input className='form-control' type='datetime-local' name='due_datetime' />
+                                    <input className='form-control' type='datetime-local' name='due_datetime' value={quizDetails.due_datetime} onChange={handleChange} />
                                 </div>
                                 <div className='form-group'>
-                                    <input type='checkbox' name='has_quiz_form' value={1} className='mr-2' />
+                                    <input type='checkbox' name='has_quiz_form' value={1} checked={quizDetails.has_quiz_form} className='mr-2' />
                                     <label>Generate Quiz Form?</label>
                                 </div>
                                 {/* <div className='form-group col-span-2'>

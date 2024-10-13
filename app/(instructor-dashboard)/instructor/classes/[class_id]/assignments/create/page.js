@@ -3,35 +3,65 @@
 import axios from 'axios';
 import jsCookie from 'js-cookie';
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import React, { useState, useEffect } from 'react'
 
 export default function CreateAssignmentPage() {
     const params = useParams();
+    const router = useRouter();
+
     const { class_id } = params;
     const [instructorId, setInstructorId] = useState(0);
-    const [session, setSession] = useState({});
+    const [authSession, setSession] = useState({});
+    const [assignmentDetails, setAssignmentDetails] = useState({
+        class_id: "",
+        instructor_id: "",
+        title: "",
+        description: "",
+        type: "assignment",
+        status: "posted",
+        points: "",
+        assessment_type: "",
+        notes: "",
+        due_datetime: "",
+    });
 
     useEffect(() => {
         const session = JSON.parse(jsCookie.get('session'));
         setInstructorId(session.user.id);
+        setAssignmentDetails(prevDetails => ({
+            ...prevDetails,
+            instructor_id: session.user.id,
+            class_id: class_id
+        }))
         setSession(session);
     }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let formData = new FormData(e.target);
 
-        const response = await axios.post(`http://127.0.0.1:8000/api/assignments`, formData, {
+        const response = await axios.post(`http://127.0.0.1:8000/api/assignments`, assignmentDetails, {
             headers: {
-                'Content-Type': "multipart/form-data",
                 'Accept': 'application/json',
-                'Authorization': `Bearer ${session.token}`
+                'Authorization': `Bearer ${authSession.token}`,
+                'Content-Type': 'application/json',
             }
         })
 
         console.log(response);
+        if (response.status == 200) {
+            router.push(`/instructor/classes/${class_id}/assignments/${response.data.assignment.school_work_id}/view`);
+        }
 
+    }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        // Dynamically update the state property using the name of the input
+        setAssignmentDetails(prevDetails => ({
+            ...prevDetails,
+            [name]: value
+        }));
     }
 
     return (
@@ -55,7 +85,7 @@ export default function CreateAssignmentPage() {
                         </ol>
                     </nav>
                 </div>
-                <Link href={'/instructor/classes/1'} className='btn btn-primary hover-shadow'><i className="bi bi-arrow-left mr-1"></i> Back to Class</Link>
+                <Link href={`/instructor/classes/${class_id}`} className='btn btn-primary hover-shadow'><i className="bi bi-arrow-left mr-1"></i> Back to Class</Link>
             </div>
             <form onSubmit={handleSubmit} method="POST" >
                 <input type="hidden" name="class_id" value={class_id} />
@@ -65,11 +95,17 @@ export default function CreateAssignmentPage() {
                         <div className='border border-black py-2 px-3 mb-5'>
                             <div className='form-group'>
                                 <label className='mb-2 block'>Title</label>
-                                <input className='form-control' name="title" />
+                                <input className='form-control'
+                                    value={assignmentDetails.title}
+                                    name="title"
+                                    onChange={handleChange}
+                                />
                             </div>
                             <div className='form-group'>
                                 <label className='mb-2 block'>Instructions (optional)</label>
-                                <textarea className='form-control' rows={10} cols={10} style={{ height: '200px' }} name="description"></textarea>
+                                <textarea className='form-control' rows={10} cols={10} name="description"
+                                    onChange={handleChange}
+                                    style={{ height: '200px' }} value={assignmentDetails.description}></textarea>
                             </div>
                             <div className='form-group'>
                                 <label className='mb-2 block'>Notes (optional)</label>
@@ -99,11 +135,15 @@ export default function CreateAssignmentPage() {
                             <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
                                 <div className='form-group col-span-2'>
                                     <label className='mb-2 block'>Points</label>
-                                    <input className='form-control' name="points" />
+                                    <input className='form-control'
+                                        value={assignmentDetails?.points}
+                                        name="points"
+                                        onChange={handleChange} />
                                 </div>
                                 <div className='form-group col-span-2'>
                                     <label className='mb-2 block'>Assessment Type</label>
-                                    <select className="form-control" name="assessment_type">
+                                    <select className="form-control" name="assessment_type" value={assignmentDetails.assessment_type} onChange={handleChange}>
+                                        <option value="">-- SELECT ASSESSMENT TYPE --</option>
                                         <option value="prelim">Prelim</option>
                                         <option value="midterm">Midterm</option>
                                         <option value="finals">Finals</option>
@@ -111,7 +151,11 @@ export default function CreateAssignmentPage() {
                                 </div>
                                 <div className='form-group col-span-2'>
                                     <label className='mb-2 block'>Due</label>
-                                    <input className='form-control' type='datetime-local' name="due_datetime" />
+                                    <input className='form-control'
+                                        name="due_datetime"
+                                        value={assignmentDetails.due_datetime}
+                                        type='datetime-local'
+                                        onChange={handleChange} />
                                 </div>
                                 {/* <div className='form-group col-span-2'>
                                 <label className='mb-2 block'>Assigned To</label>

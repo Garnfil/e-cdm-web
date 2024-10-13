@@ -1,7 +1,64 @@
+"use client"
+
+import React, { useEffect, useState } from 'react'
+import jsCookie from 'js-cookie';
 import Link from 'next/link'
-import React from 'react'
+import { useParams, useRouter } from 'next/navigation'
+import axios from 'axios';
 
 export default function CreateActivityPage() {
+    const params = useParams();
+    const router = useRouter();
+
+    const { class_id } = params;
+    const [authSession, setSession] = useState({});
+    const [activityDetails, setActivityDetails] = useState({
+        class_id: "",
+        instructor_id: "",
+        title: "",
+        description: "",
+        type: "assignment",
+        status: "posted",
+        points: "",
+        assessment_type: "",
+        notes: "",
+        due_datetime: "",
+    });
+
+
+    useEffect(() => {
+        const session = JSON.parse(jsCookie.get('session'));
+        setActivityDetails(prevDetails => ({
+            ...prevDetails,
+            instructor_id: session.user.id,
+            class_id: class_id
+        }))
+        setSession(session);
+    }, [])
+
+    const handleSubmit = async () => {
+        const response = await axios.post(`http://127.0.0.1:8000/api/activities`, activityDetails, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${authSession.token}`,
+                'Content-Type': 'application/json',
+            }
+        })
+
+        if (response.status == 200) {
+            router.push(`/instructor/classes/${class_id}/activities/${response.data.activity.school_work_id}/view`);
+        }
+    }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        // Dynamically update the state property using the name of the input
+        setActivityDetails(prevDetails => ({
+            ...prevDetails,
+            [name]: value
+        }));
+    }
+
     return (
         <div className='container-fluid'>
             <div className='flex justify-between items-center mb-5'>
@@ -23,35 +80,25 @@ export default function CreateActivityPage() {
                         </ol>
                     </nav>
                 </div>
-                <Link href={'/instructor/classes/1'} className='btn btn-primary hover-shadow'><i className="bi bi-arrow-left mr-1"></i> Back to Class</Link>
+                <Link href={`/instructor/classes/${class_id}`} className='btn btn-primary hover-shadow'><i className="bi bi-arrow-left mr-1"></i> Back to Class</Link>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6'>
                 <div className='xl:col-span-2'>
                     <div className='border border-black py-2 px-3 mb-5'>
                         <div className='form-group'>
                             <label className='mb-2 block'>Title</label>
-                            <input className='form-control' />
+                            <input className='form-control' name='title' value={activityDetails.title} onChange={handleChange} />
                         </div>
                         <div className='form-group'>
                             <label className='mb-2 block'>Instructions (optional)</label>
-                            <textarea className='form-control' rows={10} cols={10} style={{ height: '200px' }}></textarea>
-                        </div>
-                    </div>
-                    <div className='border border-black py-2 px-3'>
-                        <h3 className='font-bold'>Attach</h3>
-                        <div className='flex justify-center items-center gap-5'>
-                            <div className='flex flex-col justify-center items-center gap-1'>
-                                <button className="hidden sm:flex items-center justify-center w-14 h-14 rounded-full bg-white border border-black hover-shadow">
-                                    <i className="bi bi-file-earmark-arrow-up-fill text-2xl"></i>
-                                </button>
-                                <h6>Upload</h6>
-                            </div>
-                            <div className='flex flex-col justify-center items-center gap-1'>
-                                <button className="hidden sm:flex items-center justify-center w-14 h-14 rounded-full bg-white border border-black hover-shadow">
-                                    <i className="bi bi-link text-2xl"></i>
-                                </button>
-                                <h6>Link</h6>
-                            </div>
+                            <textarea className='form-control'
+                                rows={10}
+                                cols={10}
+                                name='description'
+                                style={{ height: '200px' }}
+                                value={activityDetails.description}
+                                onChange={handleChange}
+                            ></textarea>
                         </div>
                     </div>
                 </div>
@@ -60,11 +107,20 @@ export default function CreateActivityPage() {
                         <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
                             <div className='form-group col-span-2'>
                                 <label className='mb-2 block'>Points</label>
-                                <input className='form-control' value={10} />
+                                <input className='form-control' name='points' value={activityDetails.points} onChange={handleChange} />
+                            </div>
+                            <div className='form-group col-span-2'>
+                                <label className='mb-2 block'>Assessment Type</label>
+                                <select className="form-control" name="assessment_type" value={activityDetails.assessment_type} onChange={handleChange}>
+                                    <option value="">-- SELECT ASSESSMENT TYPE --</option>
+                                    <option value="prelim">Prelim</option>
+                                    <option value="midterm">Midterm</option>
+                                    <option value="finals">Finals</option>
+                                </select>
                             </div>
                             <div className='form-group col-span-2'>
                                 <label className='mb-2 block'>Due</label>
-                                <input className='form-control' type='date' />
+                                <input className='form-control' name='due_datetime' type='datetime-local' value={activityDetails.due_datetime} onChange={handleChange} />
                             </div>
                             {/* <div className='form-group col-span-2'>
                                 <label className='mb-2 block'>Assigned To</label>
@@ -73,7 +129,7 @@ export default function CreateActivityPage() {
                                 </div>
                             </div> */}
                         </div>
-                        <button className='w-full btn btn-primary'>Submit</button>
+                        <button className='w-full btn btn-primary' type='button' onClick={handleSubmit}>Submit</button>
                     </div>
                 </div>
             </div>
