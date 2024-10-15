@@ -1,5 +1,7 @@
 import localFont from "next/font/local";
 import "../globals.css";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata = {
     title: "E-CDM",
@@ -17,6 +19,7 @@ export default function RootLayout({ children }) {
             <body
                 className={`font-manrope antialiased`}
             >
+                <ToastContainer />
                 {children}
             </body>
         </html>

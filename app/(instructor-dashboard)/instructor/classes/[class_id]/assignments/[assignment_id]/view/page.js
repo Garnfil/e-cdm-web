@@ -181,7 +181,6 @@ export default function ViewAssignmentPage() {
 
     return (
         <div className='container-fluid'>
-            <ToastContainer />
             <div className='flex justify-between items-center mb-5'>
                 <div>
                     <h2 className='text-2xl font-bold'>Assignment</h2>
@@ -376,7 +375,7 @@ export default function ViewAssignmentPage() {
                                                         <h6 className="uppercase">Grade: {selectedSubmittedWork.grade}%</h6>
                                                     </div>
                                                     <div>
-                                                        <h5 className="text-2xl">{selectedSubmittedWork.score}/{activityDetails.points}</h5>
+                                                        <h5 className="text-2xl">{selectedSubmittedWork.score}/{assignmentDetails.points}</h5>
                                                     </div>
                                                 </div>
                                                 <div>
@@ -385,14 +384,14 @@ export default function ViewAssignmentPage() {
                                                         {
                                                             selectedSubmittedWork?.attachments?.length > 0 ? (
                                                                 selectedSubmittedWork?.attachments?.map(attachment => (
-                                                                    <Link href={`/instructor/classes/${class_id}/school-works/${activity_id}/student-submissions/${attachment.student_submission_id}`} key={attachment.id}>
+                                                                    <Link href={`/instructor/classes/${class_id}/school-works/${assignment_id}/student-submissions/${attachment.student_submission_id}`} key={attachment.id}>
                                                                         <div className='border border-black hover-shadow p-3 cursor-pointer'>
                                                                             <div className='flex justify-between items-start gap-3'>
                                                                                 <div className='w-[15%] h-[70px] bg-secondary border border-black flex justify-center items-center p-2'>
                                                                                     <i className="bi bi-files-alt text-3xl"></i>
                                                                                 </div>
-                                                                                <div className='w-[85%]'>
-                                                                                    <h3 className='text-lg'>{attachment?.attachment_name}</h3>
+                                                                                <div className='w-[85%] text-wrap'>
+                                                                                    <h3 className='text-lg text-wrap'>{attachment?.attachment_name.length >= 20 ? attachment?.attachment_name.slice(0, 20) + '...' : attachment?.attachment_name}</h3>
                                                                                     <h6 className='text-muted text-sm'>{attachment?.attachment_type}</h6>
                                                                                 </div>
                                                                             </div>

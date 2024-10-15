@@ -30,7 +30,7 @@ export default function ClassHeader(props) {
                         <i className="bi bi-calendar-fill max-md:text-2xl"></i>
                         <span className="hidden md:block">Calendar</span>
                     </Link>
-                    <Link href={`/instructor/classes/${classId}/attendance`} className="flex items-center py-2 px-3 gap-1.5 font-medium hover:text-secondary text-white">
+                    <Link href={`/instructor/classes/${classId}/attendances`} className="flex items-center py-2 px-3 gap-1.5 font-medium hover:text-secondary text-white">
                         <i className="bi bi-person-arms-up max-md:text-2xl"></i>
                         <span className="hidden md:block">Attendance</span>
                     </Link>

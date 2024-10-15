@@ -67,7 +67,6 @@ export default function CreateExamPage() {
 
     return (
         <div className='container-fluid'>
-            <ToastContainer />
             <div className='flex justify-between items-center mb-5'>
                 <div>
                     <h2 className='text-2xl font-bold'>Create Exam</h2>

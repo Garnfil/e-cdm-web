@@ -184,7 +184,6 @@ export default function ViewActivityPage() {
 
     return (
         <div className='container-fluid'>
-            <ToastContainer />
             <div className='flex justify-between items-center mb-5'>
                 <div>
                     <h2 className='text-2xl font-bold'>Activity</h2>

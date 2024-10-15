@@ -3,6 +3,8 @@ import "../../globals.css";
 import cdmLogo from '../../../public/cdm-logo.webp';
 import Image from 'next/image';
 import InstructorSidebar from '@/app/components/InstructorSidebar';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from 'react-toastify';
 
 export const metadata = {
     title: "E-CDM - Instructor Dashboard",
@@ -22,6 +24,7 @@ export default function RootLayout({ children }) {
                 className={`font-manrope antialiased bg-neutral-100`}
             >
                 <div className='bg-neutral-100'>
+                    <ToastContainer />
                     <header className='fixed z-10 top-0 inset-x-0 lg:ms-64 py-3 px-4 lg:px-6 bg-neutral-100 flex justify-between items-center border-b border-black'>
                         <div className='flex items-center gap-3'>
                             <div className="flex flex-wrap items-stretch w-full relative">

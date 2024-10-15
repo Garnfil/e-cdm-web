@@ -1,5 +1,6 @@
+"use client"
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Dialog,
     DialogContent,
@@ -8,8 +9,62 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import { useParams, useRouter } from 'next/navigation'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import jsCookie from 'js-cookie';
 
 export default function ClassAttendancePage() {
+    const params = useParams();
+    const router = useRouter();
+
+    const { class_id } = params;
+    const [authSession, setAuthSession] = useState({});
+    const [openDialog, setOpenDialog] = useState(false);
+    const [attendances, setAttendances] = useState([]);
+
+    const fetchAttendances = async (session) => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/attendances/classes/${class_id}`, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${session.token}`,
+                }
+            });
+
+            setAttendances(response.data.attendances);
+        } catch (error) {
+            toast.error(error.message ?? "Server Error");
+        }
+    }
+
+
+    useEffect(() => {
+        let session = JSON.parse(jsCookie.get("session"));
+        setAuthSession(session);
+        fetchAttendances(session);
+    }, [])
+
+    const handleNewAttendanceSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            let formData = new FormData(e.target);
+            const response = await axios.post(`http://127.0.0.1:8000/api/attendances`, formData, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${authSession.token}`,
+                }
+            });
+
+            if (response.status == 200) {
+                toast.success('Attendance Added Successfully');
+            }
+
+        } catch (error) {
+            toast.error(error.message ?? "Server Error");
+        }
+    }
+
     return (
         <div className='container-fluid'>
             <div className='flex justify-between items-center mb-5'>
@@ -32,22 +87,19 @@ export default function ClassAttendancePage() {
                     </nav>
                 </div>
                 <div className='flex gap-2'>
-                    <Link href={'/instructor/classes/1'} className='btn hover-shadow'><i className="bi bi-arrow-left mr-1"></i> Back to Class</Link>
-                    <Dialog>
+                    <Link href={`/instructor/classes/${class_id}`} className='btn hover-shadow'><i className="bi bi-arrow-left mr-1"></i> Back to Class</Link>
+                    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
                         <DialogTrigger className='btn btn-primary hover-shadow'>
                             Add New Attendance
                         </DialogTrigger>
                         <DialogContent className="bg-white">
                             <DialogHeader>
                                 <DialogTitle className="mb-3">Create New Attendance</DialogTitle>
-                                <form className='my-5'>
-                                    <div className='form-group'>
-                                        <label className='form-label'>Attendance Code</label>
-                                        <input className='form-control my-2' value={'dfdsf-32432'} readOnly />
-                                    </div>
+                                <form className='my-5' onSubmit={handleNewAttendanceSubmit}>
+                                    <input type='hidden' name='class_id' value={class_id} />
                                     <div className='form-group'>
                                         <label className='form-label'>Attendance Date</label>
-                                        <input type='date' className='form-control my-2' />
+                                        <input name='attendance_datetime' type='datetime-local' className='form-control my-2' />
                                     </div>
                                     <button className='w-full btn btn-primary'>Add New</button>
                                 </form>
@@ -80,42 +132,25 @@ export default function ClassAttendancePage() {
                         </tr>
                     </thead>
                     <tbody className='bg-white divide-y divide-black'>
-                        <tr className="cursor-pointer">
-                            <td className='p-4 whitespace-nowrap'>1</td>
-                            <td className='p-4 whitespace-nowrap'>fsdfeab-9234232</td>
-                            <td className='p-4 whitespace-nowrap'>20</td>
-                            <td className='p-4 whitespace-nowrap'>
-                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
-                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr className="cursor-pointer">
-                            <td className='p-4 whitespace-nowrap'>2</td>
-                            <td className='p-4 whitespace-nowrap'>fsdfeab-9234231</td>
-                            <td className='p-4 whitespace-nowrap'>20</td>
-                            <td className='p-4 whitespace-nowrap'>
-                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
-                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr className="cursor-pointer">
-                            <td className='p-4 whitespace-nowrap'>3</td>
-                            <td className='p-4 whitespace-nowrap'>bskdfgr-3423453</td>
-                            <td className='p-4 whitespace-nowrap'>20</td>
-                            <td className='p-4 whitespace-nowrap'>
-                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
-                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr className="cursor-pointer">
-                            <td className='p-4 whitespace-nowrap'>4</td>
-                            <td className='p-4 whitespace-nowrap'>kuzdfw-32432441</td>
-                            <td className='p-4 whitespace-nowrap'>30</td>
-                            <td className='p-4 whitespace-nowrap'>
-                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
-                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
-                            </td>
-                        </tr>
+                        {
+                            attendances.length > 0 ? (
+                                attendances.map(attendance => (
+                                    <tr className="cursor-pointer" key={attendance.id}>
+                                        <td className='p-4 whitespace-nowrap'>{attendance.id}</td>
+                                        <td className='p-4 whitespace-nowrap'>{attendance.attendance_code}</td>
+                                        <td className='p-4 whitespace-nowrap'>{0}</td>
+                                        <td className='p-4 whitespace-nowrap'>
+                                            <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
+                                            <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr className="cursor-pointer">
+                                    <td colSpan={5} className='p-4 text-center'>No Attendance Found</td>
+                                </tr>
+                            )
+                        }
                     </tbody>
                 </table>
             </div>

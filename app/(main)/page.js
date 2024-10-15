@@ -6,7 +6,6 @@ import Link from "next/link";
 export default function Home() {
     return (
         <main className="bg-main">
-
             <section className="hero-section py-5" style={{ height: "calc(100vh - 6rem)", }}>
                 <div className="max-width-container h-full">
                     <div className="flex justify-between items-center h-full border-2 border-black">

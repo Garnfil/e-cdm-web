@@ -1,13 +1,48 @@
+"use client"
+
 import ClassHeader from '@/app/components/ClassHeader'
-import React from 'react'
+import { useParams, useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+import jsCookie from 'js-cookie';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 
 export default function ClassStudentsPage() {
+    const params = useParams();
+    const router = useRouter();
+    const { class_id } = params;
+
+    const [students, setStudents] = useState([]);
+    const [authSession, setAuthSession] = useState([]);
+
+    const fetchStudents = async (session) => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/classes/${class_id}/students`, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${session.token}`,
+                }
+            });
+            console.log(response.data.students);
+            setStudents(response.data.students);
+        } catch (error) {
+            toast.error(error.message);
+        }
+    }
+
+    useEffect(() => {
+        let session = JSON.parse(jsCookie.get("session"));
+        setAuthSession(session);
+
+        fetchStudents(session);
+    }, [])
+
     return (
         <div className='container-fluid'>
             <div className='flex flex-col gap-4 lg:gap-6 mx-auto px-4 lg:px-6 mb-6'>
                 <div className='grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6'>
                     <div className='xl:col-span-3'>
-                        <ClassHeader />
+                        <ClassHeader classId={class_id} />
                     </div>
                     <div className='xl:col-span-3'>
                         <div className='border-black rounded-lg border text-base bg-white max-h-[70vh] overflow-auto class-stream-container'>
@@ -23,10 +58,10 @@ export default function ClassStudentsPage() {
                                                 Name
                                             </th>
                                             <th scope='col' className='min-w-20 p-4 text-start text-xs font-medium text-black uppercase tracking-wider'>
-                                                Age
+                                                Email
                                             </th>
                                             <th scope='col' className='min-w-20 p-4 text-start text-xs font-medium text-black uppercase tracking-wider'>
-                                                Class
+                                                Age
                                             </th>
                                             <th scope='col' className='min-w-20 p-4 text-start text-xs font-medium text-black uppercase tracking-wider'>
                                                 Actions
@@ -34,42 +69,25 @@ export default function ClassStudentsPage() {
                                         </tr>
                                     </thead>
                                     <tbody className='bg-white divide-y divide-black'>
-                                        <tr className="cursor-pointer">
-                                            <td className='p-4 whitespace-nowrap'>John Doe</td>
-                                            <td className='p-4 whitespace-nowrap'>16</td>
-                                            <td className='p-4 whitespace-nowrap'>3-H</td>
-                                            <td className='p-4 whitespace-nowrap'>
-                                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
-                                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr className="cursor-pointer">
-                                            <td className='p-4 whitespace-nowrap'>Jane Smith</td>
-                                            <td className='p-4 whitespace-nowrap'>17</td>
-                                            <td className='p-4 whitespace-nowrap'>3-H</td>
-                                            <td className='p-4 whitespace-nowrap'>
-                                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
-                                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr className="cursor-pointer">
-                                            <td className='p-4 whitespace-nowrap'>Michael Johnson</td>
-                                            <td className='p-4 whitespace-nowrap'>16</td>
-                                            <td className='p-4 whitespace-nowrap'>3-H</td>
-                                            <td className='p-4 whitespace-nowrap'>
-                                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
-                                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr className="cursor-pointer">
-                                            <td className='p-4 whitespace-nowrap'>Sarah Lee</td>
-                                            <td className='p-4 whitespace-nowrap'>15</td>
-                                            <td className='p-4 whitespace-nowrap'>3-H</td>
-                                            <td className='p-4 whitespace-nowrap'>
-                                                <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
-                                                <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
-                                            </td>
-                                        </tr>
+                                        {
+                                            students.length > 0 ? (
+                                                students.map(student => (
+                                                    <tr className="cursor-pointer" key={student.id}>
+                                                        <td className='p-4 whitespace-nowrap'>{student.firstname} {student.firstname}</td>
+                                                        <td className='p-4 whitespace-nowrap'>{student.email}</td>
+                                                        <td className='p-4 whitespace-nowrap'>{student.age}</td>
+                                                        <td className='p-4 whitespace-nowrap'>
+                                                            <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
+                                                            <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan={5} className='p-4 text-center'>No Student Found</td>
+                                                </tr>
+                                            )
+                                        }
                                     </tbody>
                                 </table>
                             </div>

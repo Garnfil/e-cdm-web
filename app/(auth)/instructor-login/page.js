@@ -2,21 +2,25 @@
 
 import axios from 'axios';
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import yellowIllustration from '../../../public/yellow-illustration.png';
 import greenIllustration from '../../../public/green-illustration.png';
 import Image from 'next/image';
 import { useRouter } from "next/navigation";
 import jsCookie from 'js-cookie';
+import { toast } from 'react-toastify';
 
 export default function LoginPage() {
     const router = useRouter();
+    const [isLoginSubmitted, setIsLoginSubmitted] = useState(false);
 
     const handleSubmitLogin = async (e) => {
         e.preventDefault();
-        let formData = new FormData(e.target);
 
         try {
+            setIsLoginSubmitted(true);
+            let formData = new FormData(e.target);
+
             // Send POST request using Axios
             const response = await axios.post('http://127.0.0.1:8000/api/instructor/login', formData, {
                 headers: {
@@ -27,11 +31,14 @@ export default function LoginPage() {
 
             if (response.status == 200) {
                 jsCookie.set("session", JSON.stringify(response.data));
+                setIsLoginSubmitted(false);
                 router.push('/instructor/dashboard');
             }
 
         } catch (error) {
             // Handle errors
+            setIsLoginSubmitted(false);
+            toast.error(error.message ?? "Server Error");
             console.error('Error submitting form:', error.response ? error.response.data : error.message);
         }
     }
@@ -53,7 +60,7 @@ export default function LoginPage() {
                                     <label className='mb-2 block'>Password</label>
                                     <input id="input-id" type="password" name="password" placeholder="Enter your password..." className="form-control" />
                                 </div>
-                                <button type='submit' className='btn btn-primary w-full'>
+                                <button type='submit' className='btn btn-primary w-full' disabled={isLoginSubmitted}>
                                     Sign In
                                 </button>
                                 <div className='mt-4'>
@@ -62,8 +69,8 @@ export default function LoginPage() {
                             </form>
                         </div>
                         <div className='w-[65%] bg-primary h-full rounded-lg relative'>
-                            <Image src={greenIllustration} className='absolute right-0' />
-                            <Image src={yellowIllustration} className='absolute bottom-0' />
+                            <Image src={greenIllustration} className='absolute right-0' alt='green-cdm-illustration' priority />
+                            <Image src={yellowIllustration} className='absolute bottom-0' alt='yellow-cdm-illustration' />
                         </div>
                     </div>
                 </div>

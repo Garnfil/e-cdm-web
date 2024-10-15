@@ -1,17 +1,32 @@
+"use client"
+
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import student from '../../../public/student.png';
-import Link from 'next/link';
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import axios from 'axios';
 
 export default function page() {
+
+    const [visibilityContent, setVisibilityContent] = useState('public');
+
+    const fetchUserInstitute = async () => {
+        const response = await axios.post(``);
+    }
+
+    const handleVisibilityRadioChange = async (e) => {
+        const visibility = e.target.value;
+        if (visibility == 'private') {
+
+        }
+    }
+
     return (
         <div className='max-width-container py-4'>
             <div className='flex justify-between items-center my-3'>
@@ -25,16 +40,43 @@ export default function page() {
                                 <DialogTitle className="mb-5">New Discussion</DialogTitle>
                                 <form >
                                     <div className='form-group'>
-                                        <label className='form-label'>Title</label>
+                                        <label className='form-label font-bold'>Visibility</label>
+                                        <div className='form-check'>
+                                            <input type='radio' name='visibility' value="public" id='public-radio' onChange={handleVisibilityRadioChange} />
+                                            <label htmlFor='public-radio' className='inline-block ml-2'>Public</label>
+                                        </div>
+                                        <div className='form-check'>
+                                            <input type='radio' name='visibility' value="private" id='private-radio' onChange={handleVisibilityRadioChange} />
+                                            <label htmlFor='private-radio' className='inline-block ml-2'>Private</label>
+                                        </div>
+                                    </div>
+                                    <div className={`grid grid-cols-2 gap-3 ${visibilityContent}`}>
+                                        <div className={`form-group`}>
+                                            <label className='form-label font-bold'>Institute</label>
+                                            <select className='form-control my-2'>
+                                                <option className=''>-- SELECT INSTITUTE --</option>
+                                            </select>
+                                        </div>
+                                        <div className={`form-group`}>
+                                            <label className='form-label font-bold'>Course</label>
+                                            <select className='form-control my-2'>
+                                                <option className=''>-- SELECT COURSE --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className='form-group'>
+                                        <label className='form-label font-bold'>Title</label>
                                         <input className='form-control my-2' />
                                     </div>
+                                    <div></div>
                                     <div className='form-group'>
-                                        <label className='form-label'>Content</label>
-                                        <textarea className='form-control my-2' style={{ height: "150px" }} rows={10} cols={10}></textarea>
+                                        <label className='form-label font-bold'>Content</label>
+                                        <textarea className='form-control my-2' style={{ height: "150px" }} rows={20} cols={20}></textarea>
                                     </div>
                                     <div className='form-group'>
-                                        <label className='form-label'>Images</label>
-                                        <input className='form-control' type='file' multiple />
+                                        <label className='form-label font-bold'>Images</label>
+                                        <input className='form-control my-2' type='file' multiple />
                                     </div>
                                     <button className='w-full btn btn-primary'>Post and Upload</button>
                                 </form>

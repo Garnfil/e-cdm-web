@@ -104,10 +104,6 @@ export default function StudentSubmissionPage() {
     return (
         isLoad && (
             <div className="container-fluid">
-                <ToastContainer
-                    position="top-right"
-                    autoClose={5000}
-                />
                 <div className='flex justify-between items-center mb-5'>
                     <div>
                         <h2 className='text-2xl font-bold'>Student Submission</h2>

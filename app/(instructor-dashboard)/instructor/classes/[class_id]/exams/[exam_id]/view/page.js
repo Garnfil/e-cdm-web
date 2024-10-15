@@ -185,7 +185,6 @@ export default function ViewExamPage() {
 
     return (
         <div className='container-fluid'>
-            <ToastContainer />
             <div className='flex justify-between items-center mb-5'>
                 <div>
                     <h2 className='text-2xl font-bold'>Exam</h2>
