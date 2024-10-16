@@ -3,6 +3,8 @@ import "../globals.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { cookies } from 'next/headers'
 import HomeNavbar from "../components/HomeNavbar";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata = {
     title: "E-CDM",
@@ -11,7 +13,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     const cookieStore = cookies();
-    const session = cookieStore.get('session').value;
+    const session = cookieStore.get('session')?.value;
     return (
         <html lang="en">
             <head>
@@ -22,6 +24,7 @@ export default function RootLayout({ children }) {
             <body
                 className={`font-manrope antialiased`}
             >
+                <ToastContainer />
                 <HomeNavbar />
                 {children}
             </body>

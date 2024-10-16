@@ -19,7 +19,7 @@ export default function HomeNavbar() {
 
     const [authSession, setAuthSession] = useState({});
     useEffect(() => {
-        let session = JSON.parse(jsCookie.get("session"));
+        let session = jsCookie.get("session") ? JSON.parse(jsCookie.get("session")) : {};
         setAuthSession(session);
     }, []);
 
@@ -62,9 +62,9 @@ export default function HomeNavbar() {
                             <DropdownMenu>
                                 <DropdownMenuTrigger className='hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-white border border-black hover-shadow'><Image src={userProfile} className="w-9 h-9 flex-none rounded-full bg-white pointer-events-none" alt="cdm-logo" /></DropdownMenuTrigger>
                                 <DropdownMenuContent className="bg-white mt-2">
-                                    <DropdownMenuItem>Settings</DropdownMenuItem>
-                                    <DropdownMenuItem>Notifications</DropdownMenuItem>
-                                    <DropdownMenuItem>Logout</DropdownMenuItem>
+                                    <DropdownMenuItem className="cursor-pointer"><Link href={'/instructor/dashboard'}>Dashboard</Link></DropdownMenuItem>
+                                    <DropdownMenuItem className="cursor-pointer">Settings</DropdownMenuItem>
+                                    <DropdownMenuItem className="cursor-pointer">Logout</DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         )

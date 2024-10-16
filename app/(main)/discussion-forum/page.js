@@ -1,7 +1,7 @@
 "use client"
 
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import student from '../../../public/student.png';
 import {
     Dialog,
@@ -11,19 +11,101 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import axios from 'axios';
+import jsCookie from 'js-cookie';
+import { toast } from 'react-toastify';
 
 export default function page() {
+    const [authSession, setAuthSession] = useState({});
+    const [visibilityContent, setVisibilityContent] = useState('');
+    const [userInstitute, setUserInstitute] = useState({});
+    const [userCourse, setUserCourse] = useState({});
+    const [discussions, setDiscussions] = useState([]);
 
-    const [visibilityContent, setVisibilityContent] = useState('public');
+
+    const fetchDiscussions = async (session) => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/discussions`, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${session?.token}`,
+                }
+            });
+
+            console.log(response.data);
+
+            setDiscussions(response.data.discussions);
+
+        } catch (error) {
+            toast.error(error.message ?? "Server Error");
+        }
+    }
+
+    useEffect(() => {
+        let session = jsCookie.get("session") ? JSON.parse(jsCookie.get("session")) : {};
+        setAuthSession(session);
+
+        fetchDiscussions(session);
+    }, [])
 
     const fetchUserInstitute = async () => {
-        const response = await axios.post(``);
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/institutes/${authSession?.user?.institute_id}`, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${authSession.token}`,
+                }
+            });
+
+            setUserInstitute(response.data.institute);
+
+        } catch (error) {
+            toast.error(error.message ?? "Server Error");
+        }
+    }
+
+    const fetchUserCourse = async () => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/courses/${authSession?.user?.course_id}`, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${authSession.token}`,
+                }
+            });
+
+            setUserCourse(response.data.course);
+        } catch (error) {
+            toast.error(error.message ?? "Server Error");
+        }
+
     }
 
     const handleVisibilityRadioChange = async (e) => {
         const visibility = e.target.value;
         if (visibility == 'private') {
+            fetchUserInstitute();
+            fetchUserCourse();
+        }
 
+
+        setVisibilityContent(e.target.value);
+    }
+
+    const handleSubmitDiscussion = async (e) => {
+        e.preventDefault();
+
+        try {
+            let formData = new FormData(e.target);
+            const response = await axios.post(`http://127.0.0.1:8000/api/discussions`, formData, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${authSession?.token}`,
+                    "Content-Type": "multipart/form-data",
+                }
+            });
+
+            toast.success("Added");
+        } catch (error) {
+            toast.error(error.message ?? "Server Error");
         }
     }
 
@@ -38,7 +120,9 @@ export default function page() {
                         <DialogContent className="bg-white">
                             <DialogHeader>
                                 <DialogTitle className="mb-5">New Discussion</DialogTitle>
-                                <form >
+                                <form onSubmit={handleSubmitDiscussion}>
+                                    <input type='hidden' name='user_id' value={authSession?.user?.id} />
+                                    <input type='hidden' name='user_type' value={authSession?.user?.role} />
                                     <div className='form-group'>
                                         <label className='form-label font-bold'>Visibility</label>
                                         <div className='form-check'>
@@ -50,33 +134,43 @@ export default function page() {
                                             <label htmlFor='private-radio' className='inline-block ml-2'>Private</label>
                                         </div>
                                     </div>
-                                    <div className={`grid grid-cols-2 gap-3 ${visibilityContent}`}>
+                                    <div className={`grid grid-cols-2 gap-3 ${visibilityContent == "public" ? "hidden" : ""}`}>
                                         <div className={`form-group`}>
                                             <label className='form-label font-bold'>Institute</label>
-                                            <select className='form-control my-2'>
+                                            <select className='form-control my-2' name='institute_id' readonly value={userInstitute?.id}>
                                                 <option className=''>-- SELECT INSTITUTE --</option>
+                                                {
+                                                    Object.keys(userInstitute).length > 0 && (
+                                                        <option value={userInstitute.id}>{userInstitute.name}</option>
+                                                    )
+                                                }
                                             </select>
                                         </div>
                                         <div className={`form-group`}>
                                             <label className='form-label font-bold'>Course</label>
-                                            <select className='form-control my-2'>
+                                            <select className='form-control my-2' name='course_id' value={userCourse?.id}>
                                                 <option className=''>-- SELECT COURSE --</option>
+                                                {
+                                                    Object.keys(userCourse).length > 0 && (
+                                                        <option value={userCourse.id}>{userCourse.name}</option>
+                                                    )
+                                                }
                                             </select>
                                         </div>
                                     </div>
 
                                     <div className='form-group'>
                                         <label className='form-label font-bold'>Title</label>
-                                        <input className='form-control my-2' />
+                                        <input className='form-control my-2' name='title' />
                                     </div>
                                     <div></div>
                                     <div className='form-group'>
                                         <label className='form-label font-bold'>Content</label>
-                                        <textarea className='form-control my-2' style={{ height: "150px" }} rows={20} cols={20}></textarea>
+                                        <textarea className='form-control my-2' style={{ height: "150px" }} name='discussion_content' rows={20} cols={20}></textarea>
                                     </div>
                                     <div className='form-group'>
                                         <label className='form-label font-bold'>Images</label>
-                                        <input className='form-control my-2' type='file' multiple />
+                                        <input className='form-control my-2' type='file' multiple name='images[]' />
                                     </div>
                                     <button className='w-full btn btn-primary'>Post and Upload</button>
                                 </form>
@@ -86,33 +180,40 @@ export default function page() {
                 </div>
             </div>
             <div className='flex flex-col gap-5 mt-4'>
-                {/* Forum */}
-                <div className='border border-black p-4 hover-shadow cursor-pointer'>
-                    <div className='flex items-start justify-between'>
-                        <div className='w-auto'>
-                            <Image className="rounded-full shadow object-cover w-10 h-10 bg-white border border-black" src={student} alt="Image Description"></Image>
-                        </div>
-                        <div className='px-3 flex-1'>
-                            <div className='forum-content'>
-                                <div className='flex items-center gap-4'>
-                                    <h3 className='text-lg font-bold'>James Garnfil</h3>
-                                    <span className='text-muted text-xs'>2 hours ago</span>
+                {
+                    discussions.length > 0 ? (
+                        discussions.map(discussion => (
+                            <div className='border border-black p-4 hover-shadow cursor-pointer' key={discussion.id}>
+                                <div className='flex items-start justify-between'>
+                                    <div className='w-auto'>
+                                        <Image className="rounded-full shadow object-cover w-10 h-10 bg-white border border-black" src={student} alt="Image Description"></Image>
+                                    </div>
+                                    <div className='px-3 flex-1'>
+                                        <div className='forum-content'>
+                                            <div className='flex items-center gap-4'>
+                                                <h3 className='text-lg font-bold'>{discussion?.user?.firstname} {discussion?.user?.lastname}</h3>
+                                                <span className='text-muted text-xs'>2 hours ago</span>
+                                            </div>
+                                            <h3 className='mt-3 font-bold text-lg'>{discussion?.title}</h3>
+                                            <p className='text-sm'>
+                                                {discussion?.content}
+                                            </p>
+                                        </div>
+                                        <div className='flex gap-3 items-start mt-5'>
+                                            <span><i className="bi bi-chat-fill"></i> 21</span>
+                                            <span><i className="bi bi-hand-thumbs-up"></i> 150</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <p>This elective course offers an in-depth exploration of web development technologies and practices.
-                                    Students will learn the essential skills to build dynamic and responsive websites using modern programming languages and frameworks.
-                                    The course covers both front-end and back-end development,
-                                    focusing on HTML, CSS, JavaScript, and libraries such as React and Vue.js.
-                                </p>
                             </div>
-                            <div className='flex gap-3 items-start mt-5'>
-                                <span><i className="bi bi-chat-fill"></i> 21</span>
-                                <span><i className="bi bi-hand-thumbs-up"></i> 150</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {/* Forum */}
-                <div className='border border-black p-4 hover-shadow cursor-pointer'>
+                        ))
+                    ) : (
+                        <div>No Disscussion Found</div>
+                    )
+                }
+
+
+                {/* <div className='border border-black p-4 hover-shadow cursor-pointer'>
                     <div className='flex items-start justify-between'>
                         <div className='w-auto'>
                             <Image className="rounded-full shadow object-cover w-10 h-10 bg-white border border-black" src={student} alt="Image Description"></Image>
@@ -129,7 +230,6 @@ export default function page() {
                                     focusing on HTML, CSS, JavaScript, and libraries such as React and Vue.js.
                                 </p>
                                 <div className='flex justify-start items-center gap-3 my-3'>
-                                    {/* Image */}
                                     <Image quality={100} className='object-cover w-[100px] h-[100px] border border-black' width={100} height={0} src={`https://plus.unsplash.com/premium_photo-1664391666703-e000bf477eb3?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`} />
                                 </div>
                             </div>
@@ -139,7 +239,7 @@ export default function page() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )
