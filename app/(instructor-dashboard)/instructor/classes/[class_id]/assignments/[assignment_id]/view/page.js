@@ -167,7 +167,6 @@ export default function ViewAssignmentPage() {
                         toast.success("Attachment Removed Successfully");
                     }
                 } catch (error) {
-                    console.log(error)
                     toast.error("Failed to Removed Attachment.");
                 }
             }
@@ -177,6 +176,24 @@ export default function ViewAssignmentPage() {
     const handleUploadAttachmentClick = async (type) => {
         setOpenAttachmentFormDialog(true);
         setUploadAttachmentType(type);
+    }
+
+    const handleUpdateAssignment = async () => {
+        try {
+            const response = await axios.put(`http://127.0.0.1:8000/api/assignments/${assignmentDetails.assignment_id}`, assignmentDetails, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${authSession.token}`
+                }
+            })
+
+            if (response.status == 200) {
+                toast.success('Assignment Updated Successfully');
+                fetchAssignmentDetails(authSession);
+            }
+        } catch (error) {
+
+        }
     }
 
     return (
@@ -315,11 +332,12 @@ export default function ViewAssignmentPage() {
                                             <input className='form-control'
                                                 value={assignmentDetails.due_datetime}
                                                 type='datetime-local'
+                                                name='due_datetime'
                                                 onChange={handleChange}
                                             />
                                         </div>
                                     </div>
-                                    <button className='w-full btn btn-primary'>Submit</button>
+                                    <button onClick={handleUpdateAssignment} className='w-full btn btn-primary'>Update</button>
                                 </div>
                             </div>
                         </div>

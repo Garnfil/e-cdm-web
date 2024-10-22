@@ -182,6 +182,24 @@ export default function ViewActivityPage() {
         setUploadAttachmentType(type);
     }
 
+    const handleUpdateActivity = async () => {
+        try {
+            const response = await axios.put(`http://127.0.0.1:8000/api/activities/${activityDetails.activity_id}`, activityDetails, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${authSession.token}`
+                }
+            })
+
+            if (response.status == 200) {
+                toast.success('Activity Updated Successfully');
+                fetchActivityDetails(authSession);
+            }
+        } catch (error) {
+
+        }
+    }
+
     return (
         <div className='container-fluid'>
             <div className='flex justify-between items-center mb-5'>
@@ -318,11 +336,12 @@ export default function ViewActivityPage() {
                                             <input className='form-control'
                                                 value={activityDetails.due_datetime}
                                                 type='datetime-local'
+                                                name='due_datetime'
                                                 onChange={handleChange}
                                             />
                                         </div>
                                     </div>
-                                    <button className='w-full btn btn-primary'>Submit</button>
+                                    <button className='w-full btn btn-primary' onClick={handleUpdateActivity}>Submit</button>
                                 </div>
                             </div>
                         </div>

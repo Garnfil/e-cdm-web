@@ -5,6 +5,7 @@ import Link from 'next/link'
 import jsCookie from 'js-cookie';
 import { useParams, useRouter } from 'next/navigation'
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function CreateQuizPage() {
     const params = useParams();
@@ -30,67 +31,78 @@ export default function CreateQuizPage() {
         attachments: [],
     });
 
+    const fetchQuizDetails = async (session) => {
+        const response = await axios.get(`http://127.0.0.1:8000/api/school-works/${quiz_id}`, {
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Bearer ${session.token}`
+            }
+        });
+
+        setQuizDetails({
+            school_work_id: response.data.school_work.id,
+            class_id: response.data.school_work.class_id,
+            instructor_id: response.data.school_work.instructor_id,
+            title: response.data.school_work.title,
+            description: response.data.school_work.description,
+            type: response.data.school_work.type,
+            status: response.data.school_work.status,
+            quiz_id: response.data.school_work.quiz.id,
+            points: response.data.school_work.quiz.points,
+            assessment_type: response.data.school_work.quiz.assessment_type,
+            notes: response.data.school_work.quiz.notes,
+            quiz_type: response.data.school_work.quiz.quiz_type,
+            due_datetime: response.data.school_work.due_datetime,
+            has_quiz_form: response.data.school_work.quiz.has_quiz_form,
+            attachments: response.data.school_work.attachments,
+        });
+
+        // fetchSubmittedAssignments(session, response.data.school_work.assignment.id);
+    }
+
     useEffect(() => {
         const session = JSON.parse(jsCookie.get('session'));
         setAuthSession(session);
         setInstructorId(session.user.id);
-
-        const fetchQuizDetails = async () => {
-            const response = await axios.get(`http://127.0.0.1:8000/api/school-works/${quiz_id}`, {
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": `Bearer ${session.token}`
-                }
-            });
-
-            setQuizDetails({
-                school_work_id: response.data.school_work.id,
-                class_id: response.data.school_work.class_id,
-                instructor_id: response.data.school_work.instructor_id,
-                title: response.data.school_work.title,
-                description: response.data.school_work.description,
-                type: response.data.school_work.type,
-                status: response.data.school_work.status,
-                quiz_id: response.data.school_work.quiz.id,
-                points: response.data.school_work.quiz.points,
-                assessment_type: response.data.school_work.quiz.assessment_type,
-                notes: response.data.school_work.quiz.notes,
-                quiz_type: response.data.school_work.quiz.quiz_type,
-                due_datetime: response.data.school_work.due_datetime,
-                has_quiz_form: response.data.school_work.quiz.has_quiz_form,
-                attachments: response.data.school_work.attachments,
-            });
-
-            // fetchSubmittedAssignments(session, response.data.school_work.assignment.id);
-        }
-
-        fetchQuizDetails();
+        fetchQuizDetails(session);
 
     }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let formData = new FormData(e.target);
+        try {
+            const response = await axios.put(`http://127.0.0.1:8000/api/quizzes/${quizDetails.quiz_id}`, quizDetails, {
+                headers: {
+                    'Accept': "application/json",
+                    'Authorization': `Bearer ${authSession.token}`,
+                }
+            });
 
-        const response = await axios.post(`http://127.0.0.1:8000/api/quizzes`, formData, {
-            headers: {
-                'Accept': "application/json",
-                'Authorization': `Bearer ${authSession.token}`,
+            console.log(response);
+
+            if (response.status == 200) {
+                toast.success("Quiz Updated Successfully");
+                fetchQuizDetails(authSession);
             }
-        })
-
-        // if (response.status == 200) {
-        //     router.push(`/instructor/classes/${class_id}/quizzes/${response.data.quiz.school_work_id}/view`);
-        // }
+        } catch (error) {
+            toast.error(error.message ?? "Server Error");
+        }
     }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        // Dynamically update the state property using the name of the input
-        setAssignmentDetails(prevDetails => ({
-            ...prevDetails,
-            [name]: value
-        }));
+        if (name == "has_quiz_form") {
+            setQuizDetails(prevDetails => ({
+                ...prevDetails,
+                has_quiz_form: e.target.checked ?? false,
+            }))
+        } else {
+            // Dynamically update the state property using the name of the input
+            setQuizDetails(prevDetails => ({
+                ...prevDetails,
+                [name]: value
+            }));
+        }
     };
 
     return (
@@ -163,15 +175,6 @@ export default function CreateQuizPage() {
                                     <input className='form-control' name='points' onChange={handleChange} value={quizDetails.points} />
                                 </div>
                                 <div className='form-group col-span-2'>
-                                    <label className='mb-2 block font-bold'>Assessment Type</label>
-                                    <select className="form-control" name="assessment_type" onChange={handleChange} value={quizDetails.assessment_type}>
-                                        <option value="">-- SELECT ASSESSMENT TYPE --</option>
-                                        <option value="prelim">Prelim</option>
-                                        <option value="midterm">Midterm</option>
-                                        <option value="finals">Finals</option>
-                                    </select>
-                                </div>
-                                <div className='form-group col-span-2'>
                                     <label className='mb-2 block'>Quiz Type</label>
                                     <select className="form-control" name="quiz_type" onChange={handleChange} value={quizDetails.quiz_type}>
                                         <option value="">-- SELECT QUIZ TYPE --</option>
@@ -184,7 +187,7 @@ export default function CreateQuizPage() {
                                     <input className='form-control' type='datetime-local' name='due_datetime' value={quizDetails.due_datetime} onChange={handleChange} />
                                 </div>
                                 <div className='form-group'>
-                                    <input type='checkbox' name='has_quiz_form' value={1} checked={quizDetails.has_quiz_form} className='mr-2' />
+                                    <input type='checkbox' name='has_quiz_form' value={1} checked={quizDetails.has_quiz_form ? true : false} className='mr-2' onChange={handleChange} />
                                     <label>Generate Quiz Form?</label>
                                 </div>
                                 {/* <div className='form-group col-span-2'>

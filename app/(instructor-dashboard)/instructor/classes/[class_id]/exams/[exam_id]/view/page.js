@@ -183,6 +183,24 @@ export default function ViewExamPage() {
         setUploadAttachmentType(type);
     }
 
+    const handleUpdateExam = async () => {
+        try {
+            const response = await axios.put(`http://127.0.0.1:8000/api/exams/${examDetails.exam_id}`, examDetails, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${authSession.token}`
+                }
+            })
+
+            if (response.status == 200) {
+                toast.success('Exam Updated Successfully');
+                fetchExamDetails(authSession);
+            }
+        } catch (error) {
+            toast.error(error.message ?? "Server Error");
+        }
+    }
+
     return (
         <div className='container-fluid'>
             <div className='flex justify-between items-center mb-5'>
@@ -319,11 +337,12 @@ export default function ViewExamPage() {
                                             <input className='form-control'
                                                 value={examDetails.due_datetime}
                                                 type='datetime-local'
+                                                name='due_datetime'
                                                 onChange={handleChange}
                                             />
                                         </div>
                                     </div>
-                                    <button className='w-full btn btn-primary'>Submit</button>
+                                    <button className='w-full btn btn-primary' onClick={handleUpdateExam}>Submit</button>
                                 </div>
                             </div>
                         </div>
