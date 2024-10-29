@@ -1,7 +1,64 @@
+"use client"
+import axios from 'axios';
 import Link from 'next/link'
-import React from 'react'
+import { useParams, useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
+import jsCookie from 'js-cookie';
 
 export default function CreateModulePage() {
+    const params = useParams();
+    const router = useRouter();
+    const { class_id } = params;
+
+    const [authSession, setAuthSession] = useState({});
+    const [module, setModule] = useState({
+        class_id: "",
+        instructor_id: "",
+        title: "",
+        description: "",
+        scheduled_datetime: ""
+    });
+
+    useEffect(() => {
+        const session = JSON.parse(jsCookie.get('session'));
+        setModule(prevDetails => ({
+            ...prevDetails,
+            instructor_id: session.user.id,
+            class_id: class_id
+        }))
+        setAuthSession(session);
+    }, [])
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        // Dynamically update the state property using the name of the input
+        setModule(prevDetails => ({
+            ...prevDetails,
+            [name]: value
+        }));
+    }
+
+    const handleSubmitModule = async (e) => {
+        try {
+            const response = await axios.post(`http://127.0.0.1:8000/api/modules`, module, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${authSession.token}`,
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            // console.log()
+
+            if (response.status == 200) {
+                router.push(`/instructor/classes/${class_id}/modules/${response.data.module.id}/view`);
+            }
+        } catch (error) {
+            toast.error(error.message ?? "Server Error");
+        }
+    }
+
     return (
         <div className='container-fluid'>
             <div className='flex justify-between items-center mb-5'>
@@ -26,18 +83,30 @@ export default function CreateModulePage() {
                 <Link href={'/instructor/classes/1'} className='btn btn-primary hover-shadow'><i className="bi bi-arrow-left mr-1"></i> Back to Class</Link>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6'>
-                <div className='xl:col-span-3'>
+                <div className='col-span-1'></div>
+                <div className='xl:col-span-1 sm:col-span-3'>
                     <div className='border border-black py-2 px-3 mb-5'>
                         <div className='form-group'>
                             <label className='mb-2 block'>Title</label>
-                            <input className='form-control' />
+                            <input className='form-control' name='title' value={module.title} onChange={handleChange} />
                         </div>
                         <div className='form-group'>
                             <label className='mb-2 block'>Description (optional)</label>
-                            <textarea className='form-control' rows={10} cols={10} style={{ height: '200px' }}></textarea>
+                            <textarea
+                                className='form-control'
+                                name='description'
+                                value={module.description}
+                                onChange={handleChange}
+                                rows={10}
+                                cols={10}
+                                style={{ height: '200px' }}></textarea>
+                        </div>
+                        <div className='form-group'>
+                            <label className='mb-2 block'>Scheduled Datetime</label>
+                            <input className='form-control' name='scheduled_datetime' type='datetime-local' value={module.scheduled_datetime} onChange={handleChange} />
                         </div>
                     </div>
-                    <div className='border border-black py-2 px-3'>
+                    {/* <div className='border border-black py-2 px-3'>
                         <h3 className='font-bold'>Attach</h3>
                         <div className='flex justify-center items-center gap-5'>
                             <div className='flex flex-col justify-center items-center gap-1'>
@@ -53,8 +122,11 @@ export default function CreateModulePage() {
                                 <h6>Link</h6>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
+                    <button onClick={handleSubmitModule} type="button" className='btn btn-primary mt-2 w-full'>Save Module</button>
                 </div>
+                <div className='col-span-1'></div>
+
                 {/* <div className='xl:col-span-1'>
                     <div className='border border-black py-2 px-3'>
                         <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
