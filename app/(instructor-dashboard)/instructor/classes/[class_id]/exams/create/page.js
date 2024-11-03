@@ -40,7 +40,7 @@ export default function CreateExamPage() {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post(`http://127.0.0.1:8000/api/exams`, examDetails, {
+            const response = await axios.post(`http://192.168.56.1:8000/api/exams`, examDetails, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${authSession.token}`,

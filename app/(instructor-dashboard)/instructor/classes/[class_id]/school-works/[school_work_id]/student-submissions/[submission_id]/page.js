@@ -28,7 +28,7 @@ export default function StudentSubmissionPage() {
         setAuthSession(session);
         const fetchStudentSubmittedWork = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/student-school-works/submissions/${submission_id}`, {
+                const response = await axios.get(`http://192.168.56.1:8000/api/student-school-works/submissions/${submission_id}`, {
                     headers: {
                         "Accept": "application/json",
                         "Authorization": `Bearer ${session.token}`
@@ -77,7 +77,7 @@ export default function StudentSubmissionPage() {
 
     const handleSubmitStudentGrade = async () => {
         try {
-            const response = await axios.post(`http://127.0.0.1:8000/api/student-school-works/submissions/${submission_id}/graded`, studentWorkGrade, {
+            const response = await axios.post(`http://192.168.56.1:8000/api/student-school-works/submissions/${submission_id}/graded`, studentWorkGrade, {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
@@ -109,18 +109,18 @@ export default function StudentSubmissionPage() {
                         <h2 className='text-2xl font-bold'>Student Submission</h2>
                         <nav className="breadcrumb" aria-label="Breadcrumb">
                             <ol className="list-none text-sm p-0 inline-flex">
-                                <li className="flex pdskdmsdnjw">
+                                <li className="flex items-center">
                                     <a href="#" className="hover:underline">Dashboard</a>
                                 </li>
-                                <li className="flex pdskdmsdnjw">
+                                <li className="flex items-center">
                                     <span className="mx-2">›</span>
                                     <a href="#" className="hover:underline">Class</a>
                                 </li>
-                                <li className="flex pdskdmsdnjw">
+                                <li className="flex items-center">
                                     <span className="mx-2">›</span>
                                     <a href="#" className="hover:underline">Submissions</a>
                                 </li>
-                                <li className="flex pdskdmsdnjw">
+                                <li className="flex items-center">
                                     <span className="mx-2">›</span>
                                     <a href="#" className="font-bold">Student Submission</a>
                                 </li>

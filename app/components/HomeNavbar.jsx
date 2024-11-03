@@ -14,21 +14,27 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useRouter } from 'next/navigation';
 
 export default function HomeNavbar() {
-
+    const router = useRouter();
     const [authSession, setAuthSession] = useState({});
     useEffect(() => {
         let session = jsCookie.get("session") ? JSON.parse(jsCookie.get("session")) : {};
         setAuthSession(session);
     }, []);
 
+    const handleInstructorLogout = async (e) => {
+        jsCookie.remove('session');
+        router.push('/instructor-login');
+    }
+
     return (
         <nav className="nav-section h-24 max-width-container">
             <div className="w-full h-full">
                 <div className="flex justify-between items-center h-full">
                     {/* Logo Section */}
-                    <div className="w-[15%] border-black flex justify-center items-center py-2 h-full box-border">
+                    <div className="w-[15%] border-black flex xl:justify-start  items-center py-2 h-full box-border">
                         <Image src={cdmLogo} width={65} height={65} />
                     </div>
 
@@ -54,8 +60,8 @@ export default function HomeNavbar() {
                                 <Link href={'/instructor-login'} className="btn btn-primary">
                                     Instructor Login
                                 </Link>
-                                <Link href={'/student-login'} className="btn btn-secondary">
-                                    Student Login
+                                <Link href={'/guardian-login'} className="btn btn-secondary">
+                                    Guardian Login
                                 </Link>
                             </div>
                         ) : (
@@ -64,7 +70,7 @@ export default function HomeNavbar() {
                                 <DropdownMenuContent className="bg-white mt-2">
                                     <DropdownMenuItem className="cursor-pointer"><Link href={'/instructor/dashboard'}>Dashboard</Link></DropdownMenuItem>
                                     <DropdownMenuItem className="cursor-pointer">Settings</DropdownMenuItem>
-                                    <DropdownMenuItem className="cursor-pointer">Logout</DropdownMenuItem>
+                                    <DropdownMenuItem className="cursor-pointer" onClick={handleInstructorLogout}>Logout</DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         )

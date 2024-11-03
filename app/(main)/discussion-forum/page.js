@@ -13,8 +13,10 @@ import {
 import axios from 'axios';
 import jsCookie from 'js-cookie';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 export default function page() {
+    const router = useRouter();
     const [authSession, setAuthSession] = useState({});
     const [visibilityContent, setVisibilityContent] = useState('');
     const [userInstitute, setUserInstitute] = useState({});
@@ -24,14 +26,12 @@ export default function page() {
 
     const fetchDiscussions = async (session) => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/discussions`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/discussions`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session?.token}`,
                 }
             });
-
-            console.log(response.data);
 
             setDiscussions(response.data.discussions);
 
@@ -49,7 +49,7 @@ export default function page() {
 
     const fetchUserInstitute = async () => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/institutes/${authSession?.user?.institute_id}`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/institutes/${authSession?.user?.institute_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,
@@ -65,7 +65,7 @@ export default function page() {
 
     const fetchUserCourse = async () => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/courses/${authSession?.user?.course_id}`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/courses/${authSession?.user?.course_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,
@@ -95,7 +95,7 @@ export default function page() {
 
         try {
             let formData = new FormData(e.target);
-            const response = await axios.post(`http://127.0.0.1:8000/api/discussions`, formData, {
+            const response = await axios.post(`http://192.168.56.1:8000/api/discussions`, formData, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession?.token}`,
@@ -107,6 +107,10 @@ export default function page() {
         } catch (error) {
             toast.error(error.message ?? "Server Error");
         }
+    }
+
+    const handleClickDiscussion = async (discussion_id) => {
+        router.push(`/discussion-forum/${discussion_id}`);
     }
 
     return (
@@ -183,7 +187,7 @@ export default function page() {
                 {
                     discussions.length > 0 ? (
                         discussions.map(discussion => (
-                            <div className='border border-black p-4 hover-shadow cursor-pointer' key={discussion.id}>
+                            <div className='border border-black p-4 hover-shadow cursor-pointer' key={discussion.id} onClick={() => handleClickDiscussion(discussion.id)}>
                                 <div className='flex items-start justify-between'>
                                     <div className='w-auto'>
                                         <Image className="rounded-full shadow object-cover w-10 h-10 bg-white border border-black" src={student} alt="Image Description"></Image>

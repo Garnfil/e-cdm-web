@@ -1,135 +1,167 @@
 "use client"
-import { useRef, useState, useEffect } from "react";
-import Pusher from "pusher-js";
 
-const Whiteboard = (props) => {
-    const { session_id } = props;
+import React, { useRef, useState, useEffect } from 'react';
+import Pusher from 'pusher-js';
+import { useParams } from 'next/navigation';
+
+const Whiteboard = () => {
+    const params = useParams();
+    const { session_id } = params;
     const canvasRef = useRef(null);
-    const isThrottled = useRef(false); // Ref to manage throttling state
-    const [isDrawing, setIsDrawing] = useState(false);
-    const [color, setColor] = useState("#000000");
+    const contextRef = useRef(null);
+    const isDrawingRef = useRef(false);
+    const [tool, setTool] = useState("pencil");
+
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        const context = canvas.getContext("2d");
-        context.lineCap = "round";  // Smooth lines
-        context.lineWidth = 5;      // Line thickness
+        if (!canvas) return; // Exit if canvas is not yet rendered
 
+        const ctx = canvas.getContext('2d');
+        ctx.lineCap = 'round';
+        ctx.lineWidth = 5;
+        contextRef.current = ctx; // Set contextRef to the canvas context
+
+        // Initialize Pusher for real-time communication
         const pusher = new Pusher('dcb5e22ff8f02d72a547', {
             cluster: 'ap1',
         });
+        const channel = pusher.subscribe(`whiteboard.${session_id}`);
 
-        const channel = pusher.subscribe(`whiteboard.${session_id}`); // Use sessionId in the public channel name
-
+        // Listen for updates from other users
         channel.bind('whiteboard-updated', (data) => {
-            console.log(data);
-            drawFromServer(data);
+            drawFromPusher(data); // Draw shapes based on received data
         });
 
-    }, []);
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+            pusher.disconnect();
+        };
+    }, [session_id]);
 
-    const startDrawing = (e) => {
-        const canvas = canvasRef.current;
-        const context = canvas.getContext("2d");
+    // Function to draw based on incoming data from Pusher
+    const drawFromPusher = (data) => {
+        const ctx = contextRef.current; // Use the ref to access context
+        if (!ctx) return;
 
-        context.strokeStyle = color; // Set the color for the stroke
-        context.beginPath();
-        context.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-        setIsDrawing(true);
-    };
+        console.log(ctx, data);
 
-    const root = this;
+        const { x, y, color, type } = data;
+        ctx.strokeStyle = color;
 
-    const draw = (e) => {
-        if (!isDrawing) return;
-
-        const canvas = canvasRef.current;
-        const context = canvas.getContext("2d");
-        context.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-        context.stroke();
-
-        // Throttle the whiteboard updates
-        if (root.timeout != undefined) clearTimeout(root.timeout);
-        root.timeout = setTimeout(() => {
-            var base64ImageData = canvas.toDataUrl("image/png");
-            sendWhiteboardUpdate(base64ImageData);
-        }, 1000);
-    };
-
-
-    const stopDrawing = (e) => {
-        setIsDrawing(false);
-    };
-
-    const clearCanvas = () => {
-        const canvas = canvasRef.current;
-        const context = canvas.getContext("2d");
-        context.clearRect(0, 0, canvas.width, canvas.height);
-    };
-
-    const sendWhiteboardUpdate = async (data) => {
-        await fetch(`http://localhost:8000/api/whiteboard/update/${session_id}`, { // Update with your Laravel API endpoint
-            method: 'POST',
-            body: JSON.stringify({ data }),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-        });
-    };
-
-    const drawFromServer = (data) => {
-        console.log(data);
-        const image = new Image();
-        const canvas = canvasRef.current;
-        const context = canvas.getContext("2d");
-        image.onload = function () {
-            context.drawImage(image, 0, 0);
+        if (type === 'start') {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        } else if (type === 'draw') {
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        } else if (type === 'stop') {
+            ctx.closePath();
         }
-        image.src = data;
+    };
+
+    const startDrawing = (event) => {
+        event.preventDefault();
+        const { offsetX, offsetY } = event.nativeEvent;
+        isDrawingRef.current = true;
+        contextRef.current.beginPath();
+        contextRef.current.moveTo(offsetX, offsetY);
+
+        // broadcastUpdate(offsetX, offsetY, 'start');
+    };
+
+    const draw = (event) => {
+        event.preventDefault();
+        if (!isDrawingRef.current) return;
+
+        const { offsetX, offsetY } = event.nativeEvent;
+        contextRef.current.lineTo(offsetX, offsetY);
+        contextRef.current.stroke();
+
+        // broadcastUpdate(offsetX, offsetY, 'draw');
+    };
+
+    const stopDrawing = (event) => {
+        event.preventDefault();
+        if (!isDrawingRef.current) return;
+
+        isDrawingRef.current = false;
+        contextRef.current.closePath();
+
+        // broadcastUpdate(0, 0, 'stop');
+    };
+
+    // Broadcast data to Laravel backend
+    const broadcastUpdate = (x, y, type) => {
+        fetch(`http://192.168.56.1:8000/api/whiteboard/update/${session_id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ x, y, type, color: '#000000' }), // You can adjust color or other properties here
+        });
     };
 
     return (
-        <div className="flex flex-col items-center justify-center p-4">
-            {/* Title */}
-            <h1 className="text-2xl font-bold mb-4 text-gray-700">Interactive Whiteboard</h1>
+        <div className='w-full '>
+            <div className='flex justify-center items-center flex-col gap-7'>
+                <div className='w-full flex justify-between items-start gap-3'>
+                    <div className='px-4 py-5 border-2 border-black w-[50%]'>
+                        <div className='flex justify-between items-center'>
+                            <div>
+                                <h3 className='text-2xl font-bold'>Session: <span></span></h3>
+                                <h4 className='text-lg'>Total Users Joined: <span></span></h4>
+                            </div>
 
-            {/* Toolbar */}
-            <div className="flex items-center justify-between mb-4 w-full max-w-lg space-x-4">
-                <div className="flex items-center space-x-2">
-                    <label htmlFor="colorPicker" className="text-gray-600 font-semibold">Line Color:</label>
-                    <input
-                        type="color"
-                        id="colorPicker"
-                        value={color}
-                        onChange={(e) => setColor(e.target.value)}
-                        className="border border-gray-300 rounded-md p-1 cursor-pointer"
-                    />
+                            <button className='btn bg-red-800 text-white'><i class="bi bi-box-arrow-left"></i> Leave Session </button>
+                        </div>
+                    </div>
+                    <div className='w-[50%] border-2 border-black p-4'>
+                        <div class="relative flex flex-col justify-center items-center gap-2">
+                            <div className='inline-flex gap-4'>
+                                <div class="flex flex-nowrap flex-row gap-3 items-center mb-2">
+                                    <input class="form-checkbox h-5 w-5 accent-lime-600 focus:outline-none rounded-full" type="radio" name="tool" id="tool-pencil" value="pencil" checked={tool == 'pencil'} onChange={(e) => setTool(e.target.value)} />
+                                    <label class="inline-block" for="tool-pencil">
+                                        Pencil
+                                    </label>
+                                </div>
+                                <div class="flex flex-nowrap flex-row gap-3 items-center mb-2">
+                                    <input class="form-checkbox h-5 w-5 accent-lime-600 focus:outline-none rounded-full" type="radio" name="tool" id="tool-line" value="line" checked={tool == 'line'} onChange={(e) => setTool(e.target.value)} />
+                                    <label class="inline-block" for="tool-line">
+                                        Line
+                                    </label>
+                                </div>
+                                <div class="flex flex-nowrap flex-row gap-3 items-center mb-2">
+                                    <input class="form-checkbox h-5 w-5 accent-lime-600 focus:outline-none rounded-full" type="radio" name="tool" id="tool-rectangle" value="rectangle" checked={tool == 'rectangle'} onChange={(e) => setTool(e.target.value)} />
+                                    <label class="inline-block" for="tool-rectangle">
+                                        Rectangle
+                                    </label>
+                                </div>
+                            </div>
+                            <div className='w-full'>
+                                <input type='color' className='w-[100%]' value={'#0b4c11'} />
+                            </div>
+                            <div className='btn-group gap-2 flex'>
+                                <button className='btn btn-primary'>Undo</button>
+                                <button className='btn btn-primary'>Redo</button>
+                                <button className='btn bg-red-500 text-white'>Clear Canvas</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Clear Button */}
-                <button
-                    onClick={clearCanvas}
-                    className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition duration-200"
-                >
-                    Clear
-                </button>
-            </div>
-
-            {/* Canvas */}
-            <div className="border-4 border-gray-300 shadow-lg rounded-lg">
                 <canvas
                     ref={canvasRef}
-                    width={800}
-                    height={600}
-                    className="bg-white rounded-lg"
                     onMouseDown={startDrawing}
                     onMouseMove={draw}
                     onMouseUp={stopDrawing}
                     onMouseLeave={stopDrawing}
+
+                    style={{ border: '1px solid black' }}
                 />
             </div>
+
         </div>
+
     );
 };
 

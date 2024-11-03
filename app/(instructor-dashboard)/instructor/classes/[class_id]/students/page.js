@@ -17,7 +17,7 @@ export default function ClassStudentsPage() {
 
     const fetchStudents = async (session) => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/classes/${class_id}/students`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/classes/${class_id}/students`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,

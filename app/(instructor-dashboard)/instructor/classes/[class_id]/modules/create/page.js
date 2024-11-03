@@ -41,7 +41,7 @@ export default function CreateModulePage() {
 
     const handleSubmitModule = async (e) => {
         try {
-            const response = await axios.post(`http://127.0.0.1:8000/api/modules`, module, {
+            const response = await axios.post(`http://192.168.56.1:8000/api/modules`, module, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${authSession.token}`,
@@ -49,9 +49,7 @@ export default function CreateModulePage() {
                 }
             });
 
-            // console.log()
-
-            if (response.status == 200) {
+            if (response.status == 200 || response.status == 201) {
                 router.push(`/instructor/classes/${class_id}/modules/${response.data.module.id}/view`);
             }
         } catch (error) {

@@ -24,7 +24,7 @@ export default function CreateQuizPage() {
         e.preventDefault();
         let formData = new FormData(e.target);
 
-        const response = await axios.post(`http://127.0.0.1:8000/api/quizzes`, formData, {
+        const response = await axios.post(`http://192.168.56.1:8000/api/quizzes`, formData, {
             headers: {
                 'Accept': "application/json",
                 'Authorization': `Bearer ${authSession.token}`,

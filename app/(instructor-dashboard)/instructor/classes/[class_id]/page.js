@@ -5,7 +5,6 @@ import ClassHeader from '@/app/components/ClassHeader'
 import axios from 'axios'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-// import {  } from "../../../../../public/";
 import { useParams } from 'next/navigation'
 import jsCookie from 'js-cookie'
 
@@ -18,7 +17,7 @@ export default function Class() {
         let session = JSON.parse(jsCookie.get("session"));
 
         const fetchClassDetails = async () => {
-            const response = await axios.get(`http://127.0.0.1:8000/api/classes/${class_id}`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/classes/${class_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`
@@ -49,12 +48,6 @@ export default function Class() {
                             </div>
                             <div className="relative mb-3">
                                 <div className="flex flex-nowrap lsdfdfsdafd gap-3 pdskdmsdnjw mb-2">
-                                    <input className="form-checkbox h-5 w-5 accent-primary" type="radio" name="flexRadioDefault" id="flexRadioDefault1" defaultChecked />
-                                    <label className="inline-block" htmlFor="flexRadioDefault1">
-                                        All
-                                    </label>
-                                </div>
-                                <div className="flex flex-nowrap lsdfdfsdafd gap-3 pdskdmsdnjw mb-2">
                                     <input className="form-checkbox h-5 w-5 accent-primary" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
                                     <label className="inline-block" htmlFor="flexRadioDefault2">
                                         Modules
@@ -63,25 +56,7 @@ export default function Class() {
                                 <div className="flex flex-nowrap lsdfdfsdafd gap-3 pdskdmsdnjw mb-2">
                                     <input className="form-checkbox h-5 w-5 accent-primary" type="radio" name="flexRadioDefault" id="flexRadioDefault3" />
                                     <label className="inline-block" htmlFor="flexRadioDefault3">
-                                        Assignments
-                                    </label>
-                                </div>
-                                <div className="flex flex-nowrap lsdfdfsdafd gap-3 pdskdmsdnjw mb-2">
-                                    <input className="form-checkbox h-5 w-5 accent-primary" type="radio" name="flexRadioDefault" id="flexRadioDefault4" />
-                                    <label className="inline-block" htmlFor="flexRadioDefault4">
-                                        Quizzes
-                                    </label>
-                                </div>
-                                <div className="flex flex-nowrap lsdfdfsdafd gap-3 pdskdmsdnjw mb-2">
-                                    <input className="form-checkbox h-5 w-5 accent-primary" type="radio" name="flexRadioDefault" id="flexRadioDefault5" />
-                                    <label className="inline-block" htmlFor="flexRadioDefault5">
-                                        Activities
-                                    </label>
-                                </div>
-                                <div className="flex flex-nowrap lsdfdfsdafd gap-3 pdskdmsdnjw mb-2">
-                                    <input className="form-checkbox h-5 w-5 accent-primary" type="radio" name="flexRadioDefault" id="flexRadioDefault5" />
-                                    <label className="inline-block" htmlFor="flexRadioDefault5">
-                                        Exams
+                                        School Works
                                     </label>
                                 </div>
                             </div>

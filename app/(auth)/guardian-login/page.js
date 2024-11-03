@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import jsCookie from 'js-cookie';
 import { toast } from 'react-toastify';
 
-export default function LoginPage() {
+export default function GuardianLoginPage() {
     const router = useRouter();
     const [isLoginSubmitted, setIsLoginSubmitted] = useState(false);
 
@@ -22,9 +22,8 @@ export default function LoginPage() {
             let formData = new FormData(e.target);
 
             // Send POST request using Axios
-            const response = await axios.post('http://192.168.56.1:8000/api/instructor/login', formData, {
+            const response = await axios.post('http://192.168.56.1:8000/api/guardian/login', formData, {
                 headers: {
-                    // 'Content-Type': 'multipart/form-data', // Set appropriate content type
                     'Content-Type': 'application/json',
                 },
             });
@@ -32,14 +31,12 @@ export default function LoginPage() {
             if (response.status == 200) {
                 jsCookie.set("session", JSON.stringify(response.data));
                 setIsLoginSubmitted(false);
-                router.push('/instructor/dashboard');
+                router.push('/guardian/dashboard');
             }
 
         } catch (error) {
-            // Handle errors
             setIsLoginSubmitted(false);
             toast.error(error.message ?? "Server Error");
-            console.error('Error submitting form:', error.response ? error.response.data : error.message);
         }
     }
 
@@ -49,12 +46,12 @@ export default function LoginPage() {
                 <div className='max-width-container h-full'>
                     <div className='flex justify-between items-center gap-5 p-10 border-2 border-black h-[80%] rounded-2xl'>
                         <div className='w-[35%] h-full'>
-                            <h2 className='text-2xl font-semibold'>Instructor Login</h2>
+                            <h2 className='text-2xl font-semibold'>Guardian Login</h2>
                             <h6>Please enter your details</h6>
                             <form className='my-8' onSubmit={handleSubmitLogin}>
                                 <div className='form-group'>
-                                    <label className='mb-2 block'>Username/Email</label>
-                                    <input id="input-id" type="text" name="login" placeholder="Enter your username..." className="form-control" />
+                                    <label className='mb-2 block'>Email</label>
+                                    <input id="input-id" type="email" name="email" placeholder="Enter your username..." className="form-control" />
                                 </div>
                                 <div className='form-group'>
                                     <label className='mb-2 block'>Password</label>
@@ -63,9 +60,6 @@ export default function LoginPage() {
                                 <button type='submit' className='btn btn-primary w-full' disabled={isLoginSubmitted}>
                                     Sign In
                                 </button>
-                                <div className='mt-4'>
-                                    Are you a student? <Link href={'/student-login'} className='text-primary font-bold'>Login Here</Link>
-                                </div>
                             </form>
                         </div>
                         <div className='w-[65%] bg-primary h-full rounded-lg relative'>

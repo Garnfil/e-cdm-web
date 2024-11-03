@@ -16,12 +16,13 @@ import { format } from "date-fns";
 export default function ClassFeed(props) {
     const { classId } = props;
     const [schoolWorks, setSchoolWorks] = useState([]);
+    const [modules, setModules] = useState([]);
 
     useEffect(() => {
         let session = JSON.parse(jsCookie.get("session"));
 
         const fetchClassSchoolWorks = async () => {
-            const response = await axios.get(`http://127.0.0.1:8000/api/classes/${classId}/school-works`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/classes/${classId}/school-works`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`
@@ -64,9 +65,8 @@ export default function ClassFeed(props) {
                 };
             })
 
-            console.log(schoolWorksList);
-
             setSchoolWorks(schoolWorksList);
+            setModules(response.data.modules);
         }
 
         fetchClassSchoolWorks();
@@ -113,6 +113,24 @@ export default function ClassFeed(props) {
                 </div>
             </div>
             <div className='relative w-full mt-4 overflow-y-auto flex flex-col gap-5'>
+                {
+                    modules.length > 0 ? (
+                        modules.map(moduleData => (
+                            <Link href={`/instructor/classes/${moduleData.class_id}/modules/${moduleData.id}/view`} key={moduleData.id}>
+                                <div className='bg-white border border-black hover-shadow'>
+                                    <div className='py-3 px-4 border-b border-black flex justify-between items-center'>
+                                        <h3 className='text-lg font-semibold mb-2'>{moduleData.title}</h3>
+                                        <div className='py-1 px-2 text-xs font-bold bg-secondary flex items-center rounded'>
+                                            Module
+                                        </div>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))
+                    ) : (
+                        <div></div>
+                    )
+                }
                 {
                     schoolWorks.length > 0 ? (
                         schoolWorks.map(schoolWorkData => (
