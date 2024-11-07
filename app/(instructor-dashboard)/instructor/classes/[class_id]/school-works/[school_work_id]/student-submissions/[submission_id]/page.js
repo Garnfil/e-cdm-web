@@ -146,7 +146,7 @@ export default function StudentSubmissionPage() {
                                                 scrolling="yes"
                                                 width="100%"
                                                 height="100%"
-                                                src={`http://127.0.0.1:8000/assets/uploads/student_submission_attachments/${selectedSubmissionAttachment.attachment_name}?height=400px`}
+                                                src={`http://e-learn.godesqsites.com/assets/uploads/student_submission_attachments/${selectedSubmissionAttachment.attachment_name}?height=400px`}
                                                 name="imgbox"
                                                 id="imgbox"
                                                 allowFullScreen={true}
