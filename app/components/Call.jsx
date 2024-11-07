@@ -109,7 +109,7 @@ function Videos(props) {
                     </div>
                 </section>
 
-                <section id="messages__container">
+                {/* <section id="messages__container">
 
                     <div id="messages">
                         <div class="message__wrapper">
@@ -124,7 +124,7 @@ function Videos(props) {
                         <input type="text" name="message" placeholder="Send a message...." />
                     </form>
 
-                </section>
+                </section> */}
             </div>
         </main>
     );

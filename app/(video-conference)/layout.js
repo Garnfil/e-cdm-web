@@ -1,6 +1,9 @@
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../main.css';
 import '../room.css';
+import cdmLogo from "../../public/cdm-logo.webp";
+import Image from 'next/image';
+
 
 export const metadata = {
   title: 'Next.js',
@@ -16,20 +19,20 @@ export default function RootLayout({ children }) {
             <button id="members__button"></button>
             <a href="lobby.html">
               <h3 id="logo">
-                <img src="./images/logo.png" alt="Site Logo" />
-                <span>E_CDM</span>
+                <Image src={cdmLogo} width={45} />
+                <span>E-CDM</span>
               </h3>
             </a>
           </div>
 
 
-          <div id="nav__links">
+          {/* <div id="nav__links">
             <button id="chat__button"></button>
 
             <a class="nav__link" id="create__room__btn" href="lobby.html">
               Leave
             </a>
-          </div>
+          </div> */}
         </header>
         {children}
       </body >

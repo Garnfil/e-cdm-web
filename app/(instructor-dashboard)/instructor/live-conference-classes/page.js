@@ -1,6 +1,91 @@
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
+import jsCookie from 'js-cookie';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 export default function LiveConferenceClassesPage() {
+    const router = useRouter();
+    const [sessionDetails, setSessionDetails] = useState({
+        title: '',
+        description: '',
+        start_datetime: '',
+        end_datetime: '',
+        instructor_id: '',
+        class_id: '',
+    });
+    const [classes, setClasses] = useState([]);
+    const [authSession, setAuthSession] = useState({});
+
+    const fetchClasses = async (session) => {
+        try {
+            const response = await axios.get(`https://e-learn.godesqsites.com/api/instructors/${session.user.id}/classes`, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${session.token}`,
+                }
+            });
+            console.log(response);
+            // If successful, set the classes data
+            setClasses(response.data.classes);
+        } catch (error) {
+            setClasses([]);
+        }
+    };
+
+    useEffect(() => {
+        let session = JSON.parse(jsCookie.get("session"));
+        setAuthSession(session);
+        setSessionDetails((prevDetails) => ({ ...prevDetails, instructor_id: session.user.id }));
+        fetchClasses(session);
+    }, []);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        // Dynamically update the state property using the name of the input
+        setSessionDetails(prevDetails => ({
+            ...prevDetails,
+            [name]: value
+        }));
+    }
+
+    const handleSessionSubmit = async () => {
+        try {
+            const response = await axios.post('https://e-learn.godesqsites.com/api/live-sessions', {
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${authSession.token}`,
+                }
+            });
+
+            const conference_session = response.data.conference_session;
+            if (new Date(conference_session.scheduled_datetime) <= new Date()) {
+                router.push(`/video-class-conference/${conference_session.session_code}`);
+            } else {
+                setSessionDetails((prevDetails) => ({
+                    class_id: '',
+                    description: '',
+                    end_datetime: '',
+                    start_datetime: '',
+                    title: ''
+                }))
+
+                toast.success("Session Added Successfully. Please wait for the scheduled time..");
+            }
+
+
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message ?? "Server Error")
+        }
+
+
+    }
+
+
     return (
         <div className='container-fluid'>
             <div className='flex justify-between items-center mb-5'>
@@ -31,13 +116,32 @@ export default function LiveConferenceClassesPage() {
                     <form className='my-3'>
                         <div className='form-group'>
                             <label className='mb-2 block font-bold'>Title</label>
-                            <input className='form-control' value={10} />
+                            <input className='form-control' name='title' id='title-field' value={sessionDetails.title} onChange={handleChange} />
                         </div>
                         <div className='form-group'>
-                            <label className='mb-2 block font-bold'>Class Code</label>
-                            <input className='form-control' value={`fsyxW3`} readOnly />
+                            <label className='mb-2 block font-bold'>Description</label>
+                            <textarea className='form-control' name='description' id='description-field' onChange={handleChange}>{sessionDetails.description}</textarea>
                         </div>
-                        <a href='/video-class-conference' className='w-full btn btn-primary'>Create</a>
+                        <div className='form-group'>
+                            <label className='mb-2 block font-bold'>Class</label>
+                            <select className='form-control my-2 text-black' name='class_id' readonly onChange={handleChange}>
+                                <option className=''>-- SELECT CLASS --</option>
+                                {
+                                    classes.map(classRoom => (
+                                        <option key={classRoom.id} value={classRoom.id}>{classRoom.title}</option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+                        <div className='form-group'>
+                            <label className='mb-2 block font-bold'>Start DateTime</label>
+                            <input type='datetime-local' className='form-control' name='start_datetime' id='start-datetime-field' onChange={handleChange} />
+                        </div>
+                        <div className='form-group'>
+                            <label className='mb-2 block font-bold'>End DateTime</label>
+                            <input type='datetime-local' className='form-control' name='end_datetime' id='end-datetime-field' onChange={handleChange} />
+                        </div>
+                        <button type='button' onClick={handleSessionSubmit} className='w-full btn btn-primary'>Create</button>
                     </form>
                 </div>
                 <div className='border border-black w-[40%] bg-white'>

@@ -166,7 +166,8 @@
 
 #stream__container {
   justify-self: center;
-  width: calc(100% - 40.7rem);
+  /* width: calc(100% - 40.7rem); */
+  width: 90%;
   position: fixed;
   left: 15.7rem;
   top: clac(100vh - 72px);
@@ -244,7 +245,8 @@
   }
 
   #stream__container {
-    width: calc(100% - 25rem);
+    /* width: calc(100% - 25rem); */
+    width: 100%;
     left: 0;
   }
 }
@@ -304,7 +306,7 @@
   border-radius: 8px;
   background-color: #1a1a1a60;
   padding: 1rem;
-  left: 50%;
+  left: 55%;
   display: flex;
   gap: 1rem;
   transform: translateX(-50%);

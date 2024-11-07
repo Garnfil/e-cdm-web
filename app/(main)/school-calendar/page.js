@@ -1,20 +1,48 @@
 "use client"
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import cdmLogo from '../../../public/cdm-logo.webp';
 import Link from "next/link";
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import axios from 'axios';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
 
 export default function SchoolCalendar() {
-    const [events, setEvents] = useState([
-        { title: 'Math Exam', date: '2024-10-01', description: 'BSIT-3H Math final exam' },
-        { title: 'Parent-Teacher Meeting', date: '2024-10-05', description: 'Meeting for all parents and teachers' },
-        { title: 'Science Fair', date: '2024-10-10', description: 'Annual science fair for all grades' },
-        { title: 'Sports Fest', date: '2024-10-15', description: 'Inter-school sports competition' },
-        { title: 'English Literature Seminar', date: '2024-10-20', description: 'Seminar on English literature for Grade 12' },
-        { title: 'Christmas Party', date: '2024-12-18', description: 'School-wide Christmas celebration' },
-    ]);
+    const [events, setEvents] = useState([]);
+
+    const fetchEvents = async () => {
+        const response = await axios.get('https://e-learn.godesqsites.com/api/school-events', {
+            headers: {
+                "Accept": 'application/json',
+            }
+        });
+
+        const events = await response.data.events;
+        if (events?.length > 0) {
+            let eventsData = events.map(event => {
+                return {
+                    id: event.id,
+                    title: event.name,
+                    date: event.event_date,
+                    description: event.description,
+                    className: 'bg-primary text-white px-2 hover:bg-primary',
+                }
+            });
+            setEvents(eventsData);
+        }
+    }
+
+    useEffect(() => {
+        fetchEvents();
+    }, []);
 
     return (
         <main className='bg-main'>
@@ -26,6 +54,7 @@ export default function SchoolCalendar() {
                             plugins={[dayGridPlugin]}
                             initialView="dayGridMonth"
                             events={events}
+                            eventClick={(arg) => console.log(arg.event.id)}
                             eventContent={(info) => (
                                 <div>
                                     <strong>{info.event.title}</strong>

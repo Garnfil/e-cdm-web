@@ -47,7 +47,6 @@ export default function HomeNavbar() {
                             <li>
                                 <Link className='font-normal' href={'/school-calendar'}>School Calendar</Link>
                             </li>
-                            <li>Institutes</li>
                             <li>
                                 <Link className='font-normal' href={'/discussion-forum'}>Discussions</Link>
                             </li>
