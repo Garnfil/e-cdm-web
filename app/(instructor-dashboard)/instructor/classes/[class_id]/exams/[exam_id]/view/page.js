@@ -48,7 +48,7 @@ export default function ViewExamPage() {
 
     const fetchSubmittedActivities = async (session, school_work_id) => {
         try {
-            const response = await axios.get(`http://192.168.56.1:8000/api/student-school-works/${school_work_id}/submissions`, {
+            const response = await axios.get(`https://e-learn.godesqsites.com/api/student-school-works/${school_work_id}/submissions`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`
@@ -69,7 +69,7 @@ export default function ViewExamPage() {
 
     const fetchExamDetails = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.56.1:8000/api/school-works/${exam_id}`, {
+            const response = await axios.get(`https://e-learn.godesqsites.com/api/school-works/${exam_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`
@@ -125,7 +125,7 @@ export default function ViewExamPage() {
 
         try {
             setSubmitBtnLoad(true);
-            const response = await axios.post(`http://192.168.56.1:8000/api/school-works/attachments/single-upload`, formData, {
+            const response = await axios.post(`https://e-learn.godesqsites.com/api/school-works/attachments/single-upload`, formData, {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "multipart/form-data",
@@ -159,7 +159,7 @@ export default function ViewExamPage() {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = await axios.delete(`http://192.168.56.1:8000/api/school-works/attachments/${attachment_id}/destroy`, {
+                    const response = await axios.delete(`https://e-learn.godesqsites.com/api/school-works/attachments/${attachment_id}/destroy`, {
                         headers: {
                             "Accept": "application/json",
                             "Authorization": `Bearer ${authSession.token}`,
@@ -185,7 +185,7 @@ export default function ViewExamPage() {
 
     const handleUpdateExam = async () => {
         try {
-            const response = await axios.put(`http://192.168.56.1:8000/api/exams/${examDetails.exam_id}`, examDetails, {
+            const response = await axios.put(`https://e-learn.godesqsites.com/api/exams/${examDetails.exam_id}`, examDetails, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`

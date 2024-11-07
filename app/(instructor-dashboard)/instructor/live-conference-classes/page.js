@@ -17,7 +17,7 @@ export default function LiveConferenceClassesPage() {
                             </li>
                             <li className="flex pdskdmsdnjw">
                                 <span className="mx-2">›</span>
-                                <a href="#" className="hover:underline font-bold">Live Conference Classes</a>
+                                <a href="#" className="hover:underline font-bold">Class Video Conference</a>
                             </li>
                         </ol>
                     </nav>
@@ -37,7 +37,7 @@ export default function LiveConferenceClassesPage() {
                             <label className='mb-2 block font-bold'>Class Code</label>
                             <input className='form-control' value={`fsyxW3`} readOnly />
                         </div>
-                        <button className='w-full btn btn-primary'>Create</button>
+                        <a href='/video-class-conference' className='w-full btn btn-primary'>Create</a>
                     </form>
                 </div>
                 <div className='border border-black w-[40%] bg-white'>

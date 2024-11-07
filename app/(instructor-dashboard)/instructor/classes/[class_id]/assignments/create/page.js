@@ -40,7 +40,7 @@ export default function CreateAssignmentPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await axios.post(`http://192.168.56.1:8000/api/assignments`, assignmentDetails, {
+        const response = await axios.post(`https://e-learn.godesqsites.com/api/assignments`, assignmentDetails, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${authSession.token}`,

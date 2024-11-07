@@ -18,6 +18,8 @@
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-tabs": "^1.1.1",
+    "agora-rtc-react": "^2.3.0",
+    "agora-rtc-sdk-ng": "latest",
     "apexcharts": "^3.53.0",
     "axios": "^1.7.7",
     "bootstrap-icons": "^1.11.3",

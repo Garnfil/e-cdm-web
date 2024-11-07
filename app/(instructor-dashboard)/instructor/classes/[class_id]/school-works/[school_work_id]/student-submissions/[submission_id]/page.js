@@ -28,7 +28,7 @@ export default function StudentSubmissionPage() {
         setAuthSession(session);
         const fetchStudentSubmittedWork = async () => {
             try {
-                const response = await axios.get(`http://192.168.56.1:8000/api/student-school-works/submissions/${submission_id}`, {
+                const response = await axios.get(`https://e-learn.godesqsites.com/api/student-school-works/submissions/${submission_id}`, {
                     headers: {
                         "Accept": "application/json",
                         "Authorization": `Bearer ${session.token}`
@@ -77,7 +77,7 @@ export default function StudentSubmissionPage() {
 
     const handleSubmitStudentGrade = async () => {
         try {
-            const response = await axios.post(`http://192.168.56.1:8000/api/student-school-works/submissions/${submission_id}/graded`, studentWorkGrade, {
+            const response = await axios.post(`https://e-learn.godesqsites.com/api/student-school-works/submissions/${submission_id}/graded`, studentWorkGrade, {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",

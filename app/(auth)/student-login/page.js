@@ -1,10 +1,57 @@
+"use client"
+
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import yellowIllustration from '../../../public/yellow-illustration.png';
 import greenIllustration from '../../../public/green-illustration.png';
 import Image from 'next/image';
+import axios from 'axios';
+import jsCookie from 'js-cookie';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
-export default function LoginPage() {
+export default function StudentLoginPage() {
+    const router = useRouter();
+
+    const [studentDetails, setStudentDetails] = useState({
+        student_id: '',
+        email: '',
+        password: '',
+    });
+    const [isLoginSubmitted, setIsLoginSubmitted] = useState(false);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        // Dynamically update the state property using the name of the input
+        setStudentDetails(prevDetails => ({
+            ...prevDetails,
+            [name]: value
+        }));
+    }
+
+    const handleSubmit = async () => {
+        try {
+            setIsLoginSubmitted(true);
+            const response = await axios.post('https://e-learn.godesqsites.com/api/student/login', studentDetails, {
+                headers: {
+                    // 'Content-Type': 'multipart/form-data', // Set appropriate content type
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.status == 200) {
+                jsCookie.set("session", JSON.stringify(response.data));
+                setIsLoginSubmitted(false);
+                router.push('/student/dashboard');
+            }
+        } catch (error) {
+            // Handle errors
+            setIsLoginSubmitted(false);
+            toast.error(error.message ?? "Server Error");
+            console.error('Error submitting form:', error.response ? error.response.data : error.message);
+        }
+    }
+
     return (
         <main>
             <section className='login-section bg-[#f5f5f5] w-full h-screen py-4'>
@@ -16,17 +63,17 @@ export default function LoginPage() {
                             <form className='my-8'>
                                 <div className='form-group'>
                                     <label className='mb-2 block'>Student ID</label>
-                                    <input id="input-id" type="text" name="" placeholder="Your Student ID" className="form-control" />
+                                    <input id="input-id" type="text" name="student_id" value={studentDetails.student_id} onChange={handleChange} placeholder="Your Student ID" className="form-control" />
                                 </div>
                                 <div className='form-group'>
                                     <label className='mb-2 block'>Email</label>
-                                    <input id="input-id" type="text" name="" placeholder="Your name" className="form-control" />
+                                    <input id="input-id" type="text" name="email" value={studentDetails.email} onChange={handleChange} placeholder="Your email" className="form-control" />
                                 </div>
                                 <div className='form-group'>
                                     <label className='mb-2 block'>Password</label>
-                                    <input id="input-id" type="password" name="" placeholder="Your password" className="form-control" />
+                                    <input id="input-id" type="password" name="password" value={studentDetails.password} onChange={handleChange} placeholder="Your password" className="form-control" />
                                 </div>
-                                <button className='btn btn-primary w-full'>
+                                <button type='button' onClick={handleSubmit} className='btn btn-primary w-full' disabled={isLoginSubmitted}>
                                     Sign In
                                 </button>
                                 <div className='mt-4'>

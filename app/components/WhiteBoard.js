@@ -94,7 +94,7 @@ const Whiteboard = () => {
 
     // Broadcast data to Laravel backend
     const broadcastUpdate = (x, y, type) => {
-        fetch(`http://192.168.56.1:8000/api/whiteboard/update/${session_id}`, {
+        fetch(`https://e-learn.godesqsites.com/api/whiteboard/update/${session_id}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ x, y, type, color: '#000000' }), // You can adjust color or other properties here
@@ -155,7 +155,8 @@ const Whiteboard = () => {
                     onMouseMove={draw}
                     onMouseUp={stopDrawing}
                     onMouseLeave={stopDrawing}
-
+                    width={1000}
+                    height={700}
                     style={{ border: '1px solid black' }}
                 />
             </div>

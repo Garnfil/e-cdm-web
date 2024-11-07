@@ -36,7 +36,7 @@ export default function SchedulePage() {
 
     const fetchInstructorSchedules = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.56.1:8000/api/instructors/${session.user.id}/class-schedules`, {
+            const response = await axios.get(`https://e-learn.godesqsites.com/api/instructors/${session.user.id}/class-schedules`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,
@@ -64,7 +64,7 @@ export default function SchedulePage() {
 
     const fetchInstructorClasses = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.56.1:8000/api/instructors/${session.user.id}/classes`, {
+            const response = await axios.get(`https://e-learn.godesqsites.com/api/instructors/${session.user.id}/classes`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,
@@ -88,7 +88,7 @@ export default function SchedulePage() {
         try {
             let formData = new FormData(e.target);
 
-            const response = await axios.post(`http://192.168.56.1:8000/api/class-schedules`, formData, {
+            const response = await axios.post(`https://e-learn.godesqsites.com/api/class-schedules`, formData, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,

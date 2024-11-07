@@ -168,7 +168,7 @@ export default function ChildrenPage() {
                                 </tr>
                                 <tr class="*:px-6 *:py-4 *:whitespace-nowrap text-center">
                                     <td>
-                                        <div class="text-start">Develop the backend product search requests</div>
+                                        <div class="text-start">4H - Second Subject</div>
                                     </td>
                                     <td>
                                         <span class="text-neutral-500 dark:text-neutral-300 text-sm">0</span>
@@ -176,7 +176,7 @@ export default function ChildrenPage() {
                                 </tr>
                                 <tr class="*:px-6 *:py-4 *:whitespace-nowrap text-center">
                                     <td>
-                                        <div class="text-start">Implement keyword-based searches for products</div>
+                                        <div class="text-start">4H - Third Subject</div>
                                     </td>
                                     <td>
                                         <span class="text-neutral-500 dark:text-neutral-300 text-sm">0</span>
@@ -184,7 +184,7 @@ export default function ChildrenPage() {
                                 </tr>
                                 <tr class="*:px-6 *:py-4 *:whitespace-nowrap text-center">
                                     <td>
-                                        <div class="text-start">Implement category-based search filter products</div>
+                                        <div class="text-start">4H - Fourth Subject</div>
                                     </td>
                                     <td>
                                         <span class="text-neutral-500 dark:text-neutral-300 text-sm">0</span>
@@ -192,15 +192,7 @@ export default function ChildrenPage() {
                                 </tr>
                                 <tr class="*:px-6 *:py-4 *:whitespace-nowrap text-center">
                                     <td>
-                                        <div class="text-start">Implement sorting options to sort the search results</div>
-                                    </td>
-                                    <td>
-                                        <span class="text-neutral-500 dark:text-neutral-300 text-sm">0</span>
-                                    </td>
-                                </tr>
-                                <tr class="*:px-6 *:py-4 *:whitespace-nowrap text-center">
-                                    <td>
-                                        <div class="text-start">Ensure the responsive and works on different devices</div>
+                                        <div class="text-start">4H - Fifth Subject</div>
                                     </td>
                                     <td>
                                         <span class="text-neutral-500 dark:text-neutral-300 text-sm">0</span>

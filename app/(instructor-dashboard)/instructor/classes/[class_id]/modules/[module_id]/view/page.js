@@ -39,7 +39,7 @@ export default function ViewModulePage() {
 
     const fetchModule = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.56.1:8000/api/modules/${module_id}`, {
+            const response = await axios.get(`https://e-learn.godesqsites.com/api/modules/${module_id}`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session.token}`
@@ -89,7 +89,7 @@ export default function ViewModulePage() {
         try {
             let formData = new FormData(e.target);
             setSubmitBtnLoad(true);
-            const response = await axios.post(`http://192.168.56.1:8000/api/modules/attachments/single-upload`, formData, {
+            const response = await axios.post(`https://e-learn.godesqsites.com/api/modules/attachments/single-upload`, formData, {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "multipart/form-data",
@@ -124,7 +124,7 @@ export default function ViewModulePage() {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = await axios.delete(`http://192.168.56.1:8000/api/school-works/attachments/${attachment_id}/destroy`, {
+                    const response = await axios.delete(`https://e-learn.godesqsites.com/api/school-works/attachments/${attachment_id}/destroy`, {
                         headers: {
                             "Accept": "application/json",
                             "Authorization": `Bearer ${authSession.token}`,
@@ -149,7 +149,7 @@ export default function ViewModulePage() {
 
     const handleUpdateModule = async () => {
         try {
-            const response = await axios.put(`http://192.168.56.1:8000/api/modules/${moduleDetails.id}`, moduleDetails, {
+            const response = await axios.put(`https://e-learn.godesqsites.com/api/modules/${moduleDetails.id}`, moduleDetails, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`
@@ -169,7 +169,7 @@ export default function ViewModulePage() {
         <div className='container-fluid'>
             <div className='flex justify-between items-center mb-5'>
                 <div>
-                    <h2 className='text-2xl font-bold'>Assignment</h2>
+                    <h2 className='text-2xl font-bold'>Module</h2>
                     <nav className="breadcrumb" aria-label="Breadcrumb">
                         <ol className="list-none text-sm p-0 inline-flex">
                             <li className="flex items-center">
@@ -181,12 +181,12 @@ export default function ViewModulePage() {
                             </li>
                             <li className="flex items-center">
                                 <span className="mx-2">›</span>
-                                <a href="#" className="font-bold">View Assignment</a>
+                                <a href="#" className="font-bold">View Module</a>
                             </li>
                         </ol>
                     </nav>
                 </div>
-                <Link href={'/instructor/classes/1'} className='btn btn-primary hover-shadow'><i className="bi bi-arrow-left mr-1"></i> Back to Class</Link>
+                <Link href={`/instructor/classes/${class_id}`} className='btn btn-primary hover-shadow'><i className="bi bi-arrow-left mr-1"></i> Back to Class</Link>
             </div>
             <div className="my-3">
                 <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6'>
@@ -222,7 +222,7 @@ export default function ViewModulePage() {
                             </div>
 
                             <div className='form-group'>
-                                <label className='mb-2 block'>Instructions (optional)</label>
+                                <label className='mb-2 block'>Description </label>
                                 <textarea className='form-control'
                                     rows={10}
                                     cols={10}
@@ -235,7 +235,7 @@ export default function ViewModulePage() {
 
 
                             <div className='mb-3 mt-5'>
-                                <h2 className='mb-3 text-xl font-bold'>School Work Attachments</h2>
+                                <h2 className='mb-3 text-xl font-bold'>Module Attachments</h2>
                                 <div className='flex flex-col gap-3'>
                                     {
                                         moduleDetails.attachments.length > 0 ? (

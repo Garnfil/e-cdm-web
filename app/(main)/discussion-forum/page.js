@@ -26,7 +26,7 @@ export default function page() {
 
     const fetchDiscussions = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.56.1:8000/api/discussions`, {
+            const response = await axios.get(`https://e-learn.godesqsites.com/api/discussions`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session?.token}`,
@@ -49,7 +49,7 @@ export default function page() {
 
     const fetchUserInstitute = async () => {
         try {
-            const response = await axios.get(`http://192.168.56.1:8000/api/institutes/${authSession?.user?.institute_id}`, {
+            const response = await axios.get(`https://e-learn.godesqsites.com/api/institutes/${authSession?.user?.institute_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,
@@ -65,7 +65,7 @@ export default function page() {
 
     const fetchUserCourse = async () => {
         try {
-            const response = await axios.get(`http://192.168.56.1:8000/api/courses/${authSession?.user?.course_id}`, {
+            const response = await axios.get(`https://e-learn.godesqsites.com/api/courses/${authSession?.user?.course_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,
@@ -95,7 +95,7 @@ export default function page() {
 
         try {
             let formData = new FormData(e.target);
-            const response = await axios.post(`http://192.168.56.1:8000/api/discussions`, formData, {
+            const response = await axios.post(`https://e-learn.godesqsites.com/api/discussions`, formData, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession?.token}`,
@@ -104,6 +104,7 @@ export default function page() {
             });
 
             toast.success("Added");
+            fetchDiscussions(authSession)
         } catch (error) {
             toast.error(error.message ?? "Server Error");
         }
