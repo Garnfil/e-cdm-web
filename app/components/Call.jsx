@@ -114,7 +114,7 @@ function Videos(props) {
                     <div id="messages">
                         <div class="message__wrapper">
                             <div class="message__body__bot">
-                                <strong class="message__author__bot">🤖 Mumble Bot</strong>
+                                <strong class="message__author__bot">🤖 E-CDM Bot</strong>
                                 <p class="message__text__bot">Welcome to the room, Don't be shy, say hello!</p>
                             </div>
                         </div>
