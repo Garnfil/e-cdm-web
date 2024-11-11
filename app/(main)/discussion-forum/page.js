@@ -173,10 +173,10 @@ export default function page() {
                                         <label className='form-label font-bold'>Content</label>
                                         <textarea className='form-control my-2' style={{ height: "150px" }} name='discussion_content' rows={20} cols={20}></textarea>
                                     </div>
-                                    <div className='form-group'>
+                                    {/* <div className='form-group'>
                                         <label className='form-label font-bold'>Images</label>
                                         <input className='form-control my-2' type='file' multiple name='images[]' />
-                                    </div>
+                                    </div> */}
                                     <button className='w-full btn btn-primary'>Post and Upload</button>
                                 </form>
                             </DialogHeader>

@@ -6,6 +6,8 @@ import axios from 'axios';
 import { useParams } from 'next/navigation';
 import { formatDate } from 'date-fns';
 import Pusher from 'pusher-js';
+import cdmAvatar from '../../../../../../public/user-profile.jpg';
+import Image from 'next/image';
 
 const ClassChatPage = () => {
     const params = useParams();
@@ -88,9 +90,10 @@ const ClassChatPage = () => {
                 }
             })
 
-            console.log(response);
-        } catch (error) {
+            setMessage("");
 
+        } catch (error) {
+            console.log(response);
         }
     }
 
@@ -108,7 +111,7 @@ const ClassChatPage = () => {
                                 messages.map((message, index) => (
                                     <div className={`${authSession?.user?.id == message.user.id && authSession.user.role == message.user.role ? "chat-2" : "chat-1"} hsdfdsfhsdf lsdfdfsdafd gap-2`} key={index}>
                                         <div className="chat-avatar hsdfdsfhsdf-none w-8 h-8 hsdfdsfhsdf pdskdmsdnjw justify-center rounded-full font-bold bg-neutral-100 dark:bg-neutral-700 border border-black">
-                                            <img src="../src/img/avatar/male5.jpg" alt="avatar" className="w-8 h-8 rounded-full" />
+                                            <Image src={cdmAvatar} width={0} height={0} alt="avatar" className="w-8 h-8 rounded-full" />
                                         </div>
 
                                         <div className="chat-content max-w-[280px] py-2 px-4 w-auto bg-neutral-100 dark:bg-neutral-700 border border-black">
