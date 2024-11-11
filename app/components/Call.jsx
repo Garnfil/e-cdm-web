@@ -2,7 +2,7 @@
 
 import AgoraRTC, {
     AgoraRTCProvider,
-    LocalVideoTrack,
+    LocalUser,
     RemoteUser,
     useJoin,
     useLocalCameraTrack,
@@ -12,7 +12,8 @@ import AgoraRTC, {
     useRemoteAudioTracks,
     useRemoteUsers,
 } from "agora-rtc-react";
-
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 function Call(props) {
     const client = useRTCClient(
@@ -21,114 +22,137 @@ function Call(props) {
 
     return (
         <AgoraRTCProvider client={client}>
-            <Videos channelName={props.channelName} AppID={props.appId} />
-            <div className="fixed z-10 bottom-0 left-0 right-0 flex justify-center pb-4">
-                <a
-                    className="px-5 py-3 text-base font-medium text-center text-white bg-red-400 rounded-lg hover:bg-red-500 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 w-40"
-                    href="/"
-                >
-                    End Call
-                </a>
-            </div>
+            <Videos channelName={props.channelName} AppID={props.appId} studentId={props.studentId} />
         </AgoraRTCProvider>
     );
 }
 
 function Videos(props) {
+    const router = useRouter();
+    const [micOn, setMic] = useState(false);
+    const [cameraOn, setCamera] = useState(true);
     const { AppID, channelName } = props;
-    const { isLoading: isLoadingMic, localMicrophoneTrack } =
-        useLocalMicrophoneTrack();
-    const { isLoading: isLoadingCam, localCameraTrack } = useLocalCameraTrack();
+    const { isLoading: isLoadingMic, localMicrophoneTrack } = useLocalMicrophoneTrack(micOn);
+    const { isLoading: isLoadingCam, localCameraTrack } = useLocalCameraTrack(cameraOn);
     const remoteUsers = useRemoteUsers();
     const { audioTracks } = useRemoteAudioTracks(remoteUsers);
+    const client = useRTCClient(); // Get the AgoraRTC client instance
+    const [isAllowed, setIsAllowed] = useState(true);
+    const [hasLeft, setHasLeft] = useState(false);
 
     usePublish([localMicrophoneTrack, localCameraTrack]);
+
     useJoin({
         appid: AppID,
         channel: channelName,
         token: null,
+        uid: props.studentId ?? "Instructor",
     });
 
     audioTracks.forEach((track) => track.play());
+
     const deviceLoading = isLoadingMic || isLoadingCam;
-    if (deviceLoading)
+
+    const leaveChannel = async () => {
+        try {
+            await client.leave();
+            setHasLeft(true);
+            console.log("Left the channel successfully");
+            router.back();
+        } catch (error) {
+            console.error("Failed to leave the channel:", error);
+        }
+    };
+
+    if (hasLeft) {
+        return (
+            <div className="flex flex-col items-center pt-40">
+                You have left the channel.
+            </div>
+        );
+    }
+
+    if (!isAllowed) {
+        return (
+            <div className="flex flex-col items-center pt-40">
+                Another tab is already open in this room.
+            </div>
+        );
+    }
+
+    if (deviceLoading) {
         return (
             <div className="flex flex-col items-center pt-40">Loading devices...</div>
         );
-    const unit = "minmax(0, 1fr) ";
+    }
 
     return (
-        <main class="container">
-
+        <main className="container">
             <div id="room__container">
                 <section id="members__container">
-
                     <div id="members__header">
-                        <p>Participants</p>
-                        <strong id="members__count">27</strong>
+                        <p>Participants <span className="text-small">({props.channelName})</span></p>
+                        <strong id="members__count">{remoteUsers.length + 1}</strong>
                     </div>
-
-                    <div id="member__list">
-                        <div class="member__wrapper" id="member__1__wrapper">
-                            <span class="green__icon"></span>
-                            <p class="member_name">Sulammita</p>
+                    <div id="member__list" className="mt-5">
+                        <div className="member__wrapper" id="member__2__wrapper">
+                            <span className="green__icon"></span>
+                            <p className="member_name">{props.studentId ?? "Instructor"} (You)</p>
+                            <div>
+                                <span>{cameraOn ? '📷 On' : '📷 Off'}</span>
+                                <span>{micOn ? '🎤 On' : '🎤 Off'}</span>
+                            </div>
                         </div>
-
-                        <div class="member__wrapper" id="member__2__wrapper">
-                            <span class="green__icon"></span>
-                            <p class="member_name">Dennis Ivy</p>
-                        </div>
-
+                        {remoteUsers.map((user) => (
+                            <div className="member__wrapper" id={`member__${user.uid}__wrapper`} key={user.uid}>
+                                <span className="green__icon"></span>
+                                <p className="member_name">User {user.uid}</p>
+                                <div>
+                                    <span>{user.videoTrack ? '📷 On' : '📷 Off'}</span>
+                                    <span>{user.audioTrack ? '🎤 On' : '🎤 Off'}</span>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-
                 </section>
 
                 <section id="stream__container">
                     <div id="streams__container">
-                        <LocalVideoTrack
-                            track={localCameraTrack}
-                            play={true}
+                        <LocalUser
+                            audioTrack={localMicrophoneTrack}
+                            cameraOn={cameraOn}
+                            micOn={micOn}
+                            videoTrack={localCameraTrack}
                             className="video__container"
-                        />
+                            cover="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png"
+                        >
+                            <samp className="user-name text-white text-xl">You</samp>
+                        </LocalUser>
                         {remoteUsers.map((user) => (
-                            <RemoteUser user={user} className="video__container" />
+                            <RemoteUser
+                                key={user.uid}
+                                user={user}
+                                cover="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png"
+                                className="video__container"
+                            />
                         ))}
-
                     </div>
 
-                    <div class="stream__actions">
-                        <button id="camera-btn">
-                            <i class="bi bi-camera-video"></i>
+                    <div className="stream__actions">
+                        <button id="camera-btn" className={cameraOn ? 'active' : null} onClick={() => setCamera((prev) => !prev)}>
+                            <i className="bi bi-camera-video"></i>
                         </button>
-                        <button id="mic-btn" class="active">
-                            <i class="bi bi-mic"></i>
+                        <button id="mic-btn" className={micOn ? 'active' : null} onClick={() => setMic((prev) => !prev)}>
+                            <i className="bi bi-mic"></i>
                         </button>
-                        <button id="leave-btn">
-                            <i class="bi bi-box-arrow-right"></i>
+                        <button id="leave-btn" onClick={leaveChannel}>
+                            <i className="bi bi-box-arrow-right"></i> Leave
                         </button>
                     </div>
                 </section>
-
-                {/* <section id="messages__container">
-
-                    <div id="messages">
-                        <div class="message__wrapper">
-                            <div class="message__body__bot">
-                                <strong class="message__author__bot">🤖 E-CDM Bot</strong>
-                                <p class="message__text__bot">Welcome to the room, Don't be shy, say hello!</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <form id="message__form">
-                        <input type="text" name="message" placeholder="Send a message...." />
-                    </form>
-
-                </section> */}
             </div>
         </main>
     );
 }
 
 export default Call;
-

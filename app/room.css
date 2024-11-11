@@ -47,6 +47,7 @@
   gap: 1rem;
   padding-top: 5rem;
   padding-bottom: 6.5rem;
+  margin-top: 30px;
 }
 
 .members__list::-webkit-scrollbar {
@@ -273,6 +274,11 @@
 }
 
 @media (max-width: 768px) {
+  .video__container {
+    height: 140px !important;
+    width: 140px !important;
+  }
+
   #stream__container {
     width: 100%;
   }

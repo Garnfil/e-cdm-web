@@ -29,12 +29,12 @@ export default function StudentSidebar() {
                         </Link>
                     </li>
                     <li>
-                        <Link href={'#'}>
+                        <Link href={'/student/grade'}>
                             <span className="flex-grow"><i className="bi bi-1-square-fill mr-2"></i> Grades</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href={'/'}>
+                        <Link href={'/student/whiteboard'}>
                             <span className="flex-grow"><i className="bi bi-clipboard-fill mr-2"></i> Whiteboard</span>
                         </Link>
                     </li>

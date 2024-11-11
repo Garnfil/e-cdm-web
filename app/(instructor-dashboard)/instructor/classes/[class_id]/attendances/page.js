@@ -140,7 +140,9 @@ export default function ClassAttendancePage() {
                                         <td className='p-4 whitespace-nowrap'>{attendance.attendance_code}</td>
                                         <td className='p-4 whitespace-nowrap'>{0}</td>
                                         <td className='p-4 whitespace-nowrap'>
-                                            <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
+                                            <Link href={`/instructor/classes/${class_id}/attendances/${attendance.attendance_code}`} className='py-1 px-2 bg-primary text-white rounded mr-2'>
+                                                <i className="bi bi-eye"></i>
+                                            </Link>
                                             <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
                                         </td>
                                     </tr>

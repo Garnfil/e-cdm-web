@@ -4,6 +4,7 @@ import jsCookie from 'js-cookie';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import { format, formatDate } from 'date-fns';
 
 export default function LiveConferenceClassesPage() {
     const router = useRouter();
@@ -17,6 +18,8 @@ export default function LiveConferenceClassesPage() {
     });
     const [classes, setClasses] = useState([]);
     const [authSession, setAuthSession] = useState({});
+    const [isSubmitLoading, setIsSubmitLoading] = useState(false);
+    const [recentClassSessions, setRecentClassSessions] = useState([]);
 
     const fetchClasses = async (session) => {
         try {
@@ -34,11 +37,27 @@ export default function LiveConferenceClassesPage() {
         }
     };
 
+    const fetchRecentClassSessions = async (session) => {
+        try {
+            const response = await axios.get(`https://e-learn.godesqsites.com/api/live-sessions/instructor-recent-classes`, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${session.token}`,
+                }
+            });
+
+            setRecentClassSessions(response.data.conference_sessions);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         let session = JSON.parse(jsCookie.get("session"));
         setAuthSession(session);
         setSessionDetails((prevDetails) => ({ ...prevDetails, instructor_id: session.user.id }));
         fetchClasses(session);
+        fetchRecentClassSessions(session);
     }, []);
 
     const handleChange = (e) => {
@@ -52,11 +71,12 @@ export default function LiveConferenceClassesPage() {
 
     const handleSessionSubmit = async () => {
         try {
-            const response = await axios.post('https://e-learn.godesqsites.com/api/live-sessions', {
+            setIsSubmitLoading(true);
+            let session = JSON.parse(jsCookie.get("session"));
+            const response = await axios.post('https://e-learn.godesqsites.com/api/live-sessions', sessionDetails, {
                 headers: {
                     "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${authSession.token}`,
+                    "Authorization": `Bearer ${session.token}`,
                 }
             });
 
@@ -74,15 +94,11 @@ export default function LiveConferenceClassesPage() {
 
                 toast.success("Session Added Successfully. Please wait for the scheduled time..");
             }
-
-
-            console.log(response);
+            setIsSubmitLoading(false);
         } catch (error) {
-            console.log(error);
-            toast.error(error.message ?? "Server Error")
+            setIsSubmitLoading(false);
+            toast.error(error?.response?.data?.message ?? "Server Error")
         }
-
-
     }
 
 
@@ -141,7 +157,7 @@ export default function LiveConferenceClassesPage() {
                             <label className='mb-2 block font-bold'>End DateTime</label>
                             <input type='datetime-local' className='form-control' name='end_datetime' id='end-datetime-field' onChange={handleChange} />
                         </div>
-                        <button type='button' onClick={handleSessionSubmit} className='w-full btn btn-primary'>Create</button>
+                        <button type='button' onClick={handleSessionSubmit} className='w-full btn btn-primary' disabled={isSubmitLoading}>Create</button>
                     </form>
                 </div>
                 <div className='border border-black w-[40%] bg-white'>
@@ -150,57 +166,34 @@ export default function LiveConferenceClassesPage() {
 
                     </div>
                     <div className='flex flex-col gap-3 my-3 p-3'>
-                        <div className="today relative flex flex-start gap-3">
-                            <div>
-                                <div className="py-2 w-12 bg-secondary border border-black text-black rounded flex flex-col items-center gap-0.5 text-today">
-                                    <span className="text-sm">May</span>
-                                    <span className="text-xl font-bold leading-none">15</span>
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-1.5">
-                                <h4 className="text-sm font-semibold">Class in BSIT-4D</h4>
-                                <div className="text-xs"><i className="bi bi-clock me-1"></i>14:30 PM - 15:00 PM</div>
-                            </div>
-                        </div>
-                        <div className="today relative flex flex-start gap-3">
-                            <div>
-                                <div className="py-2 w-12 bg-secondary border border-black text-black rounded flex flex-col items-center gap-0.5 text-today">
-                                    <span className="text-sm">May</span>
-                                    <span className="text-xl font-bold leading-none">11</span>
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-1.5">
-                                <h4 className="text-sm font-semibold">Class in BSIT-2E</h4>
-                                <div className="text-xs"><i className="bi bi-clock me-1"></i>14:30 PM - 15:00 PM</div>
-                            </div>
-                        </div>
-                        <div className="today relative flex flex-start gap-3">
-                            <div>
-                                <div className="py-2 w-12 bg-secondary border border-black text-black rounded flex flex-col items-center gap-0.5 text-today">
-                                    <span className="text-sm">May</span>
-                                    <span className="text-xl font-bold leading-none">11</span>
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-1.5">
-                                <h4 className="text-sm font-semibold">Class in BSIT-2A</h4>
-                                <div className="text-xs"><i className="bi bi-clock me-1"></i>10:30 AM - 11:00 AM</div>
-                            </div>
-                        </div>
-                        <div className="today relative flex flex-start gap-3">
-                            <div>
-                                <div className="py-2 w-12 bg-secondary border border-black text-black rounded flex flex-col items-center gap-0.5 text-today">
-                                    <span className="text-sm">May</span>
-                                    <span className="text-xl font-bold leading-none">11</span>
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-1.5">
-                                <h4 className="text-sm font-semibold">Class in BSIT-2C</h4>
-                                <div className="text-xs"><i className="bi bi-clock me-1"></i>8:30 AM - 9:30 AM</div>
-                            </div>
-                        </div>
+
+                        {
+                            recentClassSessions.length > 0 ? (
+                                recentClassSessions.map(class_session => (
+                                    <div className="today relative flex flex-start gap-3">
+                                        <div>
+                                            <div className="py-2 w-12 bg-secondary border border-black text-black rounded flex flex-col items-center gap-0.5 text-today">
+                                                <span className="text-sm">{formatDate(class_session.scheduled_datetime, "MMM")}</span>
+                                                <span className="text-xl font-bold leading-none">{formatDate(class_session.scheduled_datetime, "dd")}</span>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col gap-1.5">
+                                            <h4 className="text-sm font-semibold">Class in {class_session.classroom.title ?? ""}</h4>
+                                            <div className="text-xs"><i className="bi bi-clock me-1"></i>
+                                                <span className='mr-2'>{formatDate(class_session.start_datetime, 'MMM dd, yyyy h:m a')}</span>
+                                                -
+                                                <span className='ml-2'>{formatDate(class_session.end_datetime, 'MMM dd, yyyy h:m a')}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div></div>
+                            )
+                        }
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

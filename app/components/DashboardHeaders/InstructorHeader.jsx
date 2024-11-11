@@ -22,6 +22,10 @@ export default function InstructorHeader() {
         router.push('/instructor-login');
     }
 
+    const handleNavigateToProfile = () => {
+        router.push('/instructor/profile');
+    }
+
     return (
         <header className='fixed z-10 top-0 inset-x-0 lg:ms-64 py-3 px-4 lg:px-6 bg-neutral-100 flex justify-between items-center border-b border-black'>
             <div className='flex items-center gap-3'>
@@ -51,7 +55,7 @@ export default function InstructorHeader() {
                             <Image src={cdmLogo} className="w-10 h-10 flex-none rounded-full bg-white pointer-events-none" />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent aria-label="Static Actions" className="bg-white">
-                            <DropdownMenuItem key="profile">Profile</DropdownMenuItem>
+                            <DropdownMenuItem key="profile" className="cursor-pointer" onClick={handleNavigateToProfile}>Profile</DropdownMenuItem>
                             <DropdownMenuItem key="logout" className="text-danger cursor-pointer" color="danger" onClick={handleLogout}>
                                 Logout
                             </DropdownMenuItem>

@@ -1,7 +1,37 @@
+"use client"
+
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import jsCookie from 'js-cookie';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 export default function LiveSessionsPage() {
+    const [authSession, setAuthSession] = useState({});
+    const [conferenceSessions, setConferenceSessions] = useState([]);
+
+    const fetchConferenceSessions = async (session) => {
+        try {
+            const response = await axios.get(`https://e-learn.godesqsites.com/api/live-sessions/students/${session.user.id}/classes`, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${session.token}`
+                }
+            });
+
+            setConferenceSessions(response.data?.conference_sessions);
+
+        } catch (error) {
+            toast.error(error.message ?? "Server Error");
+        }
+    }
+
+    useEffect(() => {
+        const session = JSON.parse(jsCookie.get('session'));
+        setAuthSession(session);
+        fetchConferenceSessions(session);
+    }, [])
+
     return (
         <div className='container-fluid'>
             <div className='flex justify-between items-center mb-5'>
@@ -33,18 +63,30 @@ export default function LiveSessionsPage() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className='p-2 border border-black text-center'>1</td>
-                            <td className='p-2 border border-black text-center'>5623456</td>
-                            <td className='p-2 border border-black text-center'>Mr. John Pascual</td>
-                            <td className='p-2 border border-black text-center'>20</td>
-                            <td className='py-3 border border-black text-center'>
-                                <Link href={'/student/live-sessions/1'} className=' btn-primary px-2 py-1 hover-shadow rounded'><i className='bi bi-eye-fill'></i></Link>
-                            </td>
-                        </tr>
+                        {
+                            conferenceSessions.length > 0 ? (
+                                conferenceSessions.map(session => (
+                                    <tr>
+                                        <td className='p-2 border border-black text-center'>{session.id}</td>
+                                        <td className='p-2 border border-black text-center'>{session.session_code}</td>
+                                        <td className='p-2 border border-black text-center'>{session.instructor?.firstname} {session.instructor?.lastname}</td>
+                                        <td className='p-2 border border-black text-center'>{session.joined_students.length}</td>
+                                        <td className='py-3 border border-black text-center'>
+                                            <Link href={`/video-class-conference/${session.session_code}`} className=' btn-primary px-2 py-1 hover-shadow rounded'>Join</Link>
+                                        </td>
+                                    </tr>
+                                ))
+
+                            ) : (
+                                <tr>
+                                    <td colSpan={5}>No Sessions Found</td>
+                                </tr>
+                            )
+                        }
+
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div >
     )
 }
