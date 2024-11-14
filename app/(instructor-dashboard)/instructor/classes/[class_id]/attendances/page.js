@@ -58,10 +58,29 @@ export default function ClassAttendancePage() {
 
             if (response.status == 200) {
                 toast.success('Attendance Added Successfully');
+                location.reload();
             }
 
         } catch (error) {
             toast.error(error.message ?? "Server Error");
+        }
+    }
+
+    const handleDeleteAttendance = async (attendanceId) => {
+        try {
+            const response = await axios.delete(`https://e-learn.godesqsites.com/api/attendances/${attendanceId}`, {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${authSession.token}`,
+                }
+            });
+
+            if (response.status === 200) {
+                toast.success('Attendance Deleted Successfully');
+                setAttendances(attendances.filter(attendance => attendance.id !== attendanceId));
+            }
+        } catch (error) {
+            toast.error(error.message ?? "Failed to delete attendance");
         }
     }
 
@@ -143,7 +162,7 @@ export default function ClassAttendancePage() {
                                             <Link href={`/instructor/classes/${class_id}/attendances/${attendance.attendance_code}`} className='py-1 px-2 bg-primary text-white rounded mr-2'>
                                                 <i className="bi bi-eye"></i>
                                             </Link>
-                                            <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
+                                            <button onClick={() => handleDeleteAttendance(attendance.id)} className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
                                         </td>
                                     </tr>
                                 ))

@@ -138,22 +138,16 @@ export default function StudentSubmissionPage() {
 
                             </div>
                             <div className="border border-black bg-white p-4" style={{ height: "calc(100vh - 200px)" }}>
-                                <div className="border border-black h-full">
-                                    {
-                                        selectedSubmissionAttachment?.attachment_type === "file" ? (
-                                            <iframe
-                                                frameBorder="0"
-                                                scrolling="yes"
-                                                width="100%"
-                                                height="100%"
-                                                src={`http://e-learn.godesqsites.com/assets/uploads/student_submission_attachments/${selectedSubmissionAttachment.attachment_name}?height=400px`}
-                                                name="imgbox"
-                                                id="imgbox"
-                                                allowFullScreen={true}
 
-                                            ></iframe>
-                                        ) : (
+                                {(
+                                    selectedSubmissionAttachment?.attachment_type === "file" ? (
+                                        <div className='m-3'>
+                                            <a target='_blank' href={`https://e-learn.godesqsites.com/assets/uploads/student_submission_attachments/${selectedSubmissionAttachment.attachment_name}`} className='btn btn-primary'>View File <i class="bi bi-file-earmark"></i></a>
+                                        </div>
+                                    ) : (
+                                        <div className="border border-black h-full">
                                             <iframe
+
                                                 frameBorder="0"
                                                 scrolling="yes"
                                                 width="100%"
@@ -161,11 +155,16 @@ export default function StudentSubmissionPage() {
                                                 src={`${selectedSubmissionAttachment.attachment_name}`}
                                                 name="imgbox"
                                                 id="imgbox"
+                                                referrerpolicy="strict-origin-when-cross-origin"
                                                 allowFullScreen={true}
                                             ></iframe>
-                                        )
-                                    }
-                                </div>
+                                            {/* <iframe width="100%" height="100%"
+                                                src="https://www.youtube.com/embed/ezbJwaLmOeM?si=D6lYATpTeQSe0cft" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+                                            </iframe> */}
+                                        </div>
+                                    )
+                                )}
+
                             </div>
                         </div>
                         <div className="col-span-1">

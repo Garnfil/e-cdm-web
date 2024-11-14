@@ -80,23 +80,11 @@ export default function LiveConferenceClassesPage() {
                 }
             });
 
-            const conference_session = response.data.conference_session;
-            if (new Date(conference_session.scheduled_datetime) <= new Date()) {
-                router.push(`/video-class-conference/${conference_session.session_code}`);
-            } else {
-                setSessionDetails((prevDetails) => ({
-                    class_id: '',
-                    description: '',
-                    end_datetime: '',
-                    start_datetime: '',
-                    title: ''
-                }))
-
-                toast.success("Session Added Successfully. Please wait for the scheduled time..");
-            }
+            router.push(`/video-class-conference/${response.data.conference_session.session_code}`);
             setIsSubmitLoading(false);
         } catch (error) {
             setIsSubmitLoading(false);
+            console.log(error);
             toast.error(error?.response?.data?.message ?? "Server Error")
         }
     }
@@ -149,14 +137,14 @@ export default function LiveConferenceClassesPage() {
                                 }
                             </select>
                         </div>
-                        <div className='form-group'>
+                        {/* <div className='form-group'>
                             <label className='mb-2 block font-bold'>Start DateTime</label>
                             <input type='datetime-local' className='form-control' name='start_datetime' id='start-datetime-field' onChange={handleChange} />
                         </div>
                         <div className='form-group'>
                             <label className='mb-2 block font-bold'>End DateTime</label>
                             <input type='datetime-local' className='form-control' name='end_datetime' id='end-datetime-field' onChange={handleChange} />
-                        </div>
+                        </div> */}
                         <button type='button' onClick={handleSessionSubmit} className='w-full btn btn-primary' disabled={isSubmitLoading}>Create</button>
                     </form>
                 </div>

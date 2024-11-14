@@ -12,8 +12,10 @@ import AgoraRTC, {
     useRemoteAudioTracks,
     useRemoteUsers,
 } from "agora-rtc-react";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import jsCookie from 'js-cookie';
 
 function Call(props) {
     const client = useRTCClient(
@@ -55,6 +57,14 @@ function Videos(props) {
 
     const leaveChannel = async () => {
         try {
+            const session = JSON.parse(jsCookie.get('session'));
+            const response = await axios.post(`https://e-learn.godesqsites.com/api/live-sessions/leave-session`, { session_code: props.session_id }, {
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${session.token}`,
+                }
+            });
+
             await client.leave();
             setHasLeft(true);
             console.log("Left the channel successfully");

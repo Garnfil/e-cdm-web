@@ -34,6 +34,11 @@ export default function StudentSidebar() {
                         </Link>
                     </li>
                     <li>
+                        <Link href={'/student/guardian'}>
+                            <span className="flex-grow"><i className="bi bi-people-fill mr-2"></i> Guardian</span>
+                        </Link>
+                    </li>
+                    <li>
                         <Link href={'/student/whiteboard'}>
                             <span className="flex-grow"><i className="bi bi-clipboard-fill mr-2"></i> Whiteboard</span>
                         </Link>

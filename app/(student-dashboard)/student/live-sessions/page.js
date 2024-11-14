@@ -58,7 +58,6 @@ export default function LiveSessionsPage() {
                             <th className='p-2 border border-black'>Id</th>
                             <th className='p-2 border border-black'>Session Code</th>
                             <th className='p-2 border border-black'>Instructor</th>
-                            <th className='p-2 border border-black'>Participants</th>
                             <th className='p-2 border border-black'>Actions</th>
                         </tr>
                     </thead>
@@ -70,7 +69,6 @@ export default function LiveSessionsPage() {
                                         <td className='p-2 border border-black text-center'>{session.id}</td>
                                         <td className='p-2 border border-black text-center'>{session.session_code}</td>
                                         <td className='p-2 border border-black text-center'>{session.instructor?.firstname} {session.instructor?.lastname}</td>
-                                        <td className='p-2 border border-black text-center'>{session.joined_students.length}</td>
                                         <td className='py-3 border border-black text-center'>
                                             <Link href={`/video-class-conference/${session.session_code}`} className=' btn-primary px-2 py-1 hover-shadow rounded'>Join</Link>
                                         </td>
