@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DayPicker, getDefaultClassNames } from "react-day-picker";
 import "react-day-picker/style.css";
 import classTagIcon from "../../../../public/classroom-board.png";
@@ -8,18 +8,49 @@ import taskListIcon from "../../../../public/task-list.png";
 import medalIcon from "../../../../public/medal.png";
 import Image from 'next/image';
 import Link from 'next/link';
+import jsCookie from "js-cookie";
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function StudentDashboardPage() {
+
+
+    const fetchPendingSchoolWorks = async (session) => {
+        try {
+            const response = await axios.get(`https://e-learn.godesqsites.com/api/students/${session?.user?.id}/classes/${null}/school-works/todos`, {
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${session?.token}`
+                }
+            });
+
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message ?? "Server Error");
+        }
+    }
+
+    const fetchTotalEnrolledClassAndCompletedWorks = async (session) => {
+
+    }
+
+    useEffect(() => {
+        let session = JSON.parse(jsCookie.get("session"));
+        fetchPendingSchoolWorks(session);
+        fetchTotalEnrolledClassAndCompletedWorks(session);
+    }, [])
+
     const defaultClassNames = getDefaultClassNames();
     const [selected, setSelected] = useState(new Date());
     return (
         <div className='container-fluid'>
             <div className='grid grid-cols-3 gap-3'>
                 <div className='col-span-2'>
-                    <div className='grid grid-cols-3 gap-2'>
+                    <div className='grid grid-cols-2 gap-2'>
                         <div className='bg-white border border-black hover-shadow p-2 py-5'>
                             <div className='flex justify-start items-center gap-4'>
-                                <Image src={classTagIcon} width={0} height={0} />
+                                <Image src={classTagIcon} width={0} height={0} alt='image' />
                                 <div>
                                     <h3 className='text-3xl font-semibold'>25</h3>
                                     <h6 className='text-xs text-muted'>Total Enrolled Class</h6>
@@ -28,22 +59,14 @@ export default function StudentDashboardPage() {
                         </div>
                         <div className='bg-white border border-black hover-shadow p-2 py-5'>
                             <div className='flex justify-start items-center gap-4'>
-                                <Image src={taskListIcon} width={64} height={64} />
+                                <Image src={taskListIcon} width={64} height={64} alt='image' />
                                 <div>
                                     <h3 className='text-3xl font-semibold'>55</h3>
                                     <h6 className='text-xs text-muted'>Completed School Works</h6>
                                 </div>
                             </div>
                         </div>
-                        <div className='bg-white border border-black hover-shadow p-2 py-5'>
-                            <div className='flex justify-start items-center gap-4'>
-                                <Image src={medalIcon} width={64} height={64} />
-                                <div>
-                                    <h3 className='text-3xl font-semibold'>15</h3>
-                                    <h6 className='text-xs text-muted'>Total Earned Badges</h6>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                     <div className='my-4'>
                         <h3 className='text-xl font-bold'>Pending School Works</h3>

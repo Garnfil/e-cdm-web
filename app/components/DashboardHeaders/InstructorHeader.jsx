@@ -39,16 +39,8 @@ export default function InstructorHeader() {
                 </div>
             </div>
             <div className='flex items-center gap-3'>
-                <div className='relative'>
-                    <button className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-white border border-black hover-shadow">
-                        <i className="bi bi-gear-fill"></i>
-                    </button>
-                </div>
-                <div className='relative'>
-                    <button className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-white border border-black hover-shadow">
-                        <i className="bi bi-bell-fill"></i>
-                    </button>
-                </div>
+
+
                 <div className='relative'>
                     <DropdownMenu>
                         <DropdownMenuTrigger className='hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-white border border-black hover-shadow'>

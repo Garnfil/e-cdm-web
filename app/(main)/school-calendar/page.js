@@ -1,6 +1,7 @@
 "use client"
-import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 import cdmLogo from '../../../public/cdm-logo.webp';
 import Link from "next/link";
 import FullCalendar from '@fullcalendar/react';
@@ -13,16 +14,19 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
+import { formatDate } from 'date-fns';
 
 export default function SchoolCalendar() {
     const [events, setEvents] = useState([]);
+    const [selectedEvent, setSelectedEvent] = useState(null);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const fetchEvents = async () => {
         const response = await axios.get('https://e-learn.godesqsites.com/api/school-events', {
             headers: {
                 "Accept": 'application/json',
-            }
+            },
         });
 
         const events = await response.data.events;
@@ -34,27 +38,34 @@ export default function SchoolCalendar() {
                     date: event.event_date,
                     description: event.description,
                     className: 'bg-primary text-white px-2 hover:bg-primary',
-                }
+                };
             });
             setEvents(eventsData);
         }
-    }
+    };
 
     useEffect(() => {
         fetchEvents();
     }, []);
+
+    const handleEventClick = (arg) => {
+        const clickedEvent = events.find(event => event.id == arg.event._def.publicId);
+        console.log(clickedEvent);
+        setSelectedEvent(clickedEvent);
+        setIsDialogOpen(true);
+    };
 
     return (
         <main className='bg-main'>
             <section className='py-5'>
                 <div className='max-width-container h-full'>
                     <h1 className='text-4xl font-bold text-center my-5'>School Event Calendar</h1>
-                    <div className=' p-3'>
+                    <div className='p-3'>
                         <FullCalendar
                             plugins={[dayGridPlugin]}
                             initialView="dayGridMonth"
                             events={events}
-                            eventClick={(arg) => console.log(arg.event.id)}
+                            eventClick={handleEventClick}
                             eventContent={(info) => (
                                 <div>
                                     <strong>{info.event.title}</strong>
@@ -63,10 +74,21 @@ export default function SchoolCalendar() {
                             )}
                         />
                     </div>
+                    {selectedEvent && (
+                        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                            <DialogContent className="bg-white">
+                                <DialogHeader>
+                                    <DialogTitle>{selectedEvent.title}</DialogTitle>
+                                    <DialogDescription>{formatDate(selectedEvent.date, "MMM dd, yyyy h:m a")}</DialogDescription>
+                                </DialogHeader>
+                                <div>
+                                    <p>{selectedEvent.description}</p>
+                                </div>
+                            </DialogContent>
+                        </Dialog>
+                    )}
                 </div>
-
-
             </section>
         </main>
-    )
+    );
 }

@@ -38,30 +38,8 @@ export default function Class() {
                     <div className='xl:col-span-3'>
                         <ClassHeader classId={class_id} />
                     </div>
-                    <div className='xl:col-span-2 relative'>
+                    <div className='xl:col-span-3 relative'>
                         <ClassFeed classId={class_id} />
-                    </div>
-                    <div className='xl:col-span-1 flex flex-col gap-6'>
-                        <div className='hover-shadow border-black border p-6 text-base bg-white'>
-                            <div className='text-lg font-semibold mb-4'>
-                                Filter
-                            </div>
-                            <div className="relative mb-3">
-                                <div className="flex flex-nowrap lsdfdfsdafd gap-3 pdskdmsdnjw mb-2">
-                                    <input className="form-checkbox h-5 w-5 accent-primary" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
-                                    <label className="inline-block" htmlFor="flexRadioDefault2">
-                                        Modules
-                                    </label>
-                                </div>
-                                <div className="flex flex-nowrap lsdfdfsdafd gap-3 pdskdmsdnjw mb-2">
-                                    <input className="form-checkbox h-5 w-5 accent-primary" type="radio" name="flexRadioDefault" id="flexRadioDefault3" />
-                                    <label className="inline-block" htmlFor="flexRadioDefault3">
-                                        School Works
-                                    </label>
-                                </div>
-                            </div>
-                            <button className='btn btn-primary hover-shadow w-full'><i className="bi bi-filter"></i> Apply Filter</button>
-                        </div>
                     </div>
                 </div>
             </div>

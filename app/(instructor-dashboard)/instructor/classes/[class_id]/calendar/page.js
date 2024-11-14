@@ -7,6 +7,15 @@ import { useParams, useRouter } from 'next/navigation';
 import axios from 'axios';
 import jsCookie from 'js-cookie';
 import { toast } from 'react-toastify';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+import { formatDate } from 'date-fns';
 
 export default function ClassCalendarPage() {
     const params = useParams();
@@ -15,6 +24,8 @@ export default function ClassCalendarPage() {
 
     const [authSession, setAuthSession] = useState({});
     const [schoolWorks, setSchoolWorks] = useState([]);
+    const [selectedSchoolWork, setselectedSchoolWork] = useState([]);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 
     const fetchSchoolWorks = async (session) => {
@@ -29,7 +40,9 @@ export default function ClassCalendarPage() {
             if (response.data.school_works.length > 0) {
                 let schoolWorksData = response.data.school_works.map(school_work => (
                     {
+                        id: school_work.id,
                         title: school_work.title,
+                        description: school_work.description,
                         type: school_work.type,
                         color: '#0b4d10',
                         start: school_work.due_datetime,
@@ -45,6 +58,13 @@ export default function ClassCalendarPage() {
             toast.error(error.message ?? "Server Error");
         }
     }
+
+    const handleEventClick = (arg) => {
+        const clickedEvent = schoolWorks.find(school_work => school_work.id == arg.event._def.publicId);
+        console.log(clickedEvent);
+        setselectedSchoolWork(clickedEvent);
+        setIsDialogOpen(true);
+    };
 
     useEffect(() => {
         let session = JSON.parse(jsCookie.get("session"));
@@ -66,10 +86,23 @@ export default function ClassCalendarPage() {
                             plugins={[dayGridPlugin]}
                             initialView="dayGridMonth"
                             events={schoolWorks}
+                            eventClick={handleEventClick}
                             eventColor="#0b4d10"
                         />
                     </div>
                 </div>
+                {selectedSchoolWork && (
+                    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                        <DialogContent className="bg-white">
+                            <DialogHeader>
+                                <DialogTitle>{selectedSchoolWork.title}</DialogTitle>
+                            </DialogHeader>
+                            <div>
+                                <p>{selectedSchoolWork.description}</p>
+                            </div>
+                        </DialogContent>
+                    </Dialog>
+                )}
             </div>
         </div>
     )

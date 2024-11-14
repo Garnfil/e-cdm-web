@@ -51,7 +51,6 @@ export default function StudentHeader() {
                             <Image src={cdmLogo} className="w-10 h-10 flex-none rounded-full bg-white pointer-events-none" />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent aria-label="Static Actions" className="bg-white">
-                            <DropdownMenuItem key="profile">Profile</DropdownMenuItem>
                             <DropdownMenuItem key="logout" className="text-danger cursor-pointer" color="danger" onClick={handleLogout}>
                                 Logout
                             </DropdownMenuItem>

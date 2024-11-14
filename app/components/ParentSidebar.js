@@ -13,7 +13,7 @@ export default function ParentSidebar() {
                 </div>
 
                 <ul className="flex flex-col gap-2 w-full px-4 instructor-sidebar-list">
-                    <li>
+                    <li className="active">
                         <Link href={"/guardian/dashboard"}>
                             <span className="flex-grow">
                                 <i className="bi bi-house-door-fill mr-2"></i> Dashboard

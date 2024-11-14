@@ -107,7 +107,7 @@ export default function InstructorDashboard() {
                             Add Class <i className="bi bi-plus-lg"></i>
                         </Link>
                     </div>
-                    <div className="bg-white w-[40%] hover-shadow border-black rounded border hover:-translate-x-0.5 duration-300 p-6 flex flex-col gap-3">
+                    <div className="bg-white w-[70%] hover-shadow border-black rounded border hover:-translate-x-0.5 duration-300 p-6 flex flex-col gap-3">
                         <h4 className="font-medium text-xl">Class Schedule</h4>
                         <div className="flex flex-col gap-3">
                             {classSchedules.length > 0 ? (
