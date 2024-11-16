@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation';
 
 export default function page() {
     const router = useRouter();
-    const [authSession, setAuthSession] = useState({});
+    const [authSession, setAuthSession] = useState(null);
     const [visibilityContent, setVisibilityContent] = useState('');
     const [userInstitute, setUserInstitute] = useState({});
     const [userCourse, setUserCourse] = useState({});
@@ -41,7 +41,7 @@ export default function page() {
     }
 
     useEffect(() => {
-        let session = jsCookie.get("session") ? JSON.parse(jsCookie.get("session")) : {};
+        let session = jsCookie.get("session") ? JSON.parse(jsCookie.get("session")) : null;
         setAuthSession(session);
 
         fetchDiscussions(session);
@@ -112,6 +112,12 @@ export default function page() {
 
     const handleClickDiscussion = async (discussion_id) => {
         router.push(`/discussion-forum/${discussion_id}`);
+    }
+
+    if (!authSession) {
+        return (
+            <div className='text-center mt-4'>You need to login first.</div>
+        )
     }
 
     return (

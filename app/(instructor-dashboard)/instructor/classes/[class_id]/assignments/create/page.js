@@ -5,6 +5,7 @@ import jsCookie from 'js-cookie';
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import React, { useState, useEffect } from 'react'
+import { toast } from 'react-toastify';
 
 export default function CreateAssignmentPage() {
     const params = useParams();
@@ -12,6 +13,7 @@ export default function CreateAssignmentPage() {
 
     const { class_id } = params;
     const [instructorId, setInstructorId] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
     const [authSession, setSession] = useState({});
     const [assignmentDetails, setAssignmentDetails] = useState({
         class_id: "",
@@ -39,19 +41,26 @@ export default function CreateAssignmentPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+            setIsLoading(true)
 
-        const response = await axios.post(`https://e-learn.godesqsites.com/api/assignments`, assignmentDetails, {
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${authSession.token}`,
-                'Content-Type': 'application/json',
+            const response = await axios.post(`https://e-learn.godesqsites.com/api/assignments`, assignmentDetails, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${authSession.token}`,
+                    'Content-Type': 'application/json',
+                }
+            })
+
+            console.log(response);
+            if (response.status == 200) {
+                router.push(`/instructor/classes/${class_id}/assignments/${response.data.assignment.school_work_id}/view`);
             }
-        })
-
-        console.log(response);
-        if (response.status == 200) {
-            router.push(`/instructor/classes/${class_id}/assignments/${response.data.assignment.school_work_id}/view`);
+        } catch (error) {
+            toast.error("Failed! Please check all the input fields." ?? "Server Error")
+            console.log(error);
         }
+        setIsLoading(false);
 
     }
 
@@ -164,7 +173,7 @@ export default function CreateAssignmentPage() {
                                 </div>
                             </div> */}
                             </div>
-                            <button type="submit" className='w-full btn btn-primary'>Submit</button>
+                            <button type="submit" className='w-full btn btn-primary'>{isLoading ? "Loading..." : "Submit"}</button>
                         </div>
                     </div>
                 </div>

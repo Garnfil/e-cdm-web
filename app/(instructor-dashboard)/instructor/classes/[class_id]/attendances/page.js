@@ -142,9 +142,7 @@ export default function ClassAttendancePage() {
                             <th scope='col' className='min-w-20 p-4 text-start text-xs font-medium text-black uppercase tracking-wider'>
                                 Attendance Code
                             </th>
-                            <th scope='col' className='min-w-20 p-4 text-start text-xs font-medium text-black uppercase tracking-wider'>
-                                Total Student Present
-                            </th>
+
                             <th scope='col' className='min-w-20 p-4 text-start text-xs font-medium text-black uppercase tracking-wider'>
                                 Actions
                             </th>
@@ -157,7 +155,6 @@ export default function ClassAttendancePage() {
                                     <tr className="cursor-pointer" key={attendance.id}>
                                         <td className='p-4 whitespace-nowrap'>{attendance.id}</td>
                                         <td className='p-4 whitespace-nowrap'>{attendance.attendance_code}</td>
-                                        <td className='p-4 whitespace-nowrap'>{0}</td>
                                         <td className='p-4 whitespace-nowrap'>
                                             <Link href={`/instructor/classes/${class_id}/attendances/${attendance.attendance_code}`} className='py-1 px-2 bg-primary text-white rounded mr-2'>
                                                 <i className="bi bi-eye"></i>

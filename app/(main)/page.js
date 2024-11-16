@@ -13,9 +13,7 @@ export default function Home() {
                             <div className="flex justify-center items-start gap-2 h-full w-[80%] flex-col">
                                 <h1 className="text-[45px] font-[600]">Welcome to Colegio De Montalban – Shaping Minds, Building Futures</h1>
                                 <p>Empowering students with quality education and values for a brighter tomorrow.</p>
-                                <Link href={'/'} className="btn btn-primary mt-3">
-                                    Register Now
-                                </Link>
+
                             </div>
                         </div>
                         <div className="bg-[#0b4d10] w-[40%] h-full flex justify-center items-center">

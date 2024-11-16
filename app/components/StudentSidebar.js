@@ -28,16 +28,7 @@ export default function StudentSidebar() {
                             <span className="flex-grow"><i className="bi bi-calendar-event-fill mr-2"></i> Schedules</span>
                         </Link>
                     </li>
-                    <li>
-                        <Link href={'/student/grade'}>
-                            <span className="flex-grow"><i className="bi bi-1-square-fill mr-2"></i> Grades</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href={'/student/guardian'}>
-                            <span className="flex-grow"><i className="bi bi-people-fill mr-2"></i> Guardian</span>
-                        </Link>
-                    </li>
+
                     <li>
                         <Link href={'/student/whiteboard'}>
                             <span className="flex-grow"><i className="bi bi-clipboard-fill mr-2"></i> Whiteboard</span>

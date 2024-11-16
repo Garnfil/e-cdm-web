@@ -32,7 +32,7 @@ export default function InstructorProfilePage() {
 
     const getUserProfile = async (session) => {
         try {
-            const response = await axios.post(`https://e-learn.godesqsites.com/api/student/profile/${session.user.id}`, {
+            const response = await axios.post(`https://e-learn.godesqsites.com/api/instructor/profile/${session.user.id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,
@@ -52,6 +52,7 @@ export default function InstructorProfilePage() {
                 address: response.data?.user.address,
             }));
         } catch (error) {
+            console.log(error);
             toast.error(error?.message ?? "Server Error")
         }
     }
@@ -80,7 +81,7 @@ export default function InstructorProfilePage() {
     return (
         <div className='container-fluid'>
             <form onSubmit={handleSubmit} className="grid grid-cols-2">
-                <div className="border-black rounded-lg border py-8 px-6 lg:px-8 lg:py-12 text-base bg-white dark:bg-neutral-600 min-h-[70vh]">
+                <div className="border-black col-span-2 rounded-lg border py-8 px-6 lg:px-8 lg:py-12 text-base bg-white dark:bg-neutral-600 min-h-[70vh]">
                     <div className="flex flex-col gap-8">
                         <div className="relative">
                             <h2 className="text-xl font-semibold mb-3">Personal Info</h2>
@@ -184,7 +185,9 @@ export default function InstructorProfilePage() {
                                 </div>
                             </div>
                         </div>
+
                     </div>
+                    <button className="btn btn-primary mt-4">Submit</button>
                 </div>
             </form>
         </div>

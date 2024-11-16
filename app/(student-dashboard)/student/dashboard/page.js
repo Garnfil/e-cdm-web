@@ -90,33 +90,7 @@ export default function StudentDashboardPage() {
                                         <button className='btn btn-primary px-2 py-1'><i className="bi bi-eye"></i></button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td className='border border-black py-3 px-2'>1</td>
-                                    <td className='border border-black py-3 px-2'>Assignment Topic #1</td>
-                                    <td className='border border-black py-3 px-2'>BSIT - 3H</td>
-                                    <td className='border border-black py-3 px-2'>Assignment</td>
-                                    <td className='border border-black py-3 px-2 text-center'>
-                                        <button className='btn btn-primary px-2 py-1'><i className="bi bi-eye"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className='border border-black py-3 px-2'>1</td>
-                                    <td className='border border-black py-3 px-2'>Assignment Topic #1</td>
-                                    <td className='border border-black py-3 px-2'>BSIT - 3H</td>
-                                    <td className='border border-black py-3 px-2'>Assignment</td>
-                                    <td className='border border-black py-3 px-2 text-center'>
-                                        <button className='btn btn-primary px-2 py-1'><i className="bi bi-eye"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className='border border-black py-3 px-2'>1</td>
-                                    <td className='border border-black py-3 px-2'>Assignment Topic #1</td>
-                                    <td className='border border-black py-3 px-2'>BSIT - 3H</td>
-                                    <td className='border border-black py-3 px-2'>Assignment</td>
-                                    <td className='border border-black py-3 px-2 text-center'>
-                                        <button className='btn btn-primary px-2 py-1'><i className="bi bi-eye"></i></button>
-                                    </td>
-                                </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -167,7 +141,7 @@ export default function StudentDashboardPage() {
                                             </div>
                                             <div className='time'>
                                                 <span className='pr-2'><i className="bi bi-calendar"></i></span>
-                                                <span>Aug. 20, 2024</span>
+                                                <span>Nov. 20, 2024</span>
                                             </div>
                                         </div>
                                     </div>

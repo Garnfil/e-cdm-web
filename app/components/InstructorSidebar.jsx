@@ -1,9 +1,13 @@
+"use client"
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import cdmLogo from '../../public/cdm-logo.webp';
+import { usePathname } from 'next/navigation';
 
 export default function InstructorSidebar() {
+    const pathName = usePathname();
+
     return (
         <aside className='fixed justify-start items-center flex-col inset-y-0 start-0 sidebar gap-6 w-64 lg:min-w-64 lg:[&.show]:min-w-[0px] h-screen overflow-auto scrollbars bg-neutral-100 border-e border-black transition-all duration-500 ease-in-out -translate-x-full lg:translate-x-0 [&.show]:translate-x-0 max-lg:z-50 rtl:translate-x-full lg:rtl:translate-x-0'>
             <div className='flex justify-center items-center flex-col gap-6'>
@@ -13,18 +17,18 @@ export default function InstructorSidebar() {
                 </div>
 
                 <ul className='flex flex-col gap-2 w-full px-4 instructor-sidebar-list'>
-                    <li>
-                        <Link href={'/instructor/dashboard'}>
+                    <li >
+                        <Link href={'/instructor/dashboard'} className={pathName == "/instructor/dashboard" ? "active" : null}>
                             <span className="flex-grow"><i className="bi bi-house-door-fill mr-2"></i> Dashboard</span>
                         </Link>
                     </li>
-                    <li>
-                        <Link href={'/instructor/classes'}>
+                    <li >
+                        <Link href={'/instructor/classes'} className={pathName == "/instructor/classes" ? "active" : null}>
                             <span className="flex-grow"><i className="bi bi-collection-fill mr-2"></i> Classes</span>
                         </Link>
                     </li>
-                    <li>
-                        <Link href={'/instructor/schedules'}>
+                    <li >
+                        <Link href={'/instructor/schedules'} className={pathName == "/instructor/schedules" ? "active" : null}>
                             <span className="flex-grow"><i className="bi bi-calendar-event-fill mr-2"></i> Schedules</span>
                         </Link>
                     </li>
@@ -33,23 +37,23 @@ export default function InstructorSidebar() {
                             <span className="flex-grow"><i className="bi bi-1-square-fill mr-2"></i> Grade Rubrics</span>
                         </Link>
                     </li> */}
-                    <li>
-                        <Link href={'/instructor/live-conference-classes'}>
+                    <li >
+                        <Link href={'/instructor/live-conference-classes'} className={pathName == "/instructor/live-conference-classes" ? "active" : null}>
                             <span className="flex-grow"><i className="bi bi-camera-video-fill mr-2"></i> Live Class</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href={'/instructor/whiteboard'}>
+                        <Link href={'/instructor/whiteboard'} className={pathName == "/instructor/whiteboard" ? "active" : null}>
                             <span className="flex-grow"><i className="bi bi-clipboard-fill mr-2"></i> Whiteboard</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href={'/discussion-forum'}>
+                        <Link href={'/discussion-forum'} className={pathName == "/instructor/discussion-forum" ? "active" : null}>
                             <span className="flex-grow"><i className="bi bi-people-fill mr-2"></i> Discussion Forum</span>
                         </Link>
                     </li>
                 </ul>
             </div>
-        </aside>
+        </aside >
     )
 }

@@ -47,7 +47,7 @@ export default function InstructorHeader() {
                             <Image src={cdmLogo} className="w-10 h-10 flex-none rounded-full bg-white pointer-events-none" />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent aria-label="Static Actions" className="bg-white">
-                            <DropdownMenuItem key="profile" className="cursor-pointer" onClick={handleNavigateToProfile}>Profile</DropdownMenuItem>
+                            {/* <DropdownMenuItem key="profile" className="cursor-pointer" onClick={handleNavigateToProfile}>Profile</DropdownMenuItem> */}
                             <DropdownMenuItem key="logout" className="text-danger cursor-pointer" color="danger" onClick={handleLogout}>
                                 Logout
                             </DropdownMenuItem>

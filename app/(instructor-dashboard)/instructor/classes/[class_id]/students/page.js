@@ -48,7 +48,6 @@ export default function ClassStudentsPage() {
                         <div className='border-black rounded-lg border text-base bg-white max-h-[70vh] overflow-auto class-stream-container'>
                             <div className='flex justify-between items-center gap-3 px-6 py-3 sticky top-0 z-30 bg-white border-b border-black'>
                                 <h2 className='text-lg font-semibold'>Students</h2>
-                                <button className='btn btn-primary hover-shadow'>Invite</button>
                             </div>
                             <div className='relative w-full overflow-y-auto'>
                                 <table className='min-w-full divide-y divide-black'>
@@ -63,9 +62,7 @@ export default function ClassStudentsPage() {
                                             <th scope='col' className='min-w-20 p-4 text-start text-xs font-medium text-black uppercase tracking-wider'>
                                                 Age
                                             </th>
-                                            <th scope='col' className='min-w-20 p-4 text-start text-xs font-medium text-black uppercase tracking-wider'>
-                                                Actions
-                                            </th>
+
                                         </tr>
                                     </thead>
                                     <tbody className='bg-white divide-y divide-black'>
@@ -76,10 +73,7 @@ export default function ClassStudentsPage() {
                                                         <td className='p-4 whitespace-nowrap'>{student.firstname} {student.firstname}</td>
                                                         <td className='p-4 whitespace-nowrap'>{student.email}</td>
                                                         <td className='p-4 whitespace-nowrap'>{student.age}</td>
-                                                        <td className='p-4 whitespace-nowrap'>
-                                                            <button className='py-1 px-2 bg-primary text-white rounded mr-2'><i className="bi bi-eye"></i></button>
-                                                            <button className='py-1 px-2 bg-red-500 text-white rounded'><i className="bi bi-trash"></i></button>
-                                                        </td>
+
                                                     </tr>
                                                 ))
                                             ) : (

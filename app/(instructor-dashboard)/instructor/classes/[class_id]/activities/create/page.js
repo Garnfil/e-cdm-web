@@ -5,6 +5,7 @@ import jsCookie from 'js-cookie';
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function CreateActivityPage() {
     const params = useParams();
@@ -37,17 +38,23 @@ export default function CreateActivityPage() {
     }, [])
 
     const handleSubmit = async () => {
-        const response = await axios.post(`https://e-learn.godesqsites.com/api/activities`, activityDetails, {
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${authSession.token}`,
-                'Content-Type': 'application/json',
-            }
-        })
+        try {
+            const response = await axios.post(`https://e-learn.godesqsites.com/api/activities`, activityDetails, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${authSession.token}`,
+                    'Content-Type': 'application/json',
+                }
+            })
 
-        if (response.status == 200) {
-            router.push(`/instructor/classes/${class_id}/activities/${response.data.activity.school_work_id}/view`);
+            if (response.status == 200) {
+                router.push(`/instructor/classes/${class_id}/activities/${response.data.activity.school_work_id}/view`);
+            }
+        } catch (error) {
+            toast.error("Failed! Check all the input fields.")
+            console.log(error);
         }
+
     }
 
     const handleChange = (e) => {
