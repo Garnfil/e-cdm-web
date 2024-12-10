@@ -5,21 +5,20 @@ import jsCookie from 'js-cookie';
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import Select from 'react-select'
 
-export default function CreateExamPage() {
+export default function CreateActivityPage() {
     const params = useParams();
     const router = useRouter();
 
-    const { class_id } = params;
     const [authSession, setSession] = useState({});
-    const [examDetails, setExamDetails] = useState({
-        class_id: "",
+    const [activityDetails, setActivityDetails] = useState({
+        class_ids: [],
         instructor_id: "",
         title: "",
         description: "",
-        type: "exam",
+        type: "assignment",
         status: "posted",
         points: "",
         assessment_type: "",
@@ -27,20 +26,43 @@ export default function CreateExamPage() {
         due_datetime: "",
     });
 
+    const [instructorClasses, setInstructorClasses] = useState([]);
+
 
     useEffect(() => {
         const session = JSON.parse(jsCookie.get('session'));
-        setExamDetails(prevDetails => ({
+        setActivityDetails(prevDetails => ({
             ...prevDetails,
             instructor_id: session.user.id,
-            class_id: class_id
         }))
         setSession(session);
+
+        fetchInstructorClasses(session);
     }, [])
+
+    const fetchInstructorClasses = async (session) => {
+        const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/instructors/${session?.user?.id}/classes`, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${session.token}`,
+                'Content-Type': 'application/json',
+            }
+        });
+
+        const classes = response.data.classes.map(classroom => {
+            return {
+                value: classroom.id,
+                label: classroom.title,
+            }
+        })
+
+        setInstructorClasses(classes);
+    }
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post(`https://app-digital-cdm.godesqsites.com/api/exams`, examDetails, {
+
+            const response = await axios.post(`https://app-digital-cdm.godesqsites.com/api/activities`, activityDetails, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${authSession.token}`,
@@ -49,19 +71,29 @@ export default function CreateExamPage() {
             })
 
             if (response.status == 200) {
-                router.push(`/instructor/classes/${class_id}/exams/${response.data.exam.school_work_id}/view`);
+                router.push(`/instructor/classes/${class_id}/activities/${response.data.activity.school_work_id}/view`);
             }
         } catch (error) {
-            toast.error("Failed to Submit Exam");
+            toast.error("Failed! Check all the input fields.")
+            console.log(error);
         }
+
     }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         // Dynamically update the state property using the name of the input
-        setExamDetails(prevDetails => ({
+        setActivityDetails(prevDetails => ({
             ...prevDetails,
             [name]: value
+        }));
+    }
+
+    const handleSelectClasses = (selectedOptions) => {
+        const selectedValues = selectedOptions.map(option => option.value);
+        setActivityDetails(prevDetails => ({
+            ...prevDetails,
+            class_ids: selectedValues,
         }));
     }
 
@@ -69,7 +101,7 @@ export default function CreateExamPage() {
         <div className='container-fluid'>
             <div className='flex justify-between items-center mb-5'>
                 <div>
-                    <h2 className='text-2xl font-bold'>Create Exam</h2>
+                    <h2 className='text-2xl font-bold'>Create Activity</h2>
                     <nav className="breadcrumb" aria-label="Breadcrumb">
                         <ol className="list-none text-sm p-0 inline-flex">
                             <li className="flex pdskdmsdnjw">
@@ -77,23 +109,18 @@ export default function CreateExamPage() {
                             </li>
                             <li className="flex pdskdmsdnjw">
                                 <span className="mx-2">›</span>
-                                <a href="#" className="hover:underline">Class</a>
-                            </li>
-                            <li className="flex pdskdmsdnjw">
-                                <span className="mx-2">›</span>
-                                <a href="#" className="font-bold">Create Exam</a>
+                                <a href="#" className="font-bold">Create Activity</a>
                             </li>
                         </ol>
                     </nav>
                 </div>
-                <Link href={`/instructor/classes/${class_id}`} className='btn btn-primary hover-shadow'><i className="bi bi-arrow-left mr-1"></i> Back to Class</Link>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6'>
                 <div className='xl:col-span-2'>
                     <div className='border border-black py-2 px-3 mb-5'>
                         <div className='form-group'>
                             <label className='mb-2 block'>Title</label>
-                            <input className='form-control' name='title' value={examDetails.title} onChange={handleChange} />
+                            <input className='form-control' name='title' value={activityDetails.title} onChange={handleChange} />
                         </div>
                         <div className='form-group'>
                             <label className='mb-2 block'>Instructions (optional)</label>
@@ -102,9 +129,20 @@ export default function CreateExamPage() {
                                 cols={10}
                                 name='description'
                                 style={{ height: '200px' }}
-                                value={examDetails.description}
+                                value={activityDetails.description}
                                 onChange={handleChange}
                             ></textarea>
+                        </div>
+                        <div className="form-group">
+                            <div className="mb-2 block">
+                                <Select isMulti="true"
+                                    options={instructorClasses}
+                                    onChange={handleSelectClasses}
+                                    classNames={{
+                                        control: (state) => 'form-control h-auto '
+                                    }}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -113,11 +151,11 @@ export default function CreateExamPage() {
                         <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
                             <div className='form-group col-span-2'>
                                 <label className='mb-2 block'>Points</label>
-                                <input className='form-control' name='points' value={examDetails.points} onChange={handleChange} />
+                                <input className='form-control' name='points' value={activityDetails.points} onChange={handleChange} />
                             </div>
                             <div className='form-group col-span-2'>
                                 <label className='mb-2 block'>Assessment Type</label>
-                                <select className="form-control" name="assessment_type" value={examDetails.assessment_type} onChange={handleChange}>
+                                <select className="form-control" name="assessment_type" value={activityDetails.assessment_type} onChange={handleChange}>
                                     <option value="">-- SELECT ASSESSMENT TYPE --</option>
                                     <option value="prelim">Prelim</option>
                                     <option value="midterm">Midterm</option>
@@ -126,7 +164,7 @@ export default function CreateExamPage() {
                             </div>
                             <div className='form-group col-span-2'>
                                 <label className='mb-2 block'>Due</label>
-                                <input className='form-control' name='due_datetime' type='datetime-local' value={examDetails.due_datetime} onChange={handleChange} />
+                                <input className='form-control' name='due_datetime' type='datetime-local' value={activityDetails.due_datetime} onChange={handleChange} />
                             </div>
                             {/* <div className='form-group col-span-2'>
                                 <label className='mb-2 block'>Assigned To</label>

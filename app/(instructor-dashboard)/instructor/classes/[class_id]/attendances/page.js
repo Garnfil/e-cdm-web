@@ -25,7 +25,7 @@ export default function ClassAttendancePage() {
 
     const fetchAttendances = async (session) => {
         try {
-            const response = await axios.get(`https://e-learn.godesqsites.com/api/attendances/classes/${class_id}`, {
+            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/attendances/classes/${class_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,
@@ -49,7 +49,7 @@ export default function ClassAttendancePage() {
         e.preventDefault();
         try {
             let formData = new FormData(e.target);
-            const response = await axios.post(`https://e-learn.godesqsites.com/api/attendances`, formData, {
+            const response = await axios.post(`https://app-digital-cdm.godesqsites.com/api/attendances`, formData, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,
@@ -68,7 +68,7 @@ export default function ClassAttendancePage() {
 
     const handleDeleteAttendance = async (attendanceId) => {
         try {
-            const response = await axios.delete(`https://e-learn.godesqsites.com/api/attendances/${attendanceId}`, {
+            const response = await axios.delete(`https://app-digital-cdm.godesqsites.com/api/attendances/${attendanceId}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,

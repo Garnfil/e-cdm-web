@@ -28,7 +28,7 @@ export default function StudentSubmissionPage() {
         setAuthSession(session);
         const fetchStudentSubmittedWork = async () => {
             try {
-                const response = await axios.get(`https://e-learn.godesqsites.com/api/student-school-works/submissions/${submission_id}`, {
+                const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/student-school-works/submissions/${submission_id}`, {
                     headers: {
                         "Accept": "application/json",
                         "Authorization": `Bearer ${session.token}`
@@ -77,7 +77,7 @@ export default function StudentSubmissionPage() {
 
     const handleSubmitStudentGrade = async () => {
         try {
-            const response = await axios.post(`https://e-learn.godesqsites.com/api/student-school-works/submissions/${submission_id}/graded`, studentWorkGrade, {
+            const response = await axios.post(`https://app-digital-cdm.godesqsites.com/api/student-school-works/submissions/${submission_id}/graded`, studentWorkGrade, {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
@@ -142,7 +142,7 @@ export default function StudentSubmissionPage() {
                                 {(
                                     selectedSubmissionAttachment?.attachment_type === "file" ? (
                                         <div className='m-3'>
-                                            <a target='_blank' href={`https://e-learn.godesqsites.com/assets/uploads/student_submission_attachments/${selectedSubmissionAttachment.attachment_name}`} className='btn btn-primary'>View File <i class="bi bi-file-earmark"></i></a>
+                                            <a target='_blank' href={`https://app-digital-cdm.godesqsites.com/assets/uploads/student_submission_attachments/${selectedSubmissionAttachment.attachment_name}`} className='btn btn-primary'>View File <i class="bi bi-file-earmark"></i></a>
                                         </div>
                                     ) : (
                                         <div className="border border-black h-full">

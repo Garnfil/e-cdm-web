@@ -44,7 +44,7 @@ export default function CreateAssignmentPage() {
         try {
             setIsLoading(true)
 
-            const response = await axios.post(`https://e-learn.godesqsites.com/api/assignments`, assignmentDetails, {
+            const response = await axios.post(`https://app-digital-cdm.godesqsites.com/api/assignments`, assignmentDetails, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${authSession.token}`,

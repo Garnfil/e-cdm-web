@@ -42,7 +42,7 @@ export default function InstructorDashboard() {
 
     const fetchInstructorSchedules = async (session) => {
         try {
-            const response = await axios.get(`https://e-learn.godesqsites.com/api/instructors/${session.user.id}/class-schedules`, {
+            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/instructors/${session.user.id}/class-schedules`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session.token}`,

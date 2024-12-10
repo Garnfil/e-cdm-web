@@ -39,7 +39,7 @@ export default function CreateActivityPage() {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post(`https://e-learn.godesqsites.com/api/activities`, activityDetails, {
+            const response = await axios.post(`https://app-digital-cdm.godesqsites.com/api/activities`, activityDetails, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${authSession.token}`,

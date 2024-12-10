@@ -16,7 +16,7 @@ export default function ChildrenPage() {
 
     const fetchGuardianChildren = async (session) => {
         try {
-            const response = await axios.get(`https://e-learn.godesqsites.com/api/guardians/${session?.user?.id}/children`, {
+            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/guardians/${session?.user?.id}/children`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session?.token}`,
@@ -37,7 +37,7 @@ export default function ChildrenPage() {
 
     const getStudentFinalGrade = async (student_id) => {
         try {
-            const response = await axios.get(`https://e-learn.godesqsites.com/api/students/${student_id}/classes/final-grades`, {
+            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/students/${student_id}/classes/final-grades`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${authSession?.token}`,

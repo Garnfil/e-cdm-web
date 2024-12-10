@@ -23,7 +23,7 @@ const DiscussionDetails = () => {
 
     const fetchDiscussionDetails = async (session) => {
         try {
-            const response = await axios.get(`https://e-learn.godesqsites.com/api/discussions/${discussion_id}`, {
+            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/discussions/${discussion_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session?.token}`,
@@ -49,7 +49,7 @@ const DiscussionDetails = () => {
             user_type: authSession.user.role, // Replace with actual user type
         };
 
-        axios.post(`https://e-learn.godesqsites.com/api/discussions/${discussion_id}/comments`, body, {
+        axios.post(`https://app-digital-cdm.godesqsites.com/api/discussions/${discussion_id}/comments`, body, {
             headers: {
                 "Accept": "application/json",
                 "Authorization": `Bearer ${authSession?.token}`,
@@ -70,7 +70,7 @@ const DiscussionDetails = () => {
             user_type: authSession.user.role, // Replace with actual user type
         };
 
-        axios.post(`https://e-learn.godesqsites.com/api/discussions/${discussion_id}/votes`, body, {
+        axios.post(`https://app-digital-cdm.godesqsites.com/api/discussions/${discussion_id}/votes`, body, {
             headers: {
                 "Accept": "application/json",
                 "Authorization": `Bearer ${authSession?.token}`,

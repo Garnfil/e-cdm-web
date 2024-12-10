@@ -32,7 +32,7 @@ export default function InstructorProfilePage() {
 
     const getUserProfile = async (session) => {
         try {
-            const response = await axios.post(`https://e-learn.godesqsites.com/api/instructor/profile/${session.user.id}`, {
+            const response = await axios.post(`https://app-digital-cdm.godesqsites.com/api/instructor/profile/${session.user.id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,

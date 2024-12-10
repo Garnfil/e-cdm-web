@@ -32,7 +32,7 @@ export default function StudentLoginPage() {
     const handleSubmit = async () => {
         try {
             setIsLoginSubmitted(true);
-            const response = await axios.post("https://e-learn.godesqsites.com/api/student/login", studentDetails, {
+            const response = await axios.post("https://app-digital-cdm.godesqsites.com/api/student/login", studentDetails, {
                 headers: {
                     // 'Content-Type': 'multipart/form-data', // Set appropriate content type
                     "Content-Type": "application/json",

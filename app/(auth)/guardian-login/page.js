@@ -22,7 +22,7 @@ export default function GuardianLoginPage() {
             let formData = new FormData(e.target);
 
             // Send POST request using Axios
-            const response = await axios.post('https://e-learn.godesqsites.com/api/guardian/login', formData, {
+            const response = await axios.post('https://app-digital-cdm.godesqsites.com/api/guardian/login', formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },

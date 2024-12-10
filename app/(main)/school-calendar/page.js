@@ -23,7 +23,7 @@ export default function SchoolCalendar() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const fetchEvents = async () => {
-        const response = await axios.get('https://e-learn.godesqsites.com/api/school-events', {
+        const response = await axios.get('https://app-digital-cdm.godesqsites.com/api/school-events', {
             headers: {
                 "Accept": 'application/json',
             },

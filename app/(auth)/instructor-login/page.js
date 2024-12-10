@@ -22,7 +22,7 @@ export default function LoginPage() {
             let formData = new FormData(e.target);
 
             // Send POST request using Axios
-            const response = await axios.post('https://e-learn.godesqsites.com/api/instructor/login', formData, {
+            const response = await axios.post('https://app-digital-cdm.godesqsites.com/api/instructor/login', formData, {
                 headers: {
                     // 'Content-Type': 'multipart/form-data', // Set appropriate content type
                     'Content-Type': 'application/json',

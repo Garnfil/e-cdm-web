@@ -48,7 +48,7 @@ export default function ViewAssignmentPage() {
 
     const fetchSubmittedAssignments = async (session, school_work_id) => {
         try {
-            const response = await axios.get(`https://e-learn.godesqsites.com/api/student-school-works/${school_work_id}/submissions`, {
+            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/student-school-works/${school_work_id}/submissions`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`
@@ -67,7 +67,7 @@ export default function ViewAssignmentPage() {
     };
 
     const fetchAssignmentDetails = async (session) => {
-        const response = await axios.get(`https://e-learn.godesqsites.com/api/school-works/${assignment_id}`, {
+        const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/school-works/${assignment_id}`, {
             headers: {
                 "Accept": "application/json",
                 "Authorization": `Bearer ${session.token}`
@@ -120,7 +120,7 @@ export default function ViewAssignmentPage() {
         try {
             let formData = new FormData(e.target);
             setSubmitBtnLoad(true);
-            const response = await axios.post(`https://e-learn.godesqsites.com/api/school-works/attachments/single-upload`, formData, {
+            const response = await axios.post(`https://app-digital-cdm.godesqsites.com/api/school-works/attachments/single-upload`, formData, {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "multipart/form-data",
@@ -155,7 +155,7 @@ export default function ViewAssignmentPage() {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = await axios.delete(`https://e-learn.godesqsites.com/api/school-works/attachments/${attachment_id}/destroy`, {
+                    const response = await axios.delete(`https://app-digital-cdm.godesqsites.com/api/school-works/attachments/${attachment_id}/destroy`, {
                         headers: {
                             "Accept": "application/json",
                             "Authorization": `Bearer ${authSession.token}`,
@@ -180,7 +180,7 @@ export default function ViewAssignmentPage() {
 
     const handleUpdateAssignment = async () => {
         try {
-            const response = await axios.put(`https://e-learn.godesqsites.com/api/assignments/${assignmentDetails.assignment_id}`, assignmentDetails, {
+            const response = await axios.put(`https://app-digital-cdm.godesqsites.com/api/assignments/${assignmentDetails.assignment_id}`, assignmentDetails, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`

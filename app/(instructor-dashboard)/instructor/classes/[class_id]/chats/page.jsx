@@ -19,7 +19,7 @@ const ClassChatPage = () => {
 
     const fetchClassMessages = async (session) => {
         try {
-            const response = await axios.get(`https://e-learn.godesqsites.com/api/messages/classes/${params.class_id}`, {
+            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/messages/classes/${params.class_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`
@@ -34,7 +34,7 @@ const ClassChatPage = () => {
 
     const fetchClass = async (session) => {
         try {
-            const response = await axios.get(`https://e-learn.godesqsites.com/api/classes/${params.class_id}`, {
+            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/classes/${params.class_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`
@@ -83,7 +83,7 @@ const ClassChatPage = () => {
                 content: message
             }
             console.log(data);
-            const response = await axios.post(`https://e-learn.godesqsites.com/api/messages/classes/${params.class_id}`, data, {
+            const response = await axios.post(`https://app-digital-cdm.godesqsites.com/api/messages/classes/${params.class_id}`, data, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${authSession.token}`,

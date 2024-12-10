@@ -15,7 +15,7 @@ export default function page() {
 
     const fetchAttendance = async (session) => {
         try {
-            const response = await axios.get(`https://e-learn.godesqsites.com/api/attendances/${attendance_code}`, {
+            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/attendances/${attendance_code}`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session.token}`

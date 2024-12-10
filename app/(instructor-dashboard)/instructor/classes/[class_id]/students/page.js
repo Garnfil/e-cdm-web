@@ -17,7 +17,7 @@ export default function ClassStudentsPage() {
 
     const fetchStudents = async (session) => {
         try {
-            const response = await axios.get(`https://e-learn.godesqsites.com/api/classes/${class_id}/students`, {
+            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/classes/${class_id}/students`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,

@@ -22,7 +22,7 @@ export default function ClassFeed(props) {
         let session = JSON.parse(jsCookie.get("session"));
 
         const fetchClassSchoolWorks = async () => {
-            const response = await axios.get(`https://e-learn.godesqsites.com/api/classes/${classId}/school-works`, {
+            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/classes/${classId}/school-works`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`

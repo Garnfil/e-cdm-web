@@ -29,7 +29,7 @@ export default function CreateClassPage() {
         }))
 
         const fetchSubjects = async () => {
-            const response = await axios.get('https://e-learn.godesqsites.com/api/subjects', {
+            const response = await axios.get('https://app-digital-cdm.godesqsites.com/api/subjects', {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${session.token}`,
@@ -44,7 +44,7 @@ export default function CreateClassPage() {
     }, []);
 
     const fetchSections = async (year_level = 1) => {
-        const response = await axios.get(`https://e-learn.godesqsites.com/api/sections?year_level=${year_level}`, {
+        const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/sections?year_level=${year_level}`, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${authSession.token}`
@@ -70,7 +70,7 @@ export default function CreateClassPage() {
     }
 
     const handleSubmitBtnClicked = async () => {
-        const response = await axios.post('https://e-learn.godesqsites.com/api/classes', classDetails, {
+        const response = await axios.post('https://app-digital-cdm.godesqsites.com/api/classes', classDetails, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${authSession.token}`,

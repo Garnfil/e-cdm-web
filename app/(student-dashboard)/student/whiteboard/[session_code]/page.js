@@ -16,7 +16,7 @@ const WhiteboardPage = () => {
     const fetchConferenceSession = async (session) => {
         try {
             console.log(session);
-            const response = await axios.get(`https://e-learn.godesqsites.com/api/whiteboards/${session_code}`, {
+            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/whiteboards/${session_code}`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session?.token}`,

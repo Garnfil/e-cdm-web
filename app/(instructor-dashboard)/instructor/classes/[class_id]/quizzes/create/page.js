@@ -24,7 +24,7 @@ export default function CreateQuizPage() {
         e.preventDefault();
         let formData = new FormData(e.target);
 
-        const response = await axios.post(`https://e-learn.godesqsites.com/api/quizzes`, formData, {
+        const response = await axios.post(`https://app-digital-cdm.godesqsites.com/api/quizzes`, formData, {
             headers: {
                 'Accept': "application/json",
                 'Authorization': `Bearer ${authSession.token}`,
