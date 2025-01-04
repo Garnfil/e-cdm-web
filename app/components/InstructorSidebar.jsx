@@ -44,28 +44,28 @@ export default function InstructorSidebar() {
                         <DropdownMenu>
                             <DropdownMenuTrigger className='w-full justify-start text-left'>
                                 <Link href={'#'} >
-                                    <span className="flex-grow"><i class="bi bi-book-fill"></i> School Works</span>
+                                    <span className="flex-grow"><i className="bi bi-book-fill mr-2"></i> School Works</span>
                                 </Link>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="bg-white">
                                 <DropdownMenuItem className="py-2">
                                     <Link href={'/instructor/create-activity'} >
-                                        <span className="flex-grow"><i class="bi bi-book-fill mr-3"></i> Upload Activity</span>
+                                        <span className="flex-grow"><i className="bi bi-book-fill mr-3"></i> Upload Activity</span>
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="py-2">
                                     <Link href={'/instructor/create-assignment'} >
-                                        <span className="flex-grow"><i class="bi bi-book-fill mr-3"></i> Upload Assignment</span>
+                                        <span className="flex-grow"><i className="bi bi-book-fill mr-3"></i> Upload Assignment</span>
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="py-2">
                                     <Link href={'/instructor/create-quiz'} >
-                                        <span className="flex-grow"><i class="bi bi-book-fill mr-3"></i> Upload Quiz</span>
+                                        <span className="flex-grow"><i className="bi bi-book-fill mr-3"></i> Upload Quiz</span>
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="py-2">
                                     <Link href={'/instructor/create-exam'} >
-                                        <span className="flex-grow"><i class="bi bi-book-fill mr-3"></i> Upload Exam</span>
+                                        <span className="flex-grow"><i className="bi bi-book-fill mr-3"></i> Upload Exam</span>
                                     </Link>
                                 </DropdownMenuItem>
                             </DropdownMenuContent>

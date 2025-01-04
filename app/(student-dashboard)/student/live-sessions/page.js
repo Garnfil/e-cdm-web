@@ -12,7 +12,7 @@ export default function LiveSessionsPage() {
 
     const fetchConferenceSessions = async (session) => {
         try {
-            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/live-sessions/students/${session.user.id}/classes`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/live-sessions/students/${session.user.id}/classes`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`

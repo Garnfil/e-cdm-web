@@ -5,6 +5,8 @@ import { useParams } from 'next/navigation';
 import jsCookie from 'js-cookie';
 import { toast } from 'react-toastify';
 import { formatDate } from "date-fns";
+import Image from 'next/image';
+// import placeholderAvatar from '@/public/'
 
 const DiscussionDetails = () => {
     const params = useParams();
@@ -18,12 +20,12 @@ const DiscussionDetails = () => {
     useEffect(() => {
         let session = jsCookie.get("session") ? JSON.parse(jsCookie.get("session")) : {};
         setAuthSession(session);
-        fetchDiscussionDetails(session);
+        fetchDiscussionDetails(session, discussion_id);
     }, [discussion_id]);
 
-    const fetchDiscussionDetails = async (session) => {
+    const fetchDiscussionDetails = async (session, discussion_id) => {
         try {
-            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/discussions/${discussion_id}`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/discussions/${discussion_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session?.token}`,
@@ -49,7 +51,7 @@ const DiscussionDetails = () => {
             user_type: authSession.user.role, // Replace with actual user type
         };
 
-        axios.post(`https://app-digital-cdm.godesqsites.com/api/discussions/${discussion_id}/comments`, body, {
+        axios.post(`http://192.168.56.1:8000/api/discussions/${discussion_id}/comments`, body, {
             headers: {
                 "Accept": "application/json",
                 "Authorization": `Bearer ${authSession?.token}`,
@@ -70,7 +72,7 @@ const DiscussionDetails = () => {
             user_type: authSession.user.role, // Replace with actual user type
         };
 
-        axios.post(`https://app-digital-cdm.godesqsites.com/api/discussions/${discussion_id}/votes`, body, {
+        axios.post(`http://192.168.56.1:8000/api/discussions/${discussion_id}/votes`, body, {
             headers: {
                 "Accept": "application/json",
                 "Authorization": `Bearer ${authSession?.token}`,
@@ -95,7 +97,7 @@ const DiscussionDetails = () => {
             <div className="max-w-full mx-auto mt-8 p-4 border border-gray-300 rounded-lg shadow-lg bg-white">
                 {/* Discussion Header */}
                 <div className="flex items-center space-x-4">
-                    <img src="/placeholder-avatar.png" alt="Profile" className="w-10 h-10 rounded-full" />
+                    <Image src="/placeholder-avatar.png" alt="Profile" className="w-10 h-10 rounded-full" />
                     <div>
                         <h2 className="text-lg font-semibold">{discussion.title}</h2>
                         <p className="text-sm text-gray-500">

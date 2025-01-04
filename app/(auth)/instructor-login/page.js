@@ -14,6 +14,8 @@ export default function LoginPage() {
     const router = useRouter();
     const [isLoginSubmitted, setIsLoginSubmitted] = useState(false);
 
+    const [errors, setErrors] = useState([]);
+
     const handleSubmitLogin = async (e) => {
         e.preventDefault();
 
@@ -22,9 +24,8 @@ export default function LoginPage() {
             let formData = new FormData(e.target);
 
             // Send POST request using Axios
-            const response = await axios.post('https://app-digital-cdm.godesqsites.com/api/instructor/login', formData, {
+            const response = await axios.post('http://192.168.56.1:8000/api/instructor/login', formData, {
                 headers: {
-                    // 'Content-Type': 'multipart/form-data', // Set appropriate content type
                     'Content-Type': 'application/json',
                 },
             });
@@ -38,7 +39,8 @@ export default function LoginPage() {
         } catch (error) {
             // Handle errors
             setIsLoginSubmitted(false);
-            toast.error(error.message ?? "Server Error");
+            toast.error(error?.response?.data?.message ?? "Server Error");
+            setErrors(error?.response?.data?.errors);
             console.error('Error submitting form:', error.response ? error.response.data : error.message);
         }
     }
@@ -54,11 +56,11 @@ export default function LoginPage() {
                             <form className='my-8' onSubmit={handleSubmitLogin}>
                                 <div className='form-group'>
                                     <label className='mb-2 block'>Username/Email</label>
-                                    <input id="input-id" type="text" name="login" placeholder="Enter your username..." className="form-control" />
+                                    <input id="login-id" type="text" name="login" placeholder="Enter your username..." className="form-control" />
                                 </div>
                                 <div className='form-group'>
                                     <label className='mb-2 block'>Password</label>
-                                    <input id="input-id" type="password" name="password" placeholder="Enter your password..." className="form-control" />
+                                    <input id="password-id" type="password" name="password" placeholder="Enter your password..." className="form-control" />
                                 </div>
                                 <button type='submit' className='btn btn-primary w-full' disabled={isLoginSubmitted}>
                                     Sign In

@@ -25,7 +25,7 @@ export default function ClassAttendancePage() {
 
     const fetchAttendances = async (session) => {
         try {
-            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/attendances/classes/${class_id}`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/attendances/classes/${class_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,
@@ -49,7 +49,7 @@ export default function ClassAttendancePage() {
         e.preventDefault();
         try {
             let formData = new FormData(e.target);
-            const response = await axios.post(`https://app-digital-cdm.godesqsites.com/api/attendances`, formData, {
+            const response = await axios.post(`http://192.168.56.1:8000/api/attendances`, formData, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,
@@ -68,7 +68,7 @@ export default function ClassAttendancePage() {
 
     const handleDeleteAttendance = async (attendanceId) => {
         try {
-            const response = await axios.delete(`https://app-digital-cdm.godesqsites.com/api/attendances/${attendanceId}`, {
+            const response = await axios.delete(`http://192.168.56.1:8000/api/attendances/${attendanceId}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,
@@ -86,11 +86,11 @@ export default function ClassAttendancePage() {
 
     return (
         <div className='container-fluid'>
-            <div className='flex justify-between items-center mb-5'>
+            <div className='flex justify-between items-center gap-2 flex-col md:flex-row mb-5'>
                 <div>
                     <h2 className='text-2xl font-bold'>Class Attendance</h2>
                     <nav className="breadcrumb" aria-label="Breadcrumb">
-                        <ol className="list-none text-sm p-0 inline-flex">
+                        <ol className="list-none text-sm p-0 hidden md:inline-flex">
                             <li className="flex pdskdmsdnjw">
                                 <a href="#" className="hover:underline">Dashboard</a>
                             </li>

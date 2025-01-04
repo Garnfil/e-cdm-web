@@ -11,7 +11,7 @@ export default function CreateQuizPage() {
     const [quizDetails, setQuizDetails] = useState({});
 
     const fetchQuizDetails = async (session) => {
-        const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/school-works/${quiz_id}`, {
+        const response = await axios.get(`http://192.168.56.1:8000/api/school-works/${quiz_id}`, {
             headers: {
                 "Accept": "application/json",
                 "Authorization": `Bearer ${session.token}`

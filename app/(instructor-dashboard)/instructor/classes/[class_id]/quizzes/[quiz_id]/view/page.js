@@ -32,7 +32,7 @@ export default function CreateQuizPage() {
     });
 
     const fetchQuizDetails = async (session) => {
-        const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/school-works/${quiz_id}`, {
+        const response = await axios.get(`http://192.168.56.1:8000/api/school-works/${quiz_id}`, {
             headers: {
                 "Accept": "application/json",
                 "Authorization": `Bearer ${session.token}`
@@ -71,7 +71,7 @@ export default function CreateQuizPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(`https://app-digital-cdm.godesqsites.com/api/quizzes/${quizDetails.quiz_id}`, quizDetails, {
+            const response = await axios.put(`http://192.168.56.1:8000/api/quizzes/${quizDetails.quiz_id}`, quizDetails, {
                 headers: {
                     'Accept': "application/json",
                     'Authorization': `Bearer ${authSession.token}`,
@@ -153,13 +153,13 @@ export default function CreateQuizPage() {
                             <h3 className='font-bold'>Attach</h3>
                             <div className='flex justify-center items-center gap-5'>
                                 <div className='flex flex-col justify-center items-center gap-1'>
-                                    <button className="hidden sm:flex items-center justify-center w-14 h-14 rounded-full bg-white border border-black hover-shadow">
+                                    <button type='button' className="hidden sm:flex items-center justify-center w-14 h-14 rounded-full bg-white border border-black hover-shadow">
                                         <i className="bi bi-file-earmark-arrow-up-fill text-2xl"></i>
                                     </button>
                                     <h6>Upload</h6>
                                 </div>
                                 <div className='flex flex-col justify-center items-center gap-1'>
-                                    <button className="hidden sm:flex items-center justify-center w-14 h-14 rounded-full bg-white border border-black hover-shadow">
+                                    <button type='button' className="hidden sm:flex items-center justify-center w-14 h-14 rounded-full bg-white border border-black hover-shadow">
                                         <i className="bi bi-link text-2xl"></i>
                                     </button>
                                     <h6>Link</h6>

@@ -42,7 +42,7 @@ export default function InstructorDashboard() {
 
     const fetchInstructorSchedules = async (session) => {
         try {
-            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/instructors/${session.user.id}/class-schedules`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/instructors/${session.user.id}/class-schedules`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session.token}`,
@@ -79,10 +79,10 @@ export default function InstructorDashboard() {
                         <div className="w-[40%]">
                             <h5 className="font-medium">Good Day,</h5>
                             <h2 className="text-3xl font-bold">James Garnfil</h2>
-                            <p className="my-2">Welcome, Instructor! Your dashboard is ready to help you manage classes, track student progress, and create an engaging learning experience.</p>
-                            <button className="btn btn-primary rounded-full py-3 text-sm px-4 mt-5">
+                            <p className="my-2 mb-8">Welcome, Instructor! Your dashboard is ready to help you manage classes, track student progress, and create an engaging learning experience.</p>
+                            <Link href={'/instructor/schedules'} className="btn btn-primary rounded-full py-3 text-sm px-4 mt-5">
                                 View All Schedule <i className="bi bi-arrow-right"></i>
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -123,7 +123,9 @@ export default function InstructorDashboard() {
                                     </div>
                                 ))
                             ) : (
-                                <div></div>
+                                <div>
+                                    No Schedules Found
+                                </div>
                             )}
                         </div>
                     </div>

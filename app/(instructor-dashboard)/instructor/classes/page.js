@@ -15,7 +15,7 @@ export default function ClassesPage() {
 
         const fetchClasses = async () => {
             try {
-                const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/instructors/${session.user.id}/classes`, {
+                const response = await axios.get(`http://192.168.56.1:8000/api/instructors/${session.user.id}/classes`, {
                     headers: {
                         "Accept": "application/json",
                         "Authorization": `Bearer ${session.token}`,

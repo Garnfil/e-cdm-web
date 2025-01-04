@@ -8,9 +8,11 @@ import { formatDate } from 'date-fns';
 import Pusher from 'pusher-js';
 import cdmAvatar from '../../../../../../public/user-profile.jpg';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const ClassChatPage = () => {
     const params = useParams();
+    const { class_id } = params;
     const chatboxRef = useRef(null);
     const [messages, setMessages] = useState([]);
     const [authSession, setAuthSession] = useState({});
@@ -19,7 +21,7 @@ const ClassChatPage = () => {
 
     const fetchClassMessages = async (session) => {
         try {
-            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/messages/classes/${params.class_id}`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/messages/classes/${params.class_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`
@@ -34,7 +36,7 @@ const ClassChatPage = () => {
 
     const fetchClass = async (session) => {
         try {
-            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/classes/${params.class_id}`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/classes/${params.class_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`
@@ -83,7 +85,7 @@ const ClassChatPage = () => {
                 content: message
             }
             console.log(data);
-            const response = await axios.post(`https://app-digital-cdm.godesqsites.com/api/messages/classes/${params.class_id}`, data, {
+            const response = await axios.post(`http://192.168.56.1:8000/api/messages/classes/${params.class_id}`, data, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${authSession.token}`,
@@ -93,12 +95,36 @@ const ClassChatPage = () => {
             setMessage("");
 
         } catch (error) {
-            console.log(response);
+            console.log(error);
         }
     }
 
     return (
         <div className='container-fluid'>
+            <div className='flex justify-between items-center mb-5'>
+                <div>
+                    <h2 className='text-2xl font-bold'>Class Attendance</h2>
+                    <nav className="breadcrumb" aria-label="Breadcrumb">
+                        <ol className="list-none text-sm p-0 hidden md:inline-flex">
+                            <li className="flex pdskdmsdnjw">
+                                <a href="#" className="hover:underline">Dashboard</a>
+                            </li>
+                            <li className="flex pdskdmsdnjw">
+                                <span className="mx-2">›</span>
+                                <a href="#" className="hover:underline">Class</a>
+                            </li>
+                            <li className="flex pdskdmsdnjw">
+                                <span className="mx-2">›</span>
+                                <a href="#" className="font-bold">Class Attendance</a>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+                <div className='flex gap-2'>
+                    <Link href={`/instructor/classes/${class_id}`} className='btn btn-primary hover-shadow'><i className="bi bi-arrow-left mr-1"></i> Back to Class</Link>
+                </div>
+            </div>
+
             <div className="border-black rounded-lg border text-base bg-white dark:bg-neutral-600 min-h-[60vh]">
                 <div className="overflow-hidden w-full relative">
                     <div className="hsdfdsfhsdf lsdfdfsdafd pdskdmsdnjw qesolakmsjd px-6 pt-3 pb-3 border-b border-black">

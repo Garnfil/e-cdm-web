@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import student from '../../../public/student.png';
+import loginIllustration from '../../../public/login-illustration.png';
 import {
     Dialog,
     DialogContent,
@@ -15,7 +16,7 @@ import jsCookie from 'js-cookie';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
-export default function page() {
+export default function DiscussionForumPage() {
     const router = useRouter();
     const [authSession, setAuthSession] = useState(null);
     const [visibilityContent, setVisibilityContent] = useState('');
@@ -26,7 +27,7 @@ export default function page() {
 
     const fetchDiscussions = async (session) => {
         try {
-            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/discussions`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/discussions`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session?.token}`,
@@ -36,20 +37,19 @@ export default function page() {
             setDiscussions(response.data.discussions);
 
         } catch (error) {
-            toast.error(error.message ?? "Server Error");
+            toast.error(error?.response?.data?.message ?? "Server Error");
         }
     }
 
     useEffect(() => {
         let session = jsCookie.get("session") ? JSON.parse(jsCookie.get("session")) : null;
         setAuthSession(session);
-
         fetchDiscussions(session);
     }, [])
 
     const fetchUserInstitute = async () => {
         try {
-            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/institutes/${authSession?.user?.institute_id}`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/institutes/${authSession?.user?.institute_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,
@@ -59,13 +59,14 @@ export default function page() {
             setUserInstitute(response.data.institute);
 
         } catch (error) {
-            toast.error(error.message ?? "Server Error");
+
+            toast.error(error?.response?.data?.message ?? "Server Error");
         }
     }
 
     const fetchUserCourse = async () => {
         try {
-            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/courses/${authSession?.user?.course_id}`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/courses/${authSession?.user?.course_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,
@@ -74,7 +75,7 @@ export default function page() {
 
             setUserCourse(response.data.course);
         } catch (error) {
-            toast.error(error.message ?? "Server Error");
+            toast.error(error?.response?.data?.message ?? "Server Error");
         }
 
     }
@@ -95,7 +96,7 @@ export default function page() {
 
         try {
             let formData = new FormData(e.target);
-            const response = await axios.post(`https://app-digital-cdm.godesqsites.com/api/discussions`, formData, {
+            const response = await axios.post(`http://192.168.56.1:8000/api/discussions`, formData, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession?.token}`,
@@ -106,7 +107,8 @@ export default function page() {
             toast.success("Added");
             fetchDiscussions(authSession)
         } catch (error) {
-            toast.error(error.message ?? "Server Error");
+            console.log(error.response);
+            toast.error(error?.response?.data?.message ?? "Server Error");
         }
     }
 
@@ -116,7 +118,10 @@ export default function page() {
 
     if (!authSession) {
         return (
-            <div className='text-center mt-4'>You need to login first.</div>
+            <div className='flex justify-center flex-col items-center mt-4'>
+                <Image width={300} src={loginIllustration} alt='login-illustration' />
+                <h3 className='text-xl mt-2'>You need to login first.</h3>
+            </div>
         )
     }
 
@@ -222,35 +227,6 @@ export default function page() {
                         <div>No Disscussion Found</div>
                     )
                 }
-
-
-                {/* <div className='border border-black p-4 hover-shadow cursor-pointer'>
-                    <div className='flex items-start justify-between'>
-                        <div className='w-auto'>
-                            <Image className="rounded-full shadow object-cover w-10 h-10 bg-white border border-black" src={student} alt="Image Description"></Image>
-                        </div>
-                        <div className='px-3 flex-1'>
-                            <div className='forum-content'>
-                                <div className='flex items-center gap-4'>
-                                    <h3 className='text-lg font-bold'>Bryan Mortel</h3>
-                                    <span className='text-muted text-xs'>2 hours ago</span>
-                                </div>
-                                <p>This elective course offers an in-depth exploration of web development technologies and practices.
-                                    Students will learn the essential skills to build dynamic and responsive websites using modern programming languages and frameworks.
-                                    The course covers both front-end and back-end development,
-                                    focusing on HTML, CSS, JavaScript, and libraries such as React and Vue.js.
-                                </p>
-                                <div className='flex justify-start items-center gap-3 my-3'>
-                                    <Image quality={100} className='object-cover w-[100px] h-[100px] border border-black' width={100} height={0} src={`https://plus.unsplash.com/premium_photo-1664391666703-e000bf477eb3?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`} />
-                                </div>
-                            </div>
-                            <div className='flex gap-3 items-start mt-5'>
-                                <span><i className="bi bi-chat-fill"></i> 21</span>
-                                <span><i className="bi bi-hand-thumbs-up"></i> 150</span>
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
             </div>
         </div>
     )

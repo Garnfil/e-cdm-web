@@ -24,7 +24,7 @@ export default function ParentSidebar() {
                     <li>
                         <Link href={"/guardian/children"}>
                             <span className="flex-grow">
-                                <i class="bi bi-people-fill mr-2"></i> Children
+                                <i className="bi bi-people-fill mr-2"></i> Children
                             </span>
                         </Link>
                     </li>

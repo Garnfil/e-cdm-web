@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <header id="nav">
-          <div class="nav--list">
+          <div className="nav--list">
             <button id="members__button"></button>
             <a href="lobby.html">
               <h3 id="logo">
@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
           {/* <div id="nav__links">
             <button id="chat__button"></button>
 
-            <a class="nav__link" id="create__room__btn" href="lobby.html">
+            <a className="nav__link" id="create__room__btn" href="lobby.html">
               Leave
             </a>
           </div> */}

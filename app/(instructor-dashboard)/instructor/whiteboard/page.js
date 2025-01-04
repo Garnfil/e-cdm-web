@@ -25,7 +25,7 @@ export default function InstructorWhiteBoardPage() {
 
     const fetchClasses = async (session) => {
         try {
-            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/instructors/${session.user.id}/classes`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/instructors/${session.user.id}/classes`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,
@@ -41,7 +41,7 @@ export default function InstructorWhiteBoardPage() {
 
     const fetchInstructorWhiteboards = async (session) => {
         try {
-            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/whiteboards/instructors/${session?.user?.id}`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/whiteboards/instructors/${session?.user?.id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session?.token}`,
@@ -68,7 +68,7 @@ export default function InstructorWhiteBoardPage() {
         try {
             const formData = new FormData(e.target);
             setIsSubmitLoading(true);
-            const response = await axios.post(`https://app-digital-cdm.godesqsites.com/api/whiteboards/generate-room`, formData, {
+            const response = await axios.post(`http://192.168.56.1:8000/api/whiteboards/generate-room`, formData, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,

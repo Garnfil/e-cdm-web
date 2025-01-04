@@ -58,7 +58,7 @@ function Videos(props) {
     const leaveChannel = async () => {
         try {
             const session = JSON.parse(jsCookie.get('session'));
-            const response = await axios.post(`https://app-digital-cdm.godesqsites.com/api/live-sessions/leave-session`, { session_code: props.session_id }, {
+            const response = await axios.post(`http://192.168.56.1:8000/api/live-sessions/leave-session`, { session_code: props.session_id }, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session.token}`,

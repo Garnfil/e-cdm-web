@@ -17,6 +17,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Description } from '@radix-ui/react-dialog';
 
 export default function ViewAssignmentPage() {
     const params = useParams();
@@ -48,7 +49,7 @@ export default function ViewAssignmentPage() {
 
     const fetchSubmittedAssignments = async (session, school_work_id) => {
         try {
-            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/student-school-works/${school_work_id}/submissions`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/student-school-works/${school_work_id}/submissions`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`
@@ -67,7 +68,7 @@ export default function ViewAssignmentPage() {
     };
 
     const fetchAssignmentDetails = async (session) => {
-        const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/school-works/${assignment_id}`, {
+        const response = await axios.get(`http://192.168.56.1:8000/api/school-works/${assignment_id}`, {
             headers: {
                 "Accept": "application/json",
                 "Authorization": `Bearer ${session.token}`
@@ -120,7 +121,7 @@ export default function ViewAssignmentPage() {
         try {
             let formData = new FormData(e.target);
             setSubmitBtnLoad(true);
-            const response = await axios.post(`https://app-digital-cdm.godesqsites.com/api/school-works/attachments/single-upload`, formData, {
+            const response = await axios.post(`http://192.168.56.1:8000/api/school-works/attachments/single-upload`, formData, {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "multipart/form-data",
@@ -155,7 +156,7 @@ export default function ViewAssignmentPage() {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = await axios.delete(`https://app-digital-cdm.godesqsites.com/api/school-works/attachments/${attachment_id}/destroy`, {
+                    const response = await axios.delete(`http://192.168.56.1:8000/api/school-works/attachments/${attachment_id}/destroy`, {
                         headers: {
                             "Accept": "application/json",
                             "Authorization": `Bearer ${authSession.token}`,
@@ -180,7 +181,7 @@ export default function ViewAssignmentPage() {
 
     const handleUpdateAssignment = async () => {
         try {
-            const response = await axios.put(`https://app-digital-cdm.godesqsites.com/api/assignments/${assignmentDetails.assignment_id}`, assignmentDetails, {
+            const response = await axios.put(`http://192.168.56.1:8000/api/assignments/${assignmentDetails.assignment_id}`, assignmentDetails, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`
@@ -288,8 +289,9 @@ export default function ViewAssignmentPage() {
                                                     <i className="bi bi-file-earmark-arrow-up-fill text-2xl"></i>
                                                 </DialogTrigger>
                                                 <DialogContent className="bg-white">
+                                                    <Description className="font-semibold">{assignmentDetails.title}</Description>
                                                     <DialogHeader>
-                                                        <DialogTitle className="mb-3">Upload Attachment</DialogTitle>
+                                                        <DialogTitle className="mb-3 text-2xl font-bold">Upload Attachment</DialogTitle>
                                                         <form className='my-3' method='POST' onSubmit={handleUploadAttachmentSubmit} encType='multipart/form-data'>
                                                             <input type='hidden' name='school_work_id' value={assignment_id} />
                                                             <div className='form-group'>

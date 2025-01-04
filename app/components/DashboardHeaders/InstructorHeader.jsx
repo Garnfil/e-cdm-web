@@ -44,7 +44,7 @@ export default function InstructorHeader() {
                 <div className='relative'>
                     <DropdownMenu>
                         <DropdownMenuTrigger className='hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-white border border-black hover-shadow'>
-                            <Image src={cdmLogo} className="w-10 h-10 flex-none rounded-full bg-white pointer-events-none" />
+                            <Image src={cdmLogo} className="w-10 h-10 flex-none rounded-full bg-white pointer-events-none" alt='cdm-logo' />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent aria-label="Static Actions" className="bg-white">
                             {/* <DropdownMenuItem key="profile" className="cursor-pointer" onClick={handleNavigateToProfile}>Profile</DropdownMenuItem> */}

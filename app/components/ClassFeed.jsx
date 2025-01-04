@@ -12,6 +12,8 @@ import Link from 'next/link';
 import axios from 'axios';
 import jsCookie from 'js-cookie';
 import { format } from "date-fns";
+import searchResult from '../../public/search-result.png';
+import Image from 'next/image';
 
 export default function ClassFeed(props) {
     const { classId } = props;
@@ -22,12 +24,14 @@ export default function ClassFeed(props) {
         let session = JSON.parse(jsCookie.get("session"));
 
         const fetchClassSchoolWorks = async () => {
-            const response = await axios.get(`https://app-digital-cdm.godesqsites.com/api/classes/${classId}/school-works`, {
+            const response = await axios.get(`http://192.168.56.1:8000/api/classes/${classId}/school-works`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`
                 }
             });
+
+            console.log(response.data);
 
             let schoolWorksList = response.data.school_works.map(school_work => {
                 let url = "#";
@@ -76,41 +80,6 @@ export default function ClassFeed(props) {
         <div className=' text-base  overflow-auto class-stream-container'>
             <div className='flex justify-between items-center gap-3 px-6 py-3 bg-white border border-black'>
                 <h2 className='text-2xl font-semibold'>Stream</h2>
-                <div className='relative'>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger className='btn btn-primary'>Create <i className='bi bi-plus-lg'></i></DropdownMenuTrigger>
-                        <DropdownMenuContent className="bg-primary text-white">
-                            <DropdownMenuLabel>School Works</DropdownMenuLabel>
-                            <DropdownMenuSeparator className="bg-white" />
-                            <DropdownMenuItem>
-                                <Link href={`/instructor/classes/${classId}/modules/create`}>
-                                    Modules
-                                </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Link href={`/instructor/classes/${classId}/assignments/create`}>
-                                    Assignment
-                                </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Link href={`/instructor/classes/${classId}/quizzes/create`}>
-                                    Quiz
-                                </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Link href={`/instructor/classes/${classId}/activities/create`}>
-                                    Activity
-                                </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Link href={`/instructor/classes/${classId}/exams/create`}>
-                                    Exam
-                                </Link>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                    {/* <button className='btn btn-primary hover-shadow'>Create <i className="bi bi-plus-lg"></i></button> */}
-                </div>
             </div>
             <div className='relative w-full mt-4 overflow-y-auto flex flex-col gap-5'>
                 {
@@ -128,7 +97,12 @@ export default function ClassFeed(props) {
                             </Link>
                         ))
                     ) : (
-                        <div></div>
+                        schoolWorks.length < 1 && modules.length < 1 && (
+                            <div className='flex justify-center items-center flex-col'>
+                                <Image src={searchResult} width={400} />
+                                <h3 className='text-xl text-center'>No results found. <br /> Add Modules or School Work to this Class.</h3>
+                            </div>
+                        )
                     )
                 }
                 {
