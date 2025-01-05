@@ -23,7 +23,7 @@ export default function SchoolCalendar() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const fetchEvents = async () => {
-        const response = await axios.get('http://192.168.56.1:8000/api/school-events', {
+        const response = await axios.get('http://192.168.100.44:8000/api/school-events', {
             headers: {
                 "Accept": 'application/json',
             },

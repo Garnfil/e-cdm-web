@@ -42,7 +42,7 @@ export default function InstructorDashboard() {
 
     const fetchInstructorSchedules = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.56.1:8000/api/instructors/${session.user.id}/class-schedules`, {
+            const response = await axios.get(`http://192.168.100.44:8000/api/instructors/${session.user.id}/class-schedules`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session.token}`,

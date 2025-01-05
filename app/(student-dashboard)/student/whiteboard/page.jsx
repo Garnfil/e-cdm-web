@@ -13,7 +13,7 @@ const StudentWhiteboardsPage = () => {
 
     const fetchClassWhiteboards = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.56.1:8000/api/whiteboards/student-classes`, {
+            const response = await axios.get(`http://192.168.100.44:8000/api/whiteboards/student-classes`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session?.token}`,

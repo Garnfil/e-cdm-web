@@ -29,7 +29,7 @@ export default function CreateClassPage() {
         }))
 
         const fetchSubjects = async () => {
-            const response = await axios.get('http://192.168.56.1:8000/api/subjects', {
+            const response = await axios.get('http://192.168.100.44:8000/api/subjects', {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${session.token}`,
@@ -44,7 +44,7 @@ export default function CreateClassPage() {
     }, []);
 
     const fetchSections = async (year_level = 1) => {
-        const response = await axios.get(`http://192.168.56.1:8000/api/sections?year_level=${year_level}`, {
+        const response = await axios.get(`http://192.168.100.44:8000/api/sections?year_level=${year_level}`, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${authSession.token}`
@@ -70,7 +70,7 @@ export default function CreateClassPage() {
     }
 
     const handleSubmitBtnClicked = async () => {
-        const response = await axios.post('http://192.168.56.1:8000/api/classes', classDetails, {
+        const response = await axios.post('http://192.168.100.44:8000/api/classes', classDetails, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${authSession.token}`,

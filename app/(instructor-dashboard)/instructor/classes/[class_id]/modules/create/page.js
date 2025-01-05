@@ -41,7 +41,7 @@ export default function CreateModulePage() {
 
     const handleSubmitModule = async (e) => {
         try {
-            const response = await axios.post(`http://192.168.56.1:8000/api/modules`, module, {
+            const response = await axios.post(`http://192.168.100.44:8000/api/modules`, module, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${authSession.token}`,

@@ -32,7 +32,7 @@ export default function InstructorProfilePage() {
 
     const getUserProfile = async (session) => {
         try {
-            const response = await axios.post(`http://192.168.56.1:8000/api/instructor/profile/${session.user.id}`, {
+            const response = await axios.post(`http://192.168.100.44:8000/api/instructor/profile/${session.user.id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,

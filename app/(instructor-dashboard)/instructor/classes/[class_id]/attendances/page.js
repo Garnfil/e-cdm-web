@@ -25,7 +25,7 @@ export default function ClassAttendancePage() {
 
     const fetchAttendances = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.56.1:8000/api/attendances/classes/${class_id}`, {
+            const response = await axios.get(`http://192.168.100.44:8000/api/attendances/classes/${class_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,
@@ -49,7 +49,7 @@ export default function ClassAttendancePage() {
         e.preventDefault();
         try {
             let formData = new FormData(e.target);
-            const response = await axios.post(`http://192.168.56.1:8000/api/attendances`, formData, {
+            const response = await axios.post(`http://192.168.100.44:8000/api/attendances`, formData, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,
@@ -68,7 +68,7 @@ export default function ClassAttendancePage() {
 
     const handleDeleteAttendance = async (attendanceId) => {
         try {
-            const response = await axios.delete(`http://192.168.56.1:8000/api/attendances/${attendanceId}`, {
+            const response = await axios.delete(`http://192.168.100.44:8000/api/attendances/${attendanceId}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,
