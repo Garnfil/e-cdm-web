@@ -6,6 +6,7 @@ import InstructorSidebar from '@/app/components/InstructorSidebar';
 import InstructorHeader from '@/app/components/DashboardHeaders/InstructorHeader';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
+import { InstructorDashboardLayout } from '@/app/components/InstructorDashboardLayout';
 
 export const metadata = {
     title: "E-CDM - Instructor Dashboard",
@@ -24,11 +25,8 @@ export default function RootLayout({ children }) {
             <body
                 className={`font-manrope antialiased bg-neutral-100`}
             >
-                <div className='bg-neutral-100'>
-                    <ToastContainer />
-                    <InstructorHeader />
-                    <InstructorSidebar />
-                </div>
+                <ToastContainer />
+                <InstructorDashboardLayout />
                 <main className='content-compact px-4 lg:px-6 py-4 relative mt-20 lg:ms-64 transition-all duration-500 ease-in-out overflow-y-auto'>
                     {children}
                 </main>

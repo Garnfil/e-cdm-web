@@ -29,7 +29,7 @@ export default function CreateClassPage() {
         }))
 
         const fetchSubjects = async () => {
-            const response = await axios.get('http://192.168.100.44:8000/api/subjects', {
+            const response = await axios.get('http://192.168.100.110:8000/api/subjects', {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${session.token}`,
@@ -44,7 +44,7 @@ export default function CreateClassPage() {
     }, []);
 
     const fetchSections = async (year_level = 1) => {
-        const response = await axios.get(`http://192.168.100.44:8000/api/sections?year_level=${year_level}`, {
+        const response = await axios.get(`http://192.168.100.110:8000/api/sections?year_level=${year_level}`, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${authSession.token}`
@@ -70,7 +70,7 @@ export default function CreateClassPage() {
     }
 
     const handleSubmitBtnClicked = async () => {
-        const response = await axios.post('http://192.168.100.44:8000/api/classes', classDetails, {
+        const response = await axios.post('http://192.168.100.110:8000/api/classes', classDetails, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${authSession.token}`,
@@ -86,7 +86,7 @@ export default function CreateClassPage() {
 
     return (
         <div className='container-fluid'>
-            <div className='flex justify-between items-center mb-5'>
+            <div className='flex flex-col md:flex-row gap-2 justify-between items-start md:items-center mb-5'>
                 <div>
                     <h2 className='text-2xl font-semibold'>Create Class</h2>
                     <nav className="breadcrumb" aria-label="Breadcrumb">
@@ -109,9 +109,9 @@ export default function CreateClassPage() {
             </div>
 
             <form>
-                <div className='flex justify-between items-start my-3 gap-4'>
-                    <div className='w-[65%] border border-black p-5 bg-white'>
-                        <div className='grid grid-cols-2 gap-2'>
+                <div className='flex flex-col lg:flex-row justify-between items-start my-3 gap-4'>
+                    <div className='w-full lg:w-[65%] border border-black p-5 bg-white'>
+                        <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
                             <div className='form-group '>
                                 <label className='mb-2 block'>Year</label>
                                 <select className='form-control' onChange={handleYearLevelChanged}>
@@ -148,7 +148,7 @@ export default function CreateClassPage() {
                             </textarea>
                         </div>
                     </div>
-                    <div className='w-[35%] bg-white'>
+                    <div className='w-full lg:w-[35%] bg-white'>
                         <div className='border border-black p-5'>
                             <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
                                 <div className='form-group col-span-2'>

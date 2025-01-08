@@ -27,7 +27,7 @@ export default function DiscussionForumPage() {
 
     const fetchDiscussions = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.44:8000/api/discussions`, {
+            const response = await axios.get(`http://192.168.100.110:8000/api/discussions`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session?.token}`,
@@ -49,7 +49,7 @@ export default function DiscussionForumPage() {
 
     const fetchUserInstitute = async () => {
         try {
-            const response = await axios.get(`http://192.168.100.44:8000/api/institutes/${authSession?.user?.institute_id}`, {
+            const response = await axios.get(`http://192.168.100.110:8000/api/institutes/${authSession?.user?.institute_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,
@@ -66,7 +66,7 @@ export default function DiscussionForumPage() {
 
     const fetchUserCourse = async () => {
         try {
-            const response = await axios.get(`http://192.168.100.44:8000/api/courses/${authSession?.user?.course_id}`, {
+            const response = await axios.get(`http://192.168.100.110:8000/api/courses/${authSession?.user?.course_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,
@@ -96,7 +96,7 @@ export default function DiscussionForumPage() {
 
         try {
             let formData = new FormData(e.target);
-            const response = await axios.post(`http://192.168.100.44:8000/api/discussions`, formData, {
+            const response = await axios.post(`http://192.168.100.110:8000/api/discussions`, formData, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession?.token}`,

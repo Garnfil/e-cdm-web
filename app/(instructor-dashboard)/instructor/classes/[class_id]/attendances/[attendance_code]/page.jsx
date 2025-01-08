@@ -15,7 +15,7 @@ export default function page() {
 
     const fetchAttendance = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.44:8000/api/attendances/${attendance_code}`, {
+            const response = await axios.get(`http://192.168.100.110:8000/api/attendances/${attendance_code}`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session.token}`

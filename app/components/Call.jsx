@@ -53,12 +53,36 @@ function Videos(props) {
 
     audioTracks.forEach((track) => track.play());
 
+    useEffect(() => {
+        console.log(props.channelName);
+        if (remoteUsers.length > 0) {
+            const session = JSON.parse(jsCookie.get("session"));
+            axios
+                .post(
+                    `http://192.168.100.110:8000/api/live-sessions/joined-session`,
+                    { student_id: session.user.id, session_code: props.channelName },
+                    {
+                        headers: {
+                            Accept: "application/json",
+                            Authorization: `Bearer ${session.token}`,
+                        },
+                    }
+                )
+                .then((response) => {
+                    console.log("Remote users successfully stored:", response.data);
+                })
+                .catch((error) => {
+                    console.error("Error storing remote users:", error);
+                });
+        }
+    }, [remoteUsers]); // Trigger whenever remoteUsers updates
+
     const deviceLoading = isLoadingMic || isLoadingCam;
 
     const leaveChannel = async () => {
         try {
             const session = JSON.parse(jsCookie.get('session'));
-            const response = await axios.post(`http://192.168.100.44:8000/api/live-sessions/leave-session`, { session_code: props.session_id }, {
+            const response = await axios.post(`http://192.168.100.110:8000/api/live-sessions/leave-session`, { session_code: props.channelName }, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session.token}`,

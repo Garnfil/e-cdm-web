@@ -39,7 +39,7 @@ export default function CreateActivityPage() {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post(`http://192.168.100.44:8000/api/activities`, activityDetails, {
+            const response = await axios.post(`http://192.168.100.110:8000/api/activities`, activityDetails, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${authSession.token}`,

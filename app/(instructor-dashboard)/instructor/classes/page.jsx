@@ -25,7 +25,7 @@ export default function ClassesPage() {
         instructor_id: '',
         class_id: '',
         room: '',
-        attendance_date: '',
+        attendance_datetime: '',
     });
     const [openAttendanceFormDialog, setOpenAttendanceFormDialog] = useState(false);
 
@@ -40,7 +40,7 @@ export default function ClassesPage() {
 
         const fetchClasses = async () => {
             try {
-                const response = await axios.get(`http://192.168.100.44:8000/api/instructors/${session.user.id}/classes`, {
+                const response = await axios.get(`http://192.168.100.110:8000/api/instructors/${session.user.id}/classes`, {
                     headers: {
                         "Accept": "application/json",
                         "Authorization": `Bearer ${session.token}`,
@@ -83,7 +83,7 @@ export default function ClassesPage() {
 
     const handleSubmitAttendance = async () => {
         try {
-            const response = await axios.post(`http://192.168.100.44:8000/api/instructor-attendances`, instructorAttendance, {
+            const response = await axios.post(`http://192.168.100.110:8000/api/instructor-attendances`, instructorAttendance, {
                 headers: {
                     "Accept": "application/json",
                 }
@@ -99,7 +99,7 @@ export default function ClassesPage() {
 
     return (
         <div className='container-fluid'>
-            <div className='flex justify-between items-center mb-5'>
+            <div className='flex flex-col md:flex-row gap-2 justify-between items-start md:items-center mb-5'>
                 <div>
                     <h2 className='text-2xl font-semibold'>Classes</h2>
                     <nav className="breadcrumb" aria-label="Breadcrumb">
@@ -138,7 +138,7 @@ export default function ClassesPage() {
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="attendance-date" className='form-label block mb-3'>Attendance Date</label>
-                                        <input type="date" className="form-control" name='attendance_date' id='attendance-date' onChange={handleAttendanceInputsChange} value={instructorAttendance.attendance_date} />
+                                        <input type="datetime-local" className="form-control" name='attendance_datetime' id='attendance-date' onChange={handleAttendanceInputsChange} value={instructorAttendance.attendance_date} />
                                     </div>
                                     <hr />
                                     <button type='button' className='btn btn-primary mt-3' onClick={handleSubmitAttendance}>Save Attendance</button>

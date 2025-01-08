@@ -41,7 +41,7 @@ export default function CreateAssignmentPage() {
     }, [])
 
     const fetchInstructorClasses = async (session) => {
-        const response = await axios.get(`http://192.168.100.44:8000/api/instructors/${session?.user?.id}/classes`, {
+        const response = await axios.get(`http://192.168.100.110:8000/api/instructors/${session?.user?.id}/classes`, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${session.token}`,
@@ -62,7 +62,7 @@ export default function CreateAssignmentPage() {
     const handleSubmit = async () => {
         try {
 
-            const response = await axios.post(`http://192.168.100.44:8000/api/assignments`, assignmentDetails, {
+            const response = await axios.post(`http://192.168.100.110:8000/api/assignments`, assignmentDetails, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${authSession.token}`,

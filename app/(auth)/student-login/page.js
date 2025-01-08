@@ -32,7 +32,7 @@ export default function StudentLoginPage() {
     const handleSubmit = async () => {
         try {
             setIsLoginSubmitted(true);
-            const response = await axios.post("http://192.168.100.44:8000/api/student/login", studentDetails, {
+            const response = await axios.post("http://192.168.100.110:8000/api/student/login", studentDetails, {
                 headers: {
                     // 'Content-Type': 'multipart/form-data', // Set appropriate content type
                     "Content-Type": "application/json",

@@ -23,7 +23,7 @@ export default function LiveConferenceClassesPage() {
 
     const fetchClasses = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.44:8000/api/instructors/${session.user.id}/classes`, {
+            const response = await axios.get(`http://192.168.100.110:8000/api/instructors/${session.user.id}/classes`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,
@@ -39,7 +39,7 @@ export default function LiveConferenceClassesPage() {
 
     const fetchRecentClassSessions = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.44:8000/api/live-sessions/instructor-recent-classes`, {
+            const response = await axios.get(`http://192.168.100.110:8000/api/live-sessions/instructor-recent-classes`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,
@@ -73,7 +73,7 @@ export default function LiveConferenceClassesPage() {
         try {
             setIsSubmitLoading(true);
             let session = JSON.parse(jsCookie.get("session"));
-            const response = await axios.post('http://192.168.100.44:8000/api/live-sessions', sessionDetails, {
+            const response = await axios.post('http://192.168.100.110:8000/api/live-sessions', sessionDetails, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,

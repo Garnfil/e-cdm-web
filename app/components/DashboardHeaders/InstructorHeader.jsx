@@ -14,7 +14,7 @@ import {
 import jsCookie from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
-export default function InstructorHeader() {
+export default function InstructorHeader({ toggleSidebar }) {
     const router = useRouter();
 
     const handleLogout = () => {
@@ -29,21 +29,19 @@ export default function InstructorHeader() {
     return (
         <header className='fixed z-10 top-0 inset-x-0 lg:ms-64 py-3 px-4 lg:px-6 bg-neutral-100 flex justify-between items-center border-b border-black'>
             <div className='flex items-center gap-3'>
-                <div className="flex flex-wrap items-stretch w-full relative">
-                    <input type="text" className="flex-shrink flex-grow max-w-full leading-5 relative text-sm py-3 px-6 border border-black rounded focus:outline-none hover-shadow bg-white/60  focus:ring-0" placeholder="Search…" aria-label="Search" />
-                    <div className="raiytahskcn top-1 end-0 -me-px">
-                        <button className="flex items-center py-2 px-4 -ms-1 rtl:-me-1 rounded-r rtl:rounded-l leading-5 hover:ring-0 focus:outline-none focus:ring-0" type="button">
-                            <i className="bi bi-search"></i>
-                        </button>
-                    </div>
+                <div class="flex items-center gap-3">
+                    <button
+                        onClick={toggleSidebar}
+                        className="flex lg:hidden items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-neutral-600 border border-black hover:shadow-[2px_2px_0_0_#000000] hover:-translate-y-[2px] focus:shadow-[2px_2px_0_0_#000000] focus:-translate-y-[2px]"
+                    >
+                        <i className="bi bi-list text-black dark:text-white"></i>
+                    </button>
                 </div>
             </div>
             <div className='flex items-center gap-3'>
-
-
                 <div className='relative'>
                     <DropdownMenu>
-                        <DropdownMenuTrigger className='hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-white border border-black hover-shadow'>
+                        <DropdownMenuTrigger className=' sm:flex items-center justify-center w-10 h-10 rounded-full bg-white border border-black hover-shadow'>
                             <Image src={cdmLogo} className="w-10 h-10 flex-none rounded-full bg-white pointer-events-none" alt='cdm-logo' />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent aria-label="Static Actions" className="bg-white">
@@ -56,6 +54,6 @@ export default function InstructorHeader() {
 
                 </div>
             </div>
-        </header>
+        </header >
     )
 }

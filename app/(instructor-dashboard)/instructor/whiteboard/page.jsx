@@ -15,6 +15,8 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 export default function InstructorWhiteBoardPage() {
     const router = useRouter();
@@ -25,7 +27,7 @@ export default function InstructorWhiteBoardPage() {
 
     const fetchClasses = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.44:8000/api/instructors/${session.user.id}/classes`, {
+            const response = await axios.get(`http://192.168.100.110:8000/api/instructors/${session.user.id}/classes`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,
@@ -41,7 +43,7 @@ export default function InstructorWhiteBoardPage() {
 
     const fetchInstructorWhiteboards = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.44:8000/api/whiteboards/instructors/${session?.user?.id}`, {
+            const response = await axios.get(`http://192.168.100.110:8000/api/whiteboards/instructors/${session?.user?.id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session?.token}`,
@@ -68,7 +70,7 @@ export default function InstructorWhiteBoardPage() {
         try {
             const formData = new FormData(e.target);
             setIsSubmitLoading(true);
-            const response = await axios.post(`http://192.168.100.44:8000/api/whiteboards/generate-room`, formData, {
+            const response = await axios.post(`http://192.168.100.110:8000/api/whiteboards/generate-room`, formData, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`,
@@ -83,9 +85,46 @@ export default function InstructorWhiteBoardPage() {
         }
     }
 
+    const handleRemoveWhiteboard = async (e) => {
+        e.preventDefault();
+        try {
+            const whiteboard_id = e.target.id;
+            withReactContent(Swal).fire({
+                icon: 'question',
+                title: "Remove Whiteboard?",
+                text: "This attachment cannot be revert.",
+                confirmButtonColor: "#0b4d10",
+                confirmButtonText: "Remove",
+                cancelButtonColor: '#000',
+                showCancelButton: true,
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        const response = await axios.delete(`http://192.168.100.110:8000/api/whiteboards/${whiteboard_id}`, {
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": `Bearer ${authSession.token}`,
+                            }
+                        });
+
+                        if (response.status == 200) {
+                            fetchInstructorWhiteboards(authSession);
+                            toast.success("Attachment Removed Successfully");
+                        }
+                    } catch (error) {
+                        console.log(error);
+                        toast.error("Failed to Removed Attachment.");
+                    }
+                }
+            })
+        } catch (error) {
+
+        }
+    }
+
     return (
         <div className='container-fluid'>
-            <div className='flex justify-between items-center mb-5'>
+            <div className='flex flex-col md:flex-row gap-2 justify-between items-start md:items-center mb-5'>
                 <div>
                     <h2 className='text-2xl font-bold'>Whiteboard</h2>
                     <nav className="breadcrumb" aria-label="Breadcrumb">
@@ -102,7 +141,7 @@ export default function InstructorWhiteBoardPage() {
                 </div>
                 <Dialog>
                     <DialogTrigger className='btn btn-primary hover-shadow'>
-                        <i className="bi bi-plus-lg mr-1"></i> Create New Whiteboard
+                        <i className="bi bi-plus-lg mr-1"></i> Create Whiteboard
                     </DialogTrigger>
                     <DialogContent className="bg-white">
                         <DialogHeader>
@@ -135,14 +174,17 @@ export default function InstructorWhiteBoardPage() {
                         whiteboards?.length > 0 ? (
                             whiteboards.map(whiteboard => (
 
-                                <div className='col-span-4 lg:col-span-1 cursor-pointer'>
+                                <div key={whiteboard.id} className='col-span-4 lg:col-span-1 cursor-pointer'>
                                     <Link href={`/instructor/whiteboard/${whiteboard.session_code}`}>
                                         <div className='border border-black hover-shadow'>
                                             <div className='bg-green-50 flex justify-center items-center py-6'>
                                                 <Image src={whiteboardIcon} width={0} height={0} alt='whiteboard'></Image>
                                             </div>
-                                            <div className='border-t-black border p-3 bg-white'>
+                                            <div className='flex justify-between items-center border-t-black border p-3 bg-white'>
                                                 <h4>{whiteboard.session_code}</h4>
+                                                <button onClick={handleRemoveWhiteboard} className='btn btn-primary bg-red-500' id={whiteboard.id}>
+                                                    <i className="bi bi-trash3-fill"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </Link>
