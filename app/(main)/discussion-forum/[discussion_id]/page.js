@@ -25,7 +25,7 @@ const DiscussionDetails = () => {
 
     const fetchDiscussionDetails = async (session, discussion_id) => {
         try {
-            const response = await axios.get(`http://192.168.100.110:8000/api/discussions/${discussion_id}`, {
+            const response = await axios.get(`https://my-cdm.godesqsites.com/api/discussions/${discussion_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session?.token}`,
@@ -51,7 +51,7 @@ const DiscussionDetails = () => {
             user_type: authSession.user.role, // Replace with actual user type
         };
 
-        axios.post(`http://192.168.100.110:8000/api/discussions/${discussion_id}/comments`, body, {
+        axios.post(`https://my-cdm.godesqsites.com/api/discussions/${discussion_id}/comments`, body, {
             headers: {
                 "Accept": "application/json",
                 "Authorization": `Bearer ${authSession?.token}`,
@@ -72,7 +72,7 @@ const DiscussionDetails = () => {
             user_type: authSession.user.role, // Replace with actual user type
         };
 
-        axios.post(`http://192.168.100.110:8000/api/discussions/${discussion_id}/votes`, body, {
+        axios.post(`https://my-cdm.godesqsites.com/api/discussions/${discussion_id}/votes`, body, {
             headers: {
                 "Accept": "application/json",
                 "Authorization": `Bearer ${authSession?.token}`,

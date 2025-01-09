@@ -41,7 +41,7 @@ export default function CreateModulePage() {
 
     const handleSubmitModule = async (e) => {
         try {
-            const response = await axios.post(`http://192.168.100.110:8000/api/modules`, module, {
+            const response = await axios.post(`https://my-cdm.godesqsites.com/api/modules`, module, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${authSession.token}`,

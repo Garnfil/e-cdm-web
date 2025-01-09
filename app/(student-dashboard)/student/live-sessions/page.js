@@ -12,7 +12,7 @@ export default function LiveSessionsPage() {
 
     const fetchConferenceSessions = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.110:8000/api/live-sessions/students/${session.user.id}/classes`, {
+            const response = await axios.get(`https://my-cdm.godesqsites.com/api/live-sessions/students/${session.user.id}/classes`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`
@@ -64,8 +64,8 @@ export default function LiveSessionsPage() {
                     <tbody>
                         {
                             conferenceSessions.length > 0 ? (
-                                conferenceSessions.map(session => (
-                                    <tr>
+                                conferenceSessions.map((session, index) => (
+                                    <tr key={index}>
                                         <td className='p-2 border border-black text-center'>{session.id}</td>
                                         <td className='p-2 border border-black text-center'>{session.session_code}</td>
                                         <td className='p-2 border border-black text-center'>{session.instructor?.firstname} {session.instructor?.lastname}</td>

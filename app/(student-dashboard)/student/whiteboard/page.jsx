@@ -13,7 +13,7 @@ const StudentWhiteboardsPage = () => {
 
     const fetchClassWhiteboards = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.110:8000/api/whiteboards/student-classes`, {
+            const response = await axios.get(`https://my-cdm.godesqsites.com/api/whiteboards/student-classes`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session?.token}`,
@@ -57,9 +57,9 @@ const StudentWhiteboardsPage = () => {
                 <div className='grid grid-cols-4 gap-4'>
                     {
                         whiteboards?.length > 0 ? (
-                            whiteboards.map(whiteboard => (
+                            whiteboards.map((whiteboard, index) => (
 
-                                <div className='col-span-4 lg:col-span-1 cursor-pointer'>
+                                <div key={index} className='col-span-4 lg:col-span-1 cursor-pointer'>
                                     <Link href={`/student/whiteboard/${whiteboard.session_code}`}>
                                         <div className='border border-black hover-shadow'>
                                             <div className='bg-green-50 flex justify-center items-center py-6'>

@@ -18,7 +18,7 @@ const WhiteboardPage = () => {
     const fetchConferenceSession = async (session) => {
         try {
             console.log(session);
-            const response = await axios.get(`http://192.168.100.110:8000/api/whiteboards/${session_code}`, {
+            const response = await axios.get(`https://my-cdm.godesqsites.com/api/whiteboards/${session_code}`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session?.token}`,
@@ -26,6 +26,7 @@ const WhiteboardPage = () => {
             });
 
             const { whiteboard, whiteboard_user } = response.data;
+
             setRoomUUID(whiteboard.agora_whiteboard_room_uuid);
             setRoomToken(whiteboard_user.room_token);
         } catch (error) {

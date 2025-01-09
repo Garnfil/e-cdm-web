@@ -32,7 +32,7 @@ export default function CreateQuizPage() {
     });
 
     const fetchQuizDetails = async (session) => {
-        const response = await axios.get(`http://192.168.100.110:8000/api/school-works/${quiz_id}`, {
+        const response = await axios.get(`https://my-cdm.godesqsites.com/api/school-works/${quiz_id}`, {
             headers: {
                 "Accept": "application/json",
                 "Authorization": `Bearer ${session.token}`
@@ -71,7 +71,7 @@ export default function CreateQuizPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(`http://192.168.100.110:8000/api/quizzes/${quizDetails.quiz_id}`, quizDetails, {
+            const response = await axios.put(`https://my-cdm.godesqsites.com/api/quizzes/${quizDetails.quiz_id}`, quizDetails, {
                 headers: {
                     'Accept': "application/json",
                     'Authorization': `Bearer ${authSession.token}`,

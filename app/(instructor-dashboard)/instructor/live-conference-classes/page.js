@@ -23,7 +23,7 @@ export default function LiveConferenceClassesPage() {
 
     const fetchClasses = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.110:8000/api/instructors/${session.user.id}/classes`, {
+            const response = await axios.get(`https://my-cdm.godesqsites.com/api/instructors/${session.user.id}/classes`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,
@@ -39,7 +39,7 @@ export default function LiveConferenceClassesPage() {
 
     const fetchRecentClassSessions = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.110:8000/api/live-sessions/instructor-recent-classes`, {
+            const response = await axios.get(`https://my-cdm.godesqsites.com/api/live-sessions/instructor-recent-classes`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,
@@ -73,7 +73,7 @@ export default function LiveConferenceClassesPage() {
         try {
             setIsSubmitLoading(true);
             let session = JSON.parse(jsCookie.get("session"));
-            const response = await axios.post('http://192.168.100.110:8000/api/live-sessions', sessionDetails, {
+            const response = await axios.post('https://my-cdm.godesqsites.com/api/live-sessions', sessionDetails, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,
@@ -157,8 +157,8 @@ export default function LiveConferenceClassesPage() {
 
                         {
                             recentClassSessions.length > 0 ? (
-                                recentClassSessions.map(class_session => (
-                                    <div className="today relative flex flex-start gap-3">
+                                recentClassSessions.map((class_session, index) => (
+                                    <div key={index} className="today relative flex flex-start gap-3">
                                         <div>
                                             <div className="py-2 w-12 bg-secondary border border-black text-black rounded flex flex-col items-center gap-0.5 text-today">
                                                 <span className="text-sm">{formatDate(class_session.scheduled_datetime, "MMM")}</span>

@@ -28,7 +28,7 @@ export default function StudentSubmissionPage() {
         setAuthSession(session);
         const fetchStudentSubmittedWork = async () => {
             try {
-                const response = await axios.get(`http://192.168.100.110:8000/api/student-school-works/submissions/${submission_id}`, {
+                const response = await axios.get(`https://my-cdm.godesqsites.com/api/student-school-works/submissions/${submission_id}`, {
                     headers: {
                         "Accept": "application/json",
                         "Authorization": `Bearer ${session.token}`
@@ -77,7 +77,7 @@ export default function StudentSubmissionPage() {
 
     const handleSubmitStudentGrade = async () => {
         try {
-            const response = await axios.post(`http://192.168.100.110:8000/api/student-school-works/submissions/${submission_id}/graded`, studentWorkGrade, {
+            const response = await axios.post(`https://my-cdm.godesqsites.com/api/student-school-works/submissions/${submission_id}/graded`, studentWorkGrade, {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
@@ -142,7 +142,7 @@ export default function StudentSubmissionPage() {
                                 {(
                                     selectedSubmissionAttachment?.attachment_type === "file" ? (
                                         <div className='m-3'>
-                                            <a target='_blank' href={`http://192.168.100.110:8000/assets/uploads/student_submission_attachments/${selectedSubmissionAttachment.attachment_name}`} className='btn btn-primary'>View File <i className="bi bi-file-earmark"></i></a>
+                                            <a target='_blank' href={`https://my-cdm.godesqsites.com/assets/uploads/student_submission_attachments/${selectedSubmissionAttachment.attachment_name}`} className='btn btn-primary'>View File <i className="bi bi-file-earmark"></i></a>
                                         </div>
                                     ) : (
                                         <div className="border border-black h-full">

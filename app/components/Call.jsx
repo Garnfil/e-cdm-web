@@ -59,7 +59,7 @@ function Videos(props) {
             const session = JSON.parse(jsCookie.get("session"));
             axios
                 .post(
-                    `http://192.168.100.110:8000/api/live-sessions/joined-session`,
+                    `https://my-cdm.godesqsites.com/api/live-sessions/joined-session`,
                     { student_id: session.user.id, session_code: props.channelName },
                     {
                         headers: {
@@ -82,7 +82,7 @@ function Videos(props) {
     const leaveChannel = async () => {
         try {
             const session = JSON.parse(jsCookie.get('session'));
-            const response = await axios.post(`http://192.168.100.110:8000/api/live-sessions/leave-session`, { session_code: props.channelName }, {
+            const response = await axios.post(`https://my-cdm.godesqsites.com/api/live-sessions/leave-session`, { session_code: props.channelName }, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session.token}`,

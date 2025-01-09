@@ -48,7 +48,7 @@ export default function ViewActivityPage() {
 
     const fetchSubmittedActivities = async (session, school_work_id) => {
         try {
-            const response = await axios.get(`http://192.168.100.110:8000/api/student-school-works/${school_work_id}/submissions`, {
+            const response = await axios.get(`https://my-cdm.godesqsites.com/api/student-school-works/${school_work_id}/submissions`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`
@@ -69,7 +69,7 @@ export default function ViewActivityPage() {
 
     const fetchActivityDetails = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.110:8000/api/school-works/${activity_id}`, {
+            const response = await axios.get(`https://my-cdm.godesqsites.com/api/school-works/${activity_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`
@@ -124,7 +124,7 @@ export default function ViewActivityPage() {
 
         try {
             setSubmitBtnLoad(true);
-            const response = await axios.post(`http://192.168.100.110:8000/api/school-works/attachments/single-upload`, formData, {
+            const response = await axios.post(`https://my-cdm.godesqsites.com/api/school-works/attachments/single-upload`, formData, {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "multipart/form-data",
@@ -158,7 +158,7 @@ export default function ViewActivityPage() {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = await axios.delete(`http://192.168.100.110:8000/api/school-works/attachments/${attachment_id}/destroy`, {
+                    const response = await axios.delete(`https://my-cdm.godesqsites.com/api/school-works/attachments/${attachment_id}/destroy`, {
                         headers: {
                             "Accept": "application/json",
                             "Authorization": `Bearer ${authSession.token}`,
@@ -184,7 +184,7 @@ export default function ViewActivityPage() {
 
     const handleUpdateActivity = async () => {
         try {
-            const response = await axios.put(`http://192.168.100.110:8000/api/activities/${activityDetails.activity_id}`, activityDetails, {
+            const response = await axios.put(`https://my-cdm.godesqsites.com/api/activities/${activityDetails.activity_id}`, activityDetails, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`

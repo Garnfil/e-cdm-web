@@ -24,7 +24,7 @@ export default function LoginPage() {
             let formData = new FormData(e.target);
 
             // Send POST request using Axios
-            const response = await axios.post('http://192.168.100.110:8000/api/instructor/login', formData, {
+            const response = await axios.post('https://my-cdm.godesqsites.com/api/instructor/login', formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },

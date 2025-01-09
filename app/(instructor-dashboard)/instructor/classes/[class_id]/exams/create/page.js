@@ -40,7 +40,7 @@ export default function CreateExamPage() {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post(`http://192.168.100.110:8000/api/exams`, examDetails, {
+            const response = await axios.post(`https://my-cdm.godesqsites.com/api/exams`, examDetails, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${authSession.token}`,

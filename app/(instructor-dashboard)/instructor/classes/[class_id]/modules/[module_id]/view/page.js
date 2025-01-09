@@ -39,7 +39,7 @@ export default function ViewModulePage() {
 
     const fetchModule = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.110:8000/api/modules/${module_id}`, {
+            const response = await axios.get(`https://my-cdm.godesqsites.com/api/modules/${module_id}`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session.token}`
@@ -89,7 +89,7 @@ export default function ViewModulePage() {
         try {
             let formData = new FormData(e.target);
             setSubmitBtnLoad(true);
-            const response = await axios.post(`http://192.168.100.110:8000/api/modules/attachments/single-upload`, formData, {
+            const response = await axios.post(`https://my-cdm.godesqsites.com/api/modules/attachments/single-upload`, formData, {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "multipart/form-data",
@@ -124,7 +124,7 @@ export default function ViewModulePage() {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = await axios.delete(`http://192.168.100.110:8000/api/school-works/attachments/${attachment_id}/destroy`, {
+                    const response = await axios.delete(`https://my-cdm.godesqsites.com/api/school-works/attachments/${attachment_id}/destroy`, {
                         headers: {
                             "Accept": "application/json",
                             "Authorization": `Bearer ${authSession.token}`,
@@ -149,7 +149,7 @@ export default function ViewModulePage() {
 
     const handleUpdateModule = async () => {
         try {
-            const response = await axios.put(`http://192.168.100.110:8000/api/modules/${moduleDetails.id}`, moduleDetails, {
+            const response = await axios.put(`https://my-cdm.godesqsites.com/api/modules/${moduleDetails.id}`, moduleDetails, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${authSession.token}`

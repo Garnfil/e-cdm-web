@@ -40,7 +40,7 @@ export default function ClassesPage() {
 
         const fetchClasses = async () => {
             try {
-                const response = await axios.get(`http://192.168.100.110:8000/api/instructors/${session.user.id}/classes`, {
+                const response = await axios.get(`https://my-cdm.godesqsites.com/api/instructors/${session.user.id}/classes`, {
                     headers: {
                         "Accept": "application/json",
                         "Authorization": `Bearer ${session.token}`,
@@ -83,7 +83,7 @@ export default function ClassesPage() {
 
     const handleSubmitAttendance = async () => {
         try {
-            const response = await axios.post(`http://192.168.100.110:8000/api/instructor-attendances`, instructorAttendance, {
+            const response = await axios.post(`https://my-cdm.godesqsites.com/api/instructor-attendances`, instructorAttendance, {
                 headers: {
                     "Accept": "application/json",
                 }

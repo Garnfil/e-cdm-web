@@ -42,7 +42,7 @@ export default function CreateQuizPage() {
     }, [])
 
     const fetchInstructorClasses = async (session) => {
-        const response = await axios.get(`http://192.168.100.110:8000/api/instructors/${session?.user?.id}/classes`, {
+        const response = await axios.get(`https://my-cdm.godesqsites.com/api/instructors/${session?.user?.id}/classes`, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${session.token}`,
@@ -63,7 +63,7 @@ export default function CreateQuizPage() {
     const handleSubmit = async () => {
         try {
 
-            const response = await axios.post(`http://192.168.100.110:8000/api/quizzes`, quizDetails, {
+            const response = await axios.post(`https://my-cdm.godesqsites.com/api/quizzes`, quizDetails, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${authSession.token}`,

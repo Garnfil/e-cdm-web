@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
-export default function page() {
+export default function SingleAttendancePage() {
     const params = useParams();
     const { class_id, attendance_code } = params;
     const [authSession, setAuthSession] = useState({});
@@ -15,7 +15,7 @@ export default function page() {
 
     const fetchAttendance = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.110:8000/api/attendances/${attendance_code}`, {
+            const response = await axios.get(`https://my-cdm.godesqsites.com/api/attendances/${attendance_code}`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session.token}`
@@ -85,8 +85,8 @@ export default function page() {
                         <div className="flex flex-col gap-2">
                             {
                                 students.length > 0 ? (
-                                    students.map(student => (
-                                        <div className=" px-2 py-2 border border-black rounded">
+                                    students.map((student, index) => (
+                                        <div key={index} className=" px-2 py-2 border border-black rounded">
                                             <h4 className='text-lg font-semibold'>{student.firstname} {student.lastname}</h4>
                                             <h6>{student.student_id}</h6>
                                         </div>

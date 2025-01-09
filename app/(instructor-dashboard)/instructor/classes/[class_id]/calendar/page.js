@@ -30,7 +30,7 @@ export default function ClassCalendarPage() {
 
     const fetchSchoolWorks = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.110:8000/api/classes/${class_id}/school-works`, {
+            const response = await axios.get(`https://my-cdm.godesqsites.com/api/classes/${class_id}/school-works`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`,

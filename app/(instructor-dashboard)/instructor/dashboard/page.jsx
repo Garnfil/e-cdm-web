@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import smartPeopleIllustration from "../../../../public/smart-people-illustration.png";
-import Chart from "react-apexcharts";
 import { DayPicker, getDefaultClassNames } from "react-day-picker";
 import "react-day-picker/style.css";
 import jsCookie from "js-cookie";
@@ -10,39 +9,14 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import Link from "next/link";
 
-export default function InstructorDashboard() {
+export default function InstructorDashboardPage() {
     const defaultClassNames = getDefaultClassNames();
-    const [selected, setSelected] = useState(new Date());
+    const [selected, setSelected] = useState('');
     const [classSchedules, setClassSchedules] = useState([]);
-
-    const option = {
-        chart: {
-            id: "apexchart-example",
-        },
-        xaxis: {
-            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
-        },
-        colors: ["#0b4d10"],
-        dataLabels: {
-            style: {
-                colors: ["#fff"],
-            },
-        },
-        markers: {
-            colors: ["#fff"],
-        },
-    };
-
-    const series = [
-        {
-            name: "series-1",
-            data: [30, 40, 35, 50, 49, 60, 70, 91, 125],
-        },
-    ];
 
     const fetchInstructorSchedules = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.110:8000/api/instructors/${session.user.id}/class-schedules`, {
+            const response = await axios.get(`https://my-cdm.godesqsites.com/api/instructors/${session.user.id}/class-schedules`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session.token}`,
@@ -111,8 +85,8 @@ export default function InstructorDashboard() {
                         <h4 className="font-medium text-xl">Class Schedule</h4>
                         <div className="flex flex-col gap-3">
                             {classSchedules.length > 0 ? (
-                                classSchedules.map((schedule) => (
-                                    <div className="today [&amp;.today_.icon-today]:block [&amp;.today_.text-today]:text-primary relative flex flex-start gap-3">
+                                classSchedules.map((schedule, index) => (
+                                    <div key={index} className="today [&amp;.today_.icon-today]:block [&amp;.today_.text-today]:text-primary relative flex flex-start gap-3">
                                         <div className="flex flex-col gap-1.5">
                                             <h4 className="text-sm font-medium">{schedule.title}</h4>
                                             <div className="text-xs">

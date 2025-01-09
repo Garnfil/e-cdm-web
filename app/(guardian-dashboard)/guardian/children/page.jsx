@@ -16,7 +16,7 @@ export default function ChildrenPage() {
 
     const fetchGuardianChildren = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.110:8000/api/guardians/${session?.user?.id}/children`, {
+            const response = await axios.get(`https://my-cdm.godesqsites.com/api/guardians/${session?.user?.id}/children`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session?.token}`,
@@ -37,7 +37,7 @@ export default function ChildrenPage() {
 
     const getStudentFinalGrade = async (student_id) => {
         try {
-            const response = await axios.get(`http://192.168.100.110:8000/api/students/${student_id}/classes/final-grades`, {
+            const response = await axios.get(`https://my-cdm.godesqsites.com/api/students/${student_id}/classes/final-grades`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${authSession?.token}`,
@@ -91,7 +91,7 @@ export default function ChildrenPage() {
                                 <div className="flex flex-col sm:flex-row items-center sm:gap-4 mb-2">
                                     <div className="relative flex sm:inline-flex flex-col gap-1.5  items-center sm:items-start sm:ms-12 -mt-6">
                                         <a className="group" href="javascript:;">
-                                            <img src="../src/img/avatar/male3.jpg" className="rounded-full size-24 bg-neutral-400 border-solid border-black border -mt-3" />
+                                            <Image src={userProfileAvatar} className="rounded-full size-24 bg-neutral-400 border-solid border-black border -mt-3" />
                                         </a>
                                         <h3 className="font-semibold [text-shadow:2px_2px_4px_var(--tw-shadow-color)] shadow-lime-200 dark:shadow-lime-700 sm:text-xl sm:raiytahskcn sm:-end-28 sm:-top-3">
                                             Ari Budin
@@ -192,8 +192,8 @@ export default function ChildrenPage() {
 
                                     <tbody className="text-sm text-wrap">
                                         {selectedStudentGrades.length > 0 ? (
-                                            selectedStudentGrades.map((class_grade) => (
-                                                <tr className="*:px-6 *:py-4 *:whitespace-nowrap text-center">
+                                            selectedStudentGrades.map((class_grade, index) => (
+                                                <tr key={index} className="*:px-6 *:py-4 *:whitespace-nowrap text-center">
                                                     <td>
                                                         <div className="text-start">{class_grade?.classroom?.title}</div>
                                                     </td>

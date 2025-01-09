@@ -17,7 +17,7 @@ export default function Class() {
         let session = JSON.parse(jsCookie.get("session"));
 
         const fetchClassDetails = async () => {
-            const response = await axios.get(`http://192.168.100.110:8000/api/classes/${class_id}`, {
+            const response = await axios.get(`https://my-cdm.godesqsites.com/api/classes/${class_id}`, {
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${session.token}`

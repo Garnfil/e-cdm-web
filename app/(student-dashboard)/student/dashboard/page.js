@@ -17,7 +17,7 @@ export default function StudentDashboardPage() {
 
     const fetchPendingSchoolWorks = async (session) => {
         try {
-            const response = await axios.get(`http://192.168.100.110:8000/api/students/${session?.user?.id}/classes/${null}/school-works/todos`, {
+            const response = await axios.get(`https://my-cdm.godesqsites.com/api/students/${session?.user?.id}/classes/${null}/school-works/todos`, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${session?.token}`
