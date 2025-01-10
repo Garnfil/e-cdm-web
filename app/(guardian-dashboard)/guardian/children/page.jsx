@@ -93,9 +93,9 @@ export default function ChildrenPage() {
                                         <a className="group" href="javascript:;">
                                             <Image src={userProfileAvatar} className="rounded-full size-24 bg-neutral-400 border-solid border-black border -mt-3" />
                                         </a>
-                                        <h3 className="font-semibold [text-shadow:2px_2px_4px_var(--tw-shadow-color)] shadow-lime-200 dark:shadow-lime-700 sm:text-xl sm:raiytahskcn sm:-end-28 sm:-top-3">
+                                        {/* <h3 className="font-semibold [text-shadow:2px_2px_4px_var(--tw-shadow-color)] shadow-lime-200 dark:shadow-lime-700 sm:text-xl sm:raiytahskcn sm:-end-28 sm:-top-3">
                                             Ari Budin
-                                        </h3>
+                                        </h3> */}
                                     </div>
 
                                     <div className="flex sm:inline-flex items-center justify-center">
