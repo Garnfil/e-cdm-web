@@ -12,7 +12,7 @@ export default function Home() {
                         <div className="bg-[#FFC900] w-[60%] h-full px-10 border-r-2 border-black">
                             <div className="flex justify-center items-start gap-2 h-full w-[80%] flex-col">
                                 <h1 className="text-[45px] font-[600]">Welcome to Colegio De Montalban – Shaping Minds, Building Futures</h1>
-                                <p>Empowering students with quality education and values for a brighter tomorrow.</p>
+                                <p>Empowering students with quality education and values for a brighter tomorrow..</p>
 
                             </div>
                         </div>

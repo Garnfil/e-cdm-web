@@ -365,10 +365,9 @@ export default function ViewAssignmentPage() {
                                                                     <h5 className="text-sm font-medium">{submitted_student_work.student.firstname} {submitted_student_work.student.lastname}</h5>
                                                                 </div>
                                                             </div>
-                                                            <div className="flex items-center gap-2">
-                                                                {/* <div className="size-2.5 bg-lime-500 rounded-full"></div> */}
+                                                            {/* <div className="flex items-center gap-2">
                                                                 <span className="text-sm">{submitted_student_work.score}/50</span>
-                                                            </div>
+                                                            </div> */}
                                                         </div>
                                                     ))
                                                 ) : (
